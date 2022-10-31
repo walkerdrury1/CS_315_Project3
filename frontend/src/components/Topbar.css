@@ -1,0 +1,23 @@
+.topbar-container{
+    height: 100px;
+    display: grid;
+    grid-template-columns: 12% 15% 65% 10%;
+}
+.topbar-logo-container{
+    height: 80%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.topbar-logo{
+    height: 100px;
+    object-fit: cover;
+}
+.topbar-sign{
+    color:rgb(0, 225, 255)
+}
+.topbar-items-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 20%);
+    
+}
