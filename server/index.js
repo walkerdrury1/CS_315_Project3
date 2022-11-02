@@ -25,6 +25,15 @@ app.get('/say-name/:name', (req, res, next) => {
     res.send("hi " + name);
 });
 
+app.get('/get-users', async (req, res, next) => {
+    try{
+        const a = await pool.query("SELECT * FROM USERS");
+        res.json(a.rows);
+    } catch (err) {
+        res.send(err.message);
+    }
+} );
+
 
 
 app.listen(4000, function () {
