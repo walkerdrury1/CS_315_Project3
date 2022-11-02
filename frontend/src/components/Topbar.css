@@ -1,10 +1,9 @@
 .topbar-container{
     height: 100px;
     display: grid;
-    grid-template-columns: 12% 15% 65% 10%;
+    grid-template-columns: 10% 10% 65% 15%;
 }
 .topbar-logo-container{
-    height: 80%;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -12,9 +11,11 @@
 .topbar-logo{
     height: 100px;
     object-fit: cover;
+    cursor: pointer;
 }
 .topbar-sign{
-    color:rgb(0, 225, 255)
+    color:rgba(0, 225, 255, 0.867);
+    cursor:pointer
 }
 .topbar-items-container{
     display: grid;
@@ -25,4 +26,26 @@
     display:flex;
     justify-content: center;
     align-items: center;
+}
+.topbar-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.topbar-item:hover{
+    background-color: rgb(172, 0, 0);
+    color: white;
+    cursor: pointer;
+}
+.active-topbar-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(172, 0, 0);
+    color: white;
+}
+.sign-in{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    cursor: pointer;
 }

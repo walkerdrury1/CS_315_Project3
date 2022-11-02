@@ -1,12 +1,7 @@
-import React from "react";
-import Topbar from "./components/Topbar";
+import CustomerPage from "./components/customerPage/CustomerPage";
+
 
 const App = () => {
-    return (
-        <div>
-            <Topbar />
-        </div>
-    );
-};
-
-export default App;
+    return <CustomerPage />
+}
+export default App
