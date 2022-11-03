@@ -2,8 +2,10 @@ const express   = require('express');
 const app       = express();
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
+const cors = require('cors');
 
 app.use(express.json());
+//app.use(cors);
 
 const pool = new Pool({
     user: process.env.PSQL_USER,
@@ -24,6 +26,42 @@ app.get('/say-name/:name', (req, res, next) => {
     const {name} = req.params;
     res.send("hi " + name);
 });
+
+app.get('/get-users', async (req, res, next) => {
+    try{
+        const a = await pool.query("SELECT * FROM users");
+        res.json(a.rows);
+    } catch (err) {
+        res.send(err.message);
+    }
+} );
+
+//////////////////// GET REQUESTS
+app.get('/get-menuitems', async(req, res) => {
+    try{
+        const data = await pool.query("SELECT * FROM items");
+        res.json(data.rows);
+    } catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+app.get('/get-inventory', async(req, res) => {
+    try{
+        const data = await pool.query("SELECT * FROM inventory");
+        res.json(data.rows);
+    } catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+
+
+
+
+//////////////////// POST REQUESTS
 
 
 
