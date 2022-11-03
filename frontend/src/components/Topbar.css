@@ -7,11 +7,14 @@
     display:flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 .topbar-logo{
     height: 100px;
-    object-fit: cover;
+    object-fit: scale-down;
     cursor: pointer;
+
+    
 }
 .topbar-sign{
     color:rgba(0, 225, 255, 0.867);
