@@ -20,7 +20,8 @@ const App = (props) =>{
 
 const mapStateToProps = (state) => {
     return{
-        page: state.page
+        page: state.page,
+        combo: state.combo
     }
 }
 export default connect(mapStateToProps, {

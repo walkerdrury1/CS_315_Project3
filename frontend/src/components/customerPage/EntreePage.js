@@ -12,7 +12,7 @@ const EntreePage = (props) => {
         
     }
     return(
-        <CustomerPage onCardClick = {onCardClick} card_list={entrees} />
+        <CustomerPage header = "Select your Entrees" onCardClick = {onCardClick} card_list={entrees} />
     )
 }
 

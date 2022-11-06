@@ -8,7 +8,7 @@ const SidePage = (props) => {
     const onCardClick = (index) => {
         props.setPage("Combo Page")
     }
-    return <CustomerPage onCardClick= {onCardClick} card_list={sides} />;
+    return <CustomerPage header = "Select your Sides " onCardClick= {onCardClick} card_list={sides} />;
 };
 
 const mapStateToProps = (state) => {
