@@ -1,7 +1,28 @@
-import CustomerPage from "./components/customerPage/CustomerPage";
+import ComboPage from './components/customerPage/ComboPage'
+import { connect } from 'react-redux'
+import { setPage } from './actions'
+import SidePage from './components/customerPage/SidePage'
+import EntreePage from './components/customerPage/EntreePage'
 
 
-const App = () => {
-    return <CustomerPage />
+
+const App = (props) =>{ 
+    if(props.page === "Combo Page"){
+        return <ComboPage />
+    }
+    else if(props.page === "Entree Page"){
+        return <EntreePage />
+    }
+    else if(props.page === "Side Page"){
+        return <SidePage />
+    }
 }
-export default App
+
+const mapStateToProps = (state) => {
+    return{
+        page: state.page
+    }
+}
+export default connect(mapStateToProps, {
+    setPage: setPage
+})(App)
