@@ -21,6 +21,11 @@
     border-radius: 25px;
     box-shadow: 3px 3px 10px#a9a9a9;
 }
+.cardItem-container{
+    width: 70%;
+    border-radius: 25px;
+    box-shadow: 3px 3px 10px#a9a9a9;
+}
 .card-title{
     padding: 30px;
 }
