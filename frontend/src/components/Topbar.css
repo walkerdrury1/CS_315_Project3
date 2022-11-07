@@ -2,6 +2,7 @@
     height: 100px;
     display: grid;
     grid-template-columns: 10% 10% 65% 15%;
+    background-color: rgb(201, 0, 0);
 }
 .topbar-logo-container{
     display:flex;
@@ -10,20 +11,27 @@
     height: 100%;
 }
 .topbar-logo{
-    height: 100px;
+    height: 80px;
     object-fit: scale-down;
     cursor: pointer;
 
     
 }
-.topbar-sign{
-    color:rgba(0, 225, 255, 0.867);
-    cursor:pointer
-}
 .topbar-items-container{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 20%);
+    /*display: grid;
+    grid-template-columns: repeat(auto-fill, 20%);*/
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: large;
+    color: white;
 
+}
+.gui-view{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 .to-center{
     display:flex;
@@ -37,7 +45,7 @@
 }
 .topbar-item:hover{
     background-color: rgb(172, 0, 0);
-    color: white;
+    color: rgb(160, 160, 160);
     cursor: pointer;
 }
 .active-topbar-item{
@@ -51,4 +59,5 @@
     display: grid;
     grid-template-columns: repeat(2,1fr);
     cursor: pointer;
+    color: white;
 }

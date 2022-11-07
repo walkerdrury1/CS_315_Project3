@@ -3,11 +3,8 @@ import "./Topbar.css";
 
 const Topbar = () => {
     const topbar_item_list = [
-        "entrees",
-        "sides",
-        "checkout",
-        "entrees",
-        "sides",
+        "Locations",
+        "Checkout",
     ];
     const [active, setActive] = useState(null);
 
@@ -41,8 +38,8 @@ const Topbar = () => {
                     onClick={() => goHome()}
                 />
             </div>
-            <div className='to-center'>
-                <h4>Customer view</h4>
+            <div className='gui-view'>
+                <h4>Customer View</h4>
             </div>
             <div className='topbar-items-container'>{displayTopbarItems()}</div>
 
