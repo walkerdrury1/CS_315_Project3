@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { setPage } from './actions'
 import SidePage from './components/customerPage/SidePage'
 import EntreePage from './components/customerPage/EntreePage'
+import Checkout from './components/checkout/Checkout'
 
 
 
@@ -10,11 +11,11 @@ const App = (props) =>{
     if(props.page === "Combo Page"){
         return <ComboPage />
     }
-    else if(props.page === "Entree Page"){
-        return <EntreePage />
+    else if(props.page === "Checkout"){
+        return <Checkout />
     }
-    else if(props.page === "Side Page"){
-        return <SidePage />
+    else{
+        return <EntreePage />
     }
 }
 

@@ -1,23 +1,23 @@
-import React, { useState } from 'react'
-import './Incrementer.css'
+import React, { useState } from "react";
+import "./Incrementer.css";
+import { connect } from "react-redux";
 
-const Incrementer = ({max}) => {
-    const [count, setCount] = useState(0)
-    
-    const change_count = (type) => {
-        if(type === "i"){
-            if(count !== max){
-                setCount(count + 1)
+const Incrementer = ({ type }) => {
+    const [count, setCount] = useState(0);
+
+    const change_count = (_type) => {
+        if (_type === "i") {
+            if (count !== 2) {
+                setCount(count + 1);
+            }
+        } else {
+            if (count !== 0) {
+                setCount(count - 1);
             }
         }
-        else{
-            if(count !== 0){
-                setCount(count - 1)
-            }
-        }
-    }
+    };
 
-    return(
+    return (
         <div className='incrementer-container'>
             <div className='decrement' onClick={() => change_count("d")}>
                 -
@@ -28,8 +28,15 @@ const Incrementer = ({max}) => {
             <div className='increment' onClick={() => change_count("i")}>
                 +
             </div>
-
         </div>
-    )
-}
-export default Incrementer
+    );
+};
+
+const mapStateToProps = (state) => {
+    return {
+        entreeCount: state.entreeCount,
+        sideCount: state.sideCount,
+    };
+};
+
+export default connect(mapStateToProps)(Incrementer);

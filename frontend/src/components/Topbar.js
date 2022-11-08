@@ -1,12 +1,21 @@
 import react, { useState } from "react";
 import "./Topbar.css";
+import {connect} from 'react-redux'
+import { setPage } from "../actions";
 
-const Topbar = () => {
+const Topbar = (props) => {
     const topbar_item_list = [
         "Locations",
         "Checkout",
     ];
     const [active, setActive] = useState(null);
+
+    const click = (item,index) => {
+        if(item === "Checkout"){
+            props.setPage(item)
+            setIndex(index)
+        }
+    }
 
     const goHome = () => {
         window.location.assign("/");
@@ -21,7 +30,7 @@ const Topbar = () => {
                     className={`${
                         active === index ? "active-" : ""
                     }topbar-item`}
-                    onClick={() => setIndex(index)}
+                    onClick={() => click(item,index)}
                 >
                     {item}
                 </div>
@@ -53,4 +62,12 @@ const Topbar = () => {
     );
 };
 
-export default Topbar;
+const mapStateToProps = (state) => {
+    return{
+        page: state.page
+    }
+}
+
+export default connect(mapStateToProps, {
+    setPage: setPage
+})(Topbar);

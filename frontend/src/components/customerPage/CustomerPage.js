@@ -10,7 +10,7 @@ const CustomerPage = ({ card_list, onCardClick, header}) => {
             return (
                 <div className='card-grid-container'>
                     <ItemCard
-                        //onCardClick={() => onCardClick(card.name)}
+                        onCardClick={() => onCardClick(card.name)}
                         title={card.name}
                         img={card.img}
                     />
