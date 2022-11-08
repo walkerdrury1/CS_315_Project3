@@ -21,11 +21,12 @@ app.get('/test-connection', (req, res, next) => {
     res.send("hi");
 });
 
+/*
 // ex: http://localhost:4000/say-name/Walker
 app.get('/say-name/:name', (req, res, next) => {
     const {name} = req.params;
     res.send("hi " + name);
-});
+});*/
 
 app.get('/get-users', async (req, res, next) => {
     try{
@@ -40,6 +41,36 @@ app.get('/get-users', async (req, res, next) => {
 app.get('/get-menuitems', async(req, res) => {
     try{
         const data = await pool.query("SELECT * FROM items");
+        res.json(data.rows);
+    } catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+app.get('/get-entrees', async(req, res) => {
+    try{
+        const data = await pool.query("SELECT * FROM items WHERE type = 'entree'");
+        res.json(data.rows);
+    } catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+app.get('/get-sides', async(req, res) => {
+    try{
+        const data = await pool.query("SELECT * FROM items WHERE type = 'side'");
+        res.json(data.rows);
+    } catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+app.get('/get-extras', async(req, res) => {
+    try{
+        const data = await pool.query("SELECT * FROM items WHERE type = 'extra'");
         res.json(data.rows);
     } catch(err) {
         console.log(err.message);
