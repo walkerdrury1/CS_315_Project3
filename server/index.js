@@ -129,7 +129,7 @@ app.post('/process-transaction', async(req, res) => {
             await pool.query(updateCommand);
         }
 
-    } catch(err) {
+``    } catch(err) {
 
         console.log(err.message);
         res.send(err.message);
