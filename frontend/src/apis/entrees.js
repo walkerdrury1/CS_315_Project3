@@ -1,4 +1,4 @@
-const entrees = [
+/*const entrees = [
     {
         name: "Orange Chicken",
         img: "https://www.kitchensanctuary.com/wp-content/uploads/2020/01/Orange-Chicken-square-1200.jpg",
@@ -22,3 +22,11 @@ const entrees = [
 ];
 
 export default entrees;
+*/
+import axios from "axios";
+
+const entrees = async () => {
+    const x = await axios.get("https://tyson-express.onrender.com/get-entrees");
+    console.log(x)
+}
+export default entrees
