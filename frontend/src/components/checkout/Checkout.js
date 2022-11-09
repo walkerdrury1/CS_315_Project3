@@ -83,7 +83,7 @@ const Checkout = (props) => {
                                 </div>
                             </div>
                             <div className='ui bottom attached segment'>
-                                ${item.cost}
+                                ${item.cost.toFixed(2)}
                             </div>
                             <div className='ui section divider'></div>
                         </div>
