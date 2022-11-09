@@ -4,15 +4,20 @@ import { setPage } from './actions'
 import SidePage from './components/customerPage/SidePage'
 import EntreePage from './components/customerPage/EntreePage'
 import Checkout from './components/checkout/Checkout'
+import items from './apis/items'
+import LandingPage from './components/LandingPage';
 
 
 
-const App = (props) =>{ 
+const App = (props) =>{     
     if(props.page === "Combo Page"){
         return <ComboPage />
     }
     else if(props.page === "Checkout"){
         return <Checkout />
+    }
+    else if(props.page === "landing page"){
+        return <LandingPage />
     }
     else{
         return <EntreePage />

@@ -6,6 +6,7 @@ export const setPage = (to_set) => {
 };
 
 export const setCombo = (to_set) => {    
+    setEntreeCount(100);
     return{
         type: "SET_COMBO",
         payload: to_set
@@ -13,12 +14,9 @@ export const setCombo = (to_set) => {
 }
 
 export const setEntreeCount = (to_set) => {
-    console.log("in set entree count " + to_set)
     return{
         type: "SET_ENTREE_COUNT",
-        payload: {
-            count: 1
-        }
+        payload: to_set
     }
 }
 
@@ -26,6 +24,20 @@ export const setSideCount = (to_set) => {
     return{
         type: "SET_SIDE_COUNT",
         payload: to_set
+    }
+}
+
+export const addItem = (item) => {
+    return{
+        type: "ADD_ITEM",
+        payload: item
+    }
+}
+
+export const concatList = (list) => {
+    return {
+        type: "CONCAT_LIST",
+        payload: list
     }
 }
 
