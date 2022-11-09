@@ -2,22 +2,24 @@ import React, { useEffect } from "react";
 import Topbar from "../Topbar";
 import { connect } from "react-redux";
 import axios from "axios";
-import { calculateTotal } from "../../actions";
+import { calculateTotal, setPage } from "../../actions";
 import { deleteIndex } from "../../actions";
-
+import { setCombo } from "../../actions";
 
 const Checkout = (props) => {
     const processTransactions = async () => {
         const itemList = [];
         props.items.map((item) => {
             item.items.map((order) => {
-                itemList.append(order);
+                itemList.push(order);
             });
         });
         await axios.post(
             "https://tyson-express.onrender.com/process-transaction",
             { cost: props.total, items: itemList }
         );
+        props.setPage("landing page");
+        props.setCombo(null);
     };
 
     useEffect(() => {
@@ -27,8 +29,8 @@ const Checkout = (props) => {
     const clearCart = () => {
         props.items.map((item, index) => {
             return props.deleteIndex(0);
-        })
-    }
+        });
+    };
 
     const calculateCost = (name) => {
         let x = 0;
@@ -40,11 +42,11 @@ const Checkout = (props) => {
             x = 10.5;
         }
 
-        return <div>${x.toFixed(2)}</div>
-    }
+        return <div>${x.toFixed(2)}</div>;
+    };
 
     const displayCheckout = () => {
-        console.log(props.items)
+        console.log(props.items);
         return props.items.map((item, index) => {
             if (item.combo === "A La Carte") {
                 return item.items.map((item) => {
@@ -74,7 +76,7 @@ const Checkout = (props) => {
                 });
             } else {
                 const list = item.items.map((list_item) => {
-                    return <li value="-">{list_item.name}</li>;
+                    return <li value='-'>{list_item.name}</li>;
                 });
                 return (
                     <div>
@@ -87,20 +89,17 @@ const Checkout = (props) => {
                                     <button
                                         className='ui red button'
                                         tabIndex={0}
-                                        onClick = {() => props.deleteIndex(index)}
+                                        onClick={() => props.deleteIndex(index)}
                                     >
                                         X
                                     </button>
                                 </div>
-                                
                             </div>
                         </div>
                         <div className='ui attached segment'>
-                            <ol className="ui list">{list}</ol>
+                            <ol className='ui list'>{list}</ol>
                         </div>
-                        <div className='ui bottom attached segment'>
-                            {calculateCost(item.combo)}
-                        </div>
+                        <div className='ui bottom attached segment'>20</div>
                         <div className='ui section divider'></div>
                     </div>
                 );
@@ -132,9 +131,11 @@ const Checkout = (props) => {
                                 Complete Order
                             </button>
                             <div class='or'></div>
-                            <button class='ui negative button' 
-                            tabIndex={0}
-                            onClick = {() => clearCart()}>
+                            <button
+                                class='ui negative button'
+                                tabIndex={0}
+                                onClick={() => clearCart()}
+                            >
                                 Clear Cart
                             </button>
                         </div>
@@ -154,5 +155,7 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
     calculateTotal: calculateTotal,
-    deleteIndex: deleteIndex
+    deleteIndex: deleteIndex,
+    setPage: setPage,
+    setCombo: setCombo,
 })(Checkout);
