@@ -87,7 +87,7 @@ const Checkout = (props) => {
                             <ol className="ui list">{list}</ol>
                         </div>
                         <div className='ui bottom attached segment'>
-                            {calculateCost(item.combo)}
+                            20
                         </div>
                         <div className='ui section divider'></div>
                     </div>
