@@ -6,6 +6,7 @@ import EntreePage from "./components/customerPage/EntreePage";
 import Checkout from "./components/checkout/Checkout";
 import LandingPage from "./components/LandingPage";
 import AllPage from "./components/AllPage";
+import SignInPage from "./components/SignInPage";
 
 const App = (props) => {
     if (props.page === "Combo Page") {
@@ -16,7 +17,11 @@ const App = (props) => {
         return <LandingPage />;
     } else if (props.page === "a la carte page") {
         return <AllPage />;
-    } else {
+    } 
+    else if(props.page === "Sign in page"){
+        return <SignInPage />
+    }
+    else {
         return <EntreePage />;
     }
 };

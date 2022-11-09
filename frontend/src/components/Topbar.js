@@ -1,25 +1,23 @@
 import react, { useState } from "react";
 import "./Topbar.css";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 import { setPage } from "../actions";
 
 const Topbar = (props) => {
-    const topbar_item_list = [
-        "Order Now",
-        "Locations",
-        "Checkout",
-    ];
+    const topbar_item_list = ["Order Now", "Locations", "Checkout"];
     const [active, setActive] = useState(null);
 
-    const click = (item,index) => {
-        if(item === "Order Now"){
-            props.setPage("Combo Page")
+    const click = (item, index) => {
+        if (item === "Order Now") {
+            props.setPage("Combo Page");
         }
-        if(item === "Checkout"){
-            props.setPage(item)
-            setIndex(index)
+        if (item === "Checkout") {
+            props.setPage(item);
+            setIndex(index);
+        } else if (item === "Sign in") {
+            props.setPage("Sign in page");
         }
-    }
+    };
 
     const goHome = () => {
         window.location.assign("/");
@@ -34,7 +32,7 @@ const Topbar = (props) => {
                     className={`${
                         active === index ? "active-" : ""
                     }topbar-item`}
-                    onClick={() => click(item,index)}
+                    onClick={() => click(item, index)}
                 >
                     {item}
                 </div>
@@ -59,7 +57,9 @@ const Topbar = (props) => {
             <div className='to-center'>
                 <div className='sign-in'>
                     <i class='big user circle icon'></i>
-                    <div className="to-center">Sign in</div>
+                    <div className='to-center' onClick={() => click("Sign in")}>
+                        Sign in
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,11 +67,11 @@ const Topbar = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    return{
-        page: state.page
-    }
-}
+    return {
+        page: state.page,
+    };
+};
 
 export default connect(mapStateToProps, {
-    setPage: setPage
+    setPage: setPage,
 })(Topbar);
