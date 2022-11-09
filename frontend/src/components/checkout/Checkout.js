@@ -53,7 +53,7 @@ const Checkout = (props) => {
                             <div className='ui top attached segment'>
                                 <div className='ui padded grid container'>
                                     <div className='fourteen wide column'>
-                                        <h1>{item.name}</h1>
+                                        <h1>{item.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</h1>
                                     </div>
                                     <div className='two wide column'>
                                         <button
