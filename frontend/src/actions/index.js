@@ -1,43 +1,48 @@
 export const setPage = (to_set) => {
     return {
         type: "SET_PAGE",
-        payload: to_set
+        payload: to_set,
     };
 };
 
-export const setCombo = (to_set) => {    
+export const setCombo = (to_set) => {
     setEntreeCount(100);
-    return{
+    return {
         type: "SET_COMBO",
-        payload: to_set
-    }
-}
+        payload: to_set,
+    };
+};
 
 export const setEntreeCount = (to_set) => {
-    return{
+    return {
         type: "SET_ENTREE_COUNT",
-        payload: to_set
-    }
-}
+        payload: to_set,
+    };
+};
 
 export const setSideCount = (to_set) => {
-    return{
+    return {
         type: "SET_SIDE_COUNT",
-        payload: to_set
-    }
-}
+        payload: to_set,
+    };
+};
 
 export const addItem = (item) => {
-    return{
+    return {
         type: "ADD_ITEM",
-        payload: item
-    }
-}
+        payload: item,
+    };
+};
 
 export const concatList = (list) => {
     return {
         type: "CONCAT_LIST",
-        payload: list
-    }
-}
-
+        payload: list,
+    };
+};
+export const deleteIndex = (index) => {
+    return {
+        type: "DELETE_ITEM_INDEX",
+        payload: index,
+    };
+};
