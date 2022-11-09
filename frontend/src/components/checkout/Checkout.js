@@ -1,23 +1,28 @@
 import React from "react";
 import Topbar from "../Topbar";
+import { connect } from "react-redux";
 
-const Checkout = () => {
+const Checkout = props => {
+    // const order_items = [
+    //     {id : 0, name : "Orange Chicken", cost : 10.00},
+    //     {id : 1, name : "Spicy Ooh Beef", cost : 69.00},
+    //     {id : 2, name : "Sexy Lady Linguine", cost : 420.00},
+    //     {id : 3, name : "My Booty Cheeks", cost : 0.00}
+    // ]
+    console.log(props.items);
+
     const order_items = [
-        {id : 0, name : "Orange Chicken", cost : 10.00},
-        {id : 1, name : "Spicy Ooh Beef", cost : 69.00},
-        {id : 2, name : "Sexy Lady Linguine", cost : 420.00}
+        {combo : "al a carte", items : [{name : "orange chicken", cost : 10}]}
     ]
 
     const total = order_items.reduce((sum, curr) => sum = sum + curr.cost, 0);
 
-    const displayCheckout = () => {
-        return order_items.map((item) => {
-            return (
-                <div>
+    const displayALaCarte = () => {
+        <div>
                     <div className = "ui top attached header">
                         <div className="ui padded grid container">
                             <div className="fourteen wide column">
-                                {item.name}
+                                {item.items.name}
                             </div>
                             <div className="two wide column">
                                 <button className="ui red button" tabIndex={0}>X</button>
@@ -25,11 +30,15 @@ const Checkout = () => {
                         </div>
                     </div>
                     <div className="ui bottom attached segment">
-                        ${item.cost}
+                        2
                     </div>
                     <div className="ui section divider"></div>
                 </div>
-            );
+    }
+
+    const displayCheckout = () => {
+        return props.items.map((item) => {
+            {displayALaCarte}
         });
     };
 
@@ -42,7 +51,7 @@ const Checkout = () => {
                     <h1>Checkout</h1>
                 </div>
                 <div className="ui section divider"></div>
-                {displayCheckout()}
+                {displayCheckout}
                 <div className="ui top attached header">
                     <div className="ui padded grid">
                         <div className="fourteen wide column">
@@ -66,4 +75,10 @@ const Checkout = () => {
     )
 }
 
-export default Checkout
+const mapStateToProps = state => {
+    return {
+        items : state.items
+    }
+}
+
+export default connect (mapStateToProps) (Checkout)
