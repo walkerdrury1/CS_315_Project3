@@ -7,6 +7,8 @@ const cors = require('cors');
 app.use(express.json());
 //app.use(cors);
 
+const PORT = process.env.PORT || 4000;
+
 const pool = new Pool({
     user: process.env.PSQL_USER,
     host: process.env.PSQL_HOST,
@@ -121,6 +123,6 @@ app.post('/process-transaction', async(req, res) => {
 });
 
 
-app.listen(4000, function () {
-    console.log('Server is running on port 4000');
+app.listen(PORT, function () {
+    console.log('Server is running on port ' + PORT);
 });
