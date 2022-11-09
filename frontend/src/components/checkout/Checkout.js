@@ -18,6 +18,9 @@ const Checkout = (props) => {
             "https://tyson-express.onrender.com/process-transaction",
             { cost: props.total, items: itemList }
         );
+
+        clearCart();
+        
         props.setPage("landing page");
         props.setCombo(null);
     };
@@ -99,7 +102,7 @@ const Checkout = (props) => {
                         <div className='ui attached segment'>
                             <ol className='ui list'>{list}</ol>
                         </div>
-                        <div className='ui bottom attached segment'>20</div>
+                        <div className='ui bottom attached segment'>{calculateCost(item.combo)}</div>
                         <div className='ui section divider'></div>
                     </div>
                 );
@@ -120,13 +123,15 @@ const Checkout = (props) => {
                 <div className='ui top attached header'>
                     <div className='ui padded grid'>
                         <div className='fourteen wide column'>Total:</div>
-                        <div className='two wide column'>${props.total}</div>
+                        <div className='two wide column'>${props.total.toFixed(2)}</div>
                     </div>
                     <div className='ui bottom attached segment'>
                         <div class='fluid ui buttons'>
                             <button
                                 class='ui positive button'
-                                onClick={processTransactions}
+                                onClick={
+                                    processTransactions
+                                }
                             >
                                 Complete Order
                             </button>
