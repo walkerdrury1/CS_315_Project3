@@ -30,14 +30,14 @@ app.get('/say-name/:name', (req, res, next) => {
     res.send("hi " + name);
 });*/
 
-app.get('/get-users', async (req, res, next) => {
-    try{
-        const a = await pool.query("SELECT * FROM users");
-        res.json(a.rows);
-    } catch (err) {
-        res.send(err.message);
-    }
-} );
+// app.get('/get-users', async (req, res, next) => {
+//     try{
+//         const a = await pool.query("SELECT * FROM users");
+//         res.json(a.rows);
+//     } catch (err) {
+//         res.send(err.message);
+//     }
+// } );
 
 //////////////////// GET REQUESTS
 app.get('/get-menuitems', async(req, res) => {
@@ -128,6 +128,29 @@ app.post('/process-transaction', async(req, res) => {
            // console.log(updateCommand);
             await pool.query(updateCommand);
         }
+
+    } catch(err) {
+
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+
+app.post('/validate', async(req, res) => {
+    try{
+    const username = req.body.username;
+    const password = req.body.password;
+    const sqlQuery = `SELECT * FROM users WHERE name='${username}' AND password='${password}';`
+    const result = await pool.query(sqlQuery);
+    console.log(result.rows);
+    if (result.rows == 0) {
+        res.send({role : 'None'});
+    }
+    else{
+        res.send({role : `${result.rows[0].role}`});
+    }
+
 
     } catch(err) {
 
