@@ -47,6 +47,16 @@ export const deleteIndex = (index) => {
     };
 };
 
+export const deleteCartItem = (index1, index2) => {
+    return{
+        type: "CART_DELETE",
+        payload: {
+            comboIndex: index1,
+            itemIndex: index2
+        }
+    }
+}
+
 export const calculateTotal = (list) => {
     return{
         type: "CALCULATE_COST",

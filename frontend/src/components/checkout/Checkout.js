@@ -5,6 +5,7 @@ import axios from "axios";
 import { calculateTotal, setPage } from "../../actions";
 import { deleteIndex } from "../../actions";
 import { setCombo } from "../../actions";
+import { deleteCartItem } from "../../actions";
 
 const Checkout = (props) => {
     const processTransactions = async () => {
@@ -49,7 +50,7 @@ const Checkout = (props) => {
         console.log(props.items);
         return props.items.map((item, index) => {
             if (item.combo === "A La Carte") {
-                return item.items.map((item) => {
+                return item.items.map((item, itemIndex) => {
                     return (
                         <div>
                             <div className='ui top attached segment'>
@@ -61,6 +62,7 @@ const Checkout = (props) => {
                                         <button
                                             className='ui red button'
                                             tabIndex={0}
+                                            onClick = {() => props.deleteCartItem(index,itemIndex)}
                                         >
                                             X
                                         </button>
@@ -158,4 +160,5 @@ export default connect(mapStateToProps, {
     deleteIndex: deleteIndex,
     setPage: setPage,
     setCombo: setCombo,
+    deleteCartItem: deleteCartItem
 })(Checkout);
