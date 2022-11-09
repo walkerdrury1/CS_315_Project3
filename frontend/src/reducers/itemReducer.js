@@ -13,6 +13,16 @@ const itemReducer = (state = [], action) => {
                 concat_list.push(item)
             })
             return concat_list
+        case "DELETE_ITEM_INDEX":
+            const temp_list = []
+            const indexx = action.payload
+            state.forEach((item, index)=> {
+                if(index !== indexx){
+                    temp_list.push(item)
+                } 
+            })
+            return temp_list;
+
         default:
             return state
     }
