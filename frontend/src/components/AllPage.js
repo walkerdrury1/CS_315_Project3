@@ -40,17 +40,33 @@ const AllPage = (props) => {
     console.log(selectedItems);
     const displayItems = () => {
         return allItems.map((item) => {
-            const setMaxandItems = (amount) => {
+            const setMaxandItems = (amount, inc) => {
                 const new_list = [...selectedItems];
-                new_list.push(item);
-                setSelectedItems(new_list);
+                if (inc) {
+                    new_list.push(item);
+                    setSelectedItems(new_list);
+                } else {
+                    const to_return = [];
+                    let index_to_remove = true;
+                    selectedItems.map((card) => {
+                        if (
+                            item.name !== card.name ||
+                            index_to_remove === false
+                        ) {
+                            to_return.push(card);
+                        } else {
+                            index_to_remove = false;
+                        }
+                    });
+                    setSelectedItems(to_return);
+                }
             };
             if (item.type !== "combo" && item.onmenu === "yes") {
                 return (
                     <div className='card-grid-container'>
                         <ItemCard
                             item={item}
-                            setMax={(e) => setMaxandItems(e)}
+                            setMax={(e, x) => setMaxandItems(e, x)}
                         />
                     </div>
                 );

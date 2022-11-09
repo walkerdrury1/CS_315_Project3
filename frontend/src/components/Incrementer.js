@@ -9,12 +9,12 @@ const Incrementer = ({ type, max, setMax }) => {
         if (_type === "i") {
             if (max !== 0) {
                 setCount(count + 1);
-                setMax(max - 1);
+                setMax(max - 1, true);
             }
         } else {
             if (count !== 0) {
                 setCount(count - 1);
-                setMax(max + 1);
+                setMax(max + 1, false);
             }
         }
     };

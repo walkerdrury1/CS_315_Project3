@@ -84,17 +84,48 @@ const EntreePage = (props) => {
             );
         }
         return card_list.map((card) => {
-            const setMaxandItems = (amount) => {
+            const setMaxandItems = (amount, inc) => {
                 if (type === "entree") {
                     setEntreeMax(amount);
                     const new_list = [...entreeItems];
-                    new_list.push(card);
-                    setEntreeItems(new_list);
+                    if (inc) {
+                        new_list.push(card);
+                        setEntreeItems(new_list);
+                    }
+                    else{
+                        const to_return = []
+                        let index_to_remove = true
+                        entreeItems.map((item) => {
+                            if(card.name !== item.name || index_to_remove === false){
+                                to_return.push(item)
+                            }
+                            else{
+                                index_to_remove = false
+                            }
+                        })
+                        setEntreeItems(to_return)
+                    }
                 } else {
                     setSidesMax(amount);
                     const new_list = [...sideItems];
-                    new_list.push(card);
-                    setSideItems(new_list);
+                    
+                    if (inc) {
+                        new_list.push(card);
+                        setSideItems(new_list);
+                    }
+                    else{
+                        const to_return = []
+                        let index_to_remove = true
+                        sideItems.map((item) => {
+                            if(card.name !== item.name || index_to_remove === false){
+                                to_return.push(item)
+                            }
+                            else{
+                                index_to_remove = false
+                            }
+                        })
+                        setSideItems(to_return)
+                    }
                 }
             };
             if (card.onmenu === "yes") {
@@ -104,7 +135,9 @@ const EntreePage = (props) => {
                             item={card}
                             type={type}
                             max={type === "entree" ? entreeMax : sidesMax}
-                            setMax={(amount) => setMaxandItems(amount)}
+                            setMax={(amount, inc) =>
+                                setMaxandItems(amount, inc)
+                            }
                         />
                     </div>
                 );
@@ -169,6 +202,3 @@ export default connect(mapStateToProps, {
     addItem: addItem,
     concatList: concatList,
 })(EntreePage);
-
-
-
