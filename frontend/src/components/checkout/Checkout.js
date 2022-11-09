@@ -5,6 +5,7 @@ import axios from "axios";
 import { calculateTotal, setPage } from "../../actions";
 import { deleteIndex } from "../../actions";
 import { setCombo } from "../../actions";
+import { deleteCartItem } from "../../actions";
 
 const Checkout = (props) => {
     const processTransactions = async () => {
@@ -52,18 +53,29 @@ const Checkout = (props) => {
         console.log(props.items);
         return props.items.map((item, index) => {
             if (item.combo === "A La Carte") {
-                return item.items.map((item) => {
+                return item.items.map((item, itemIndex) => {
                     return (
                         <div>
                             <div className='ui top attached segment'>
                                 <div className='ui padded grid container'>
                                     <div className='fourteen wide column'>
-                                        <h1>{item.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</h1>
+                                        <h1>
+                                            {item.name.replace(
+                                                /(^\w{1})|(\s+\w{1})/g,
+                                                (letter) => letter.toUpperCase()
+                                            )}
+                                        </h1>
                                     </div>
                                     <div className='two wide column'>
                                         <button
                                             className='ui red button'
                                             tabIndex={0}
+                                            onClick={() =>
+                                                props.deleteCartItem(
+                                                    index,
+                                                    itemIndex
+                                                )
+                                            }
                                         >
                                             X
                                         </button>
@@ -102,7 +114,9 @@ const Checkout = (props) => {
                         <div className='ui attached segment'>
                             <ol className='ui list'>{list}</ol>
                         </div>
-                        <div className='ui bottom attached segment'>{calculateCost(item.combo)}</div>
+                        <div className='ui bottom attached segment'>
+                            {calculateCost(item.combo)}
+                        </div>
                         <div className='ui section divider'></div>
                     </div>
                 );
@@ -163,4 +177,5 @@ export default connect(mapStateToProps, {
     deleteIndex: deleteIndex,
     setPage: setPage,
     setCombo: setCombo,
+    deleteCartItem: deleteCartItem,
 })(Checkout);

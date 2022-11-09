@@ -22,6 +22,22 @@ const itemReducer = (state = [], action) => {
                 } 
             })
             return temp_list;
+        case "CART_DELETE":
+            const comboIndex = action.payload.comboIndex
+            const itemIndex = action.payload.itemIndex
+            state.map((combo, index) => {
+                if(index === comboIndex){
+                    const to_change = []
+                    combo.items.map((item,index) => {
+                        if(index !== itemIndex){
+                            to_change.push(item)
+                        }
+                    })
+                    combo.items = to_change
+                }
+            })
+            const to_return  = [...state]
+            return to_return
 
         default:
             return state
