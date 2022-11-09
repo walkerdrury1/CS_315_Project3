@@ -27,7 +27,6 @@ import axios from "axios";
 
 const entrees = async () => {
     const x = await axios.get("https://tyson-express.onrender.com/get-entrees");
-    console.log(x)
-    return x;
+    return x.data;
 }
 export default entrees

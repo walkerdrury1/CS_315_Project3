@@ -11,7 +11,7 @@ const ComboPage = (props) => {
     const onCardClick = (combo_name) => {
         props.setCombo(combo_name);
         if (combo_name === "A La Carte") {
-            props.setPage("A La Carte");
+            props.setPage("a la carte page");
             return;
         }
         props.setPage("Select Items Page");

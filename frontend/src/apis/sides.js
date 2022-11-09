@@ -23,7 +23,6 @@ import axios from "axios";
 
 const sides = async () => {
     const x = await axios.get("https://tyson-express.onrender.com/get-sides");
-    console.log(x)
-    return x;
+    return x.data;
 }
 export default sides

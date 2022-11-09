@@ -3,9 +3,9 @@ import "./Card.css";
 import Incrementer from "./Incrementer";
 
 const ItemCard = ({ title, onCardClick, type, max, setMax, setItems, item}) => {
+    console.log(item)
     let img = item.name + ".png"
     img = img.replace(/\s/g, "");
-    console.log(img)
     
     return (
         <div className='cardItem-container' onClick={onCardClick}>
