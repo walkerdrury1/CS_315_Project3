@@ -71,6 +71,7 @@ app.get('/get-sides', async(req, res) => {
 app.get('/get-extras', async(req, res) => {
     try{
         const data = await pool.query("SELECT * FROM items WHERE type = 'extra'");
+        console.log(data.rows[0]);
         res.json(data.rows);
     } catch(err) {
         console.log(err.message);
@@ -92,8 +93,32 @@ app.get('/get-inventory', async(req, res) => {
 
 
 
+
+
 //////////////////// POST REQUESTS
 
+
+app.post('/process-transaction', async(req, res) => {
+    try{
+        const data = await pool.query("SELECT MAX(transactionid) FROM transactions;");
+        res.json(data.rows);
+        const transactionid = data.rows[0].max + 1;
+        await pool.query(`INSERT INTO TRANSACTIONS VALUES (${transactionid}, CURRENT_DATE, ${req.body.cost}); `);
+        const items = req.body.items;
+        const data1 = await pool.query("SELECT MAX(indexid) FROM TRANSACTIONITEMS;")
+        var transactionItemId = data1.rows[0].max + 1;
+        console.log(`next transactionItem id = ${transactionItemId}`);
+        for (var i = 0; i < items.length; i++) {
+            console.log(`INSERT INTO TRANSACTIONITEMS VALUES (${transactionItemId}, ${transactionid}, ${items[i].id});`);
+            await pool.query(`INSERT INTO TRANSACTIONITEMS VALUES (${transactionItemId}, ${transactionid}, ${items[i].id});`);
+            transactionItemId += 1;
+        }
+    } catch(err) {
+
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
 
 
 app.listen(4000, function () {
