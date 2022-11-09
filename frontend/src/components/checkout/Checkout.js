@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import Topbar from "../Topbar";
 import { connect } from "react-redux";
-<<<<<<< HEAD
 import axios from "axios";
 import { calculateTotal } from "../../actions";
+import { deleteIndex } from "../../actions";
+
 
 const Checkout = (props) => {
     const processTransactions = async () => {
@@ -22,35 +23,13 @@ const Checkout = (props) => {
     useEffect(() => {
         props.calculateTotal(props.items);
     }, [props.items]);
-=======
-import { deleteIndex } from "../../actions";
-
-const Checkout = (props) => {
-    let total = 0
-
-    const calculateCost = (combo) => {
-        let x = 0
-        if (combo === "Bowl") {
-            x = 8.5
-        } else if(combo === "Plate") {
-            x = 9.5
-        } else if (combo === "Bigger Plate") {
-            x = 10.5
-        }
-        
-        total += x;
-        
-        return(
-            <div>${x.toFixed(2)}</div>
-        )
-    }
+   
 
     const clearCart = () => {
         props.items.map((item, index) => {
             return props.deleteIndex(0);
         })
     }
->>>>>>> 34727922d2d76f8bb5fd6c1825eca9411ee2200f
 
     const displayCheckout = () => {
         console.log(props.items)
