@@ -1,5 +1,6 @@
 import React from "react";
 import Topbar from "../Topbar";
+import { connect } from "react-redux";
 
 const Checkout = () => {
     const order_items = [
@@ -66,4 +67,4 @@ const Checkout = () => {
     )
 }
 
-export default Checkout
+export default connect()(Checkout);
