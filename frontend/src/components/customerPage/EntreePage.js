@@ -34,8 +34,8 @@ const EntreePage = (props) => {
             items: new_list
         }
         props.addItem(to_return)
-        //props.setPage("Combo Page")
-        //props.setCombo(name)
+        props.setPage("Checkout")
+        props.setCombo(null)
     }
     useEffect(() => {
         if(props.combo === "Bowl"){
