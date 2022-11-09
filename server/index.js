@@ -5,7 +5,7 @@ const dotenv = require('dotenv').config();
 const cors = require('cors');
 
 app.use(express.json());
-app.use(cors);
+app.use(cors());
 
 const PORT = process.env.PORT || 4000;
 
@@ -137,13 +137,6 @@ app.post('/process-transaction', async(req, res) => {
 });
 
 
-<<<<<<< HEAD
-
-
-app.listen(4000, function () {
-    console.log('Server is running on port 4000');
-=======
 app.listen(PORT, function () {
     console.log('Server is running on port ' + PORT);
->>>>>>> 73bb19752b331d6be2fa22f7fde0969592d07f5b
 });
