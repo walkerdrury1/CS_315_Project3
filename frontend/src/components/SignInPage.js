@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Topbar from "./Topbar";
 import TextField from "@mui/material/TextField";
+import axios from "axios";
 
 const SignInPage = () => {
     let correct_username = "username";
@@ -23,14 +24,21 @@ const SignInPage = () => {
         }
     };
 
-    const submit = () => {
-        if(username !== correct_username || password !== correct_password){
-            setError(true)
+    const submit = async () => {
+        const x = await (
+            await axios.post("https://tyson-express.onrender.com/validate", {
+                username: username,
+                password: password,
+            })
+        ).data;
+        console.log(x);
+        if (x.role === "None") {
+            setError(true);
+        } else {
+            setError(false);
+            console.log("signed in");
         }
-        else{
-           console.log("signed in")
-        }
-    }
+    };
     return (
         <div>
             <Topbar />
@@ -61,7 +69,10 @@ const SignInPage = () => {
             {displayError()}
             <br />
             <div className='to-center'>
-                <button className='ui red button' onClick={submit}> Sign in</button>
+                <button className='ui red button' onClick={submit}>
+                    {" "}
+                    Sign in
+                </button>
             </div>
         </div>
     );
