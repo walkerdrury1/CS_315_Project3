@@ -107,18 +107,34 @@ app.post('/process-transaction', async(req, res) => {
         const items = req.body.items;
         const data1 = await pool.query("SELECT MAX(indexid) FROM TRANSACTIONITEMS;")
         var transactionItemId = data1.rows[0].max + 1;
-        console.log(`next transactionItem id = ${transactionItemId}`);
+       // console.log(`next transactionItem id = ${transactionItemId}`);
         for (var i = 0; i < items.length; i++) {
-            console.log(`INSERT INTO TRANSACTIONITEMS VALUES (${transactionItemId}, ${transactionid}, ${items[i].id});`);
+           // console.log(`INSERT INTO TRANSACTIONITEMS VALUES (${transactionItemId}, ${transactionid}, ${items[i].id});`);
             await pool.query(`INSERT INTO TRANSACTIONITEMS VALUES (${transactionItemId}, ${transactionid}, ${items[i].id});`);
             transactionItemId += 1;
         }
+
+        const create_view = `CREATE OR REPLACE VIEW view1 AS SELECT transactionid, id, name FROM transactionitems NATURAL JOIN items WHERE transactionid=${transactionid};`;
+        const ingIds = `select itemid from items NATURAL JOIN ingredientslist NATURAL JOIN inventory NATURAL JOIN view1;`
+        await pool.query(create_view);
+        const data2 = await pool.query(ingIds);
+       // console.log(data2.rows);
+        const data3 = data2.rows;
+        var updateCommand;
+        for (var i = 0; i < data3.length; i++) {
+            updateCommand = `UPDATE inventory SET totalquantity = totalquantity -1 WHERE itemid=${data3[i].itemid};`
+           // console.log(updateCommand);
+            await pool.query(updateCommand);
+        }
+
     } catch(err) {
 
         console.log(err.message);
         res.send(err.message);
     }
 });
+
+
 
 
 app.listen(4000, function () {
