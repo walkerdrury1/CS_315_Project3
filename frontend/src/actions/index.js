@@ -46,3 +46,10 @@ export const deleteIndex = (index) => {
         payload: index,
     };
 };
+
+export const calculateTotal = (list) => {
+    return{
+        type: "CALCULATE_COST",
+        payload: list
+    }
+}

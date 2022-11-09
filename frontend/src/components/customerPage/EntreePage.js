@@ -169,3 +169,6 @@ export default connect(mapStateToProps, {
     addItem: addItem,
     concatList: concatList,
 })(EntreePage);
+
+
+

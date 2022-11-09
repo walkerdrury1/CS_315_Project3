@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Topbar from "../Topbar";
 import { connect } from "react-redux";
+import axios from "axios";
+import { calculateTotal } from "../../actions";
 
 const Checkout = (props) => {
-    const order_items = [
-        { id: 0, name: "Orange Chicken", cost: 10.0 },
-        { id: 1, name: "Spicy Ooh Beef", cost: 69.0 },
-        { id: 2, name: "Sexy Lady Linguine", cost: 420.0 },
-    ];
+    const processTransactions = async () => {
+        const itemList = [];
+        props.items.map((item) => {
+            item.items.map((order) => {
+                itemList.append(order);
+            });
+        });
+        await axios.post(
+            "https://tyson-express.onrender.com/process-transaction",
+            { cost: props.total, items: itemList }
+        );
+    };
 
-    const total = order_items.reduce((sum, curr) => (sum = sum + curr.cost), 0);
+    useEffect(() => {
+        props.calculateTotal(props.items);
+    }, [props.items]);
 
     const displayCheckout = () => {
         return props.items.map((item) => {
@@ -84,11 +95,14 @@ const Checkout = (props) => {
                 <div className='ui top attached header'>
                     <div className='ui padded grid'>
                         <div className='fourteen wide column'>Total:</div>
-                        <div className='two wide column'>${total}</div>
+                        <div className='two wide column'>${props.total}</div>
                     </div>
                     <div className='ui bottom attached segment'>
                         <div class='fluid ui buttons'>
-                            <button class='ui positive button'>
+                            <button
+                                class='ui positive button'
+                                onClick={processTransactions}
+                            >
                                 Complete Order
                             </button>
                             <div class='or'></div>
@@ -107,6 +121,9 @@ const Checkout = (props) => {
 const mapStateToProps = (state) => {
     return {
         items: state.items,
+        total: state.total,
     };
 };
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, {
+    calculateTotal: calculateTotal,
+})(Checkout);
