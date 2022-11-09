@@ -22,8 +22,18 @@ const EntreePage = (props) => {
         if(sidesMax !== 0 || entreeMax !== 0){
             return
         }
-        props.concatList(entreeItems)
-        props.concatList(sideItems);
+        const new_list= []
+        entreeItems.forEach(item => {
+            new_list.push(item)
+        })
+        sideItems.forEach(item => {
+            new_list.push(item)
+        })
+        const to_return = {
+            combo: props.combo,
+            items: new_list
+        }
+        props.addItem(to_return)
         //props.setPage("Combo Page")
         //props.setCombo(name)
     }
@@ -45,6 +55,7 @@ const EntreePage = (props) => {
             setSidesMax(100)
         }
     }, [])
+    console.log(props.items)
 
     const displayCard = (card_list, type) => {
         return card_list.map((card) => {

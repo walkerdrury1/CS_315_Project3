@@ -2,7 +2,7 @@ const itemReducer = (state = [], action) => {
     switch(action.type){
         case "ADD_ITEM":
             const new_list = [...state]
-            new_list.append(action.payload)
+            new_list.push(action.payload)
             return new_list
         case "CONCAT_LIST":
             const concat_list = []
