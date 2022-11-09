@@ -8,11 +8,14 @@ import Card from "../Card";
 import { setEntreeCount, setSideCount } from "../../actions";
 
 const ComboPage = (props) => {
-
     const onCardClick = (combo_name) => {
-        props.setCombo(combo_name)
-        props.setPage("Select Items Page")
-    }
+        props.setCombo(combo_name);
+        if (combo_name === "A La Carte") {
+            props.setPage("A La Carte");
+            return;
+        }
+        props.setPage("Select Items Page");
+    };
 
     const displayCard = () => {
         return combos.map((card, index) => {
@@ -33,13 +36,12 @@ const ComboPage = (props) => {
             <Topbar />
             <br />
             <div className='to-center'>
-                <h1>Select a Combo</h1>
+                <h1>Make a Selection</h1>
             </div>
             <div className='mainpage-card-container'>{displayCard()}</div>
         </div>
     );
 };
-
 
 const mapStateToProps = (state) => {
     return {
@@ -52,5 +54,5 @@ export default connect(mapStateToProps, {
     setPage: setPage,
     setCombo: setCombo,
     setEntreeCount: setEntreeCount,
-    setSideCount: setSideCount
+    setSideCount: setSideCount,
 })(ComboPage);

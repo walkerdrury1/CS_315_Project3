@@ -2,17 +2,21 @@ import React from "react";
 import "./Card.css";
 import Incrementer from "./Incrementer";
 
-const ItemCard = ({ title, img, onCardClick, type, max, setMax, setItems}) => {
+const ItemCard = ({ title, onCardClick, type, max, setMax, setItems, item}) => {
+    let img = item.name + ".png"
+    img = img.replace(/\s/g, "");
+    console.log(img)
+    
     return (
         <div className='cardItem-container' onClick={onCardClick}>
             <div className='card-img-container'>
                 <img className='card-img' src={img} alt='pic of card' />
             </div>
             <div className='to-center'>
-                <h3 className='card-title'>{title}</h3>
+                <h3 className='card-title'>{item.name}</h3>
             </div>
             <div className="to-center">
-                <Incrementer type = {type} max = {max} setMax = {setMax} />
+                <Incrementer type = {item.type} max = {max} setMax = {setMax} />
             </div>
             <br/>
         </div>
