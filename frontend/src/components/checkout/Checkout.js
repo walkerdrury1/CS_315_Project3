@@ -23,12 +23,24 @@ const Checkout = (props) => {
     useEffect(() => {
         props.calculateTotal(props.items);
     }, [props.items]);
-   
 
     const clearCart = () => {
         props.items.map((item, index) => {
             return props.deleteIndex(0);
         })
+    }
+
+    const calculateCost = (name) => {
+        let x = 0;
+        if (name === "Bowl") {
+            x = 7.5;
+        } else if (name === "Plate") {
+            x = 9;
+        } else if (name === "Bigger Plate") {
+            x = 10.5;
+        }
+
+        return <div>${x.toFixed(2)}</div>
     }
 
     const displayCheckout = () => {

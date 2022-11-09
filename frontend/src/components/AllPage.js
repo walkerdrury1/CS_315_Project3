@@ -58,6 +58,17 @@ const AllPage = (props) => {
         });
     };
 
+    if (allItems.length === 0) {
+        return (
+            <div>
+                <Topbar />
+                <div className='ui active dimmer'>
+                    <div className='ui text loader'>loading...</div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div>
             <Topbar />
