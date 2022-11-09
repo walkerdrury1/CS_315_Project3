@@ -10,13 +10,14 @@ import { setEntreeCount, setSideCount } from "../../actions";
 const ComboPage = (props) => {
     const onCardClick = (combo_name) => {
         props.setCombo(combo_name);
+
         if (combo_name === "A La Carte") {
             props.setPage("a la carte page");
             return;
         }
         props.setPage("Select Items Page");
     };
-
+    console.log(props.combo)
     const displayCard = () => {
         return combos.map((card, index) => {
             return (
