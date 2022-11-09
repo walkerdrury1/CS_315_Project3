@@ -2,7 +2,7 @@ import React from "react";
 import "./Card.css";
 import Incrementer from "./Incrementer";
 
-const ItemCard = ({ title, img, onCardClick, type}) => {
+const ItemCard = ({ title, img, onCardClick, type, max, setMax, setItems}) => {
     return (
         <div className='cardItem-container' onClick={onCardClick}>
             <div className='card-img-container'>
@@ -12,7 +12,7 @@ const ItemCard = ({ title, img, onCardClick, type}) => {
                 <h3 className='card-title'>{title}</h3>
             </div>
             <div className="to-center">
-                <Incrementer type = {type} />
+                <Incrementer type = {type} max = {max} setMax = {setMax} />
             </div>
             <br/>
         </div>

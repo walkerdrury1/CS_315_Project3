@@ -5,12 +5,16 @@ import { setPage } from "../actions";
 
 const Topbar = (props) => {
     const topbar_item_list = [
+        "Order Now",
         "Locations",
         "Checkout",
     ];
     const [active, setActive] = useState(null);
 
     const click = (item,index) => {
+        if(item === "Order Now"){
+            props.setPage("Combo Page")
+        }
         if(item === "Checkout"){
             props.setPage(item)
             setIndex(index)
@@ -42,7 +46,7 @@ const Topbar = (props) => {
             <div className='topbar-logo-container'>
                 <img
                     className='topbar-logo'
-                    src='https://logos-world.net/wp-content/uploads/2022/02/Panda-Express-Logo.png'
+                    src='mike.png'
                     alt='panda logo'
                     onClick={() => goHome()}
                 />

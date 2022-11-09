@@ -1,4 +1,4 @@
-const sides = [
+/*const sides = [
     {
         name: "White Rice",
         img: "https://images.squarespace-cdn.com/content/v1/5ea3b22556f3d073f3d9cae4/1596800023719-VK8EJFM1E1B4VUZ5PQIQ/IMG_6839.jpeg"
@@ -18,4 +18,12 @@ const sides = [
 ]
 
 
+export default sides*/
+import axios from "axios";
+
+const sides = async () => {
+    const x = await axios.get("https://tyson-express.onrender.com/get-sides");
+    console.log(x)
+    return x;
+}
 export default sides

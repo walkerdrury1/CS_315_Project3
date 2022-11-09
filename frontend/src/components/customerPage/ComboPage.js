@@ -7,33 +7,11 @@ import Topbar from "../Topbar";
 import Card from "../Card";
 import { setEntreeCount, setSideCount } from "../../actions";
 
-
-
 const ComboPage = (props) => {
 
     const onCardClick = (combo_name) => {
-        props.setEntreeCount(100)
         props.setCombo(combo_name)
-        if(combo_name === "Plate"){
-            console.log("in here")
-            setEntreeCount(2);
-            setSideCount(1);
-        }
-        else if(combo_name === "Bowl"){
-            setEntreeCount(1);
-            setSideCount(1);
-        }
-        else if(combo_name === "Bigger Plate"){
-            setEntreeCount(3);
-            setSideCount(1);
-        }
-        else{
-            setEntreeCount(100);
-            setSideCount(100);
-        }
-        console.log(props.entreeCount)
-        console.log(props.combo)
-        // props.setPage("Select Items Page")
+        props.setPage("Select Items Page")
     }
 
     const displayCard = () => {

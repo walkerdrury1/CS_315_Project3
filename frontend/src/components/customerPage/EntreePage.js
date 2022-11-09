@@ -1,28 +1,87 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import entrees from '../../apis/entrees'
 import {connect} from 'react-redux'
 import { setCombo, setPage } from '../../actions'
 import ItemCard from '../ItemCard'
 import Topbar from '../Topbar'
-import { setEntreeCount } from '../../actions'
 import sides from '../../apis/sides'
-
+import { addItem, concatList } from '../../actions'
 
 const EntreePage = (props) => {
-    console.log(props)
+    const [entreeItems, setEntreeItems] = useState([])
+    const [sideItems, setSideItems] = useState([])
+
+    const [sidesMax, setSidesMax] = useState(0);
+    const [entreeMax, setEntreeMax] = useState(0);
+
     const submit = (name) => {
-        props.setPage("Combo Page")
-        props.setCombo(name)
-        
+        if(name === "previous"){
+            props.setPage("Combo Page")
+            props.setCombo(null)
+        }
+        if(sidesMax !== 0 || entreeMax !== 0){
+            return
+        }
+        const new_list= []
+        entreeItems.forEach(item => {
+            new_list.push(item)
+        })
+        sideItems.forEach(item => {
+            new_list.push(item)
+        })
+        const to_return = {
+            combo: props.combo,
+            items: new_list
+        }
+        props.addItem(to_return)
+        props.setPage("Checkout")
+        props.setCombo(null)
     }
+    useEffect(() => {
+        if(props.combo === "Bowl"){
+            setEntreeMax(1)
+            setSidesMax(1)
+        }
+        else if(props.combo === "Plate"){
+            setEntreeMax(2)
+            setSidesMax(1)
+        }
+        else if(props.combo === "Bigger Plate"){
+            setEntreeMax(3)
+            setSidesMax(1)
+        }
+        else{
+            setEntreeMax(100)
+            setSidesMax(100)
+        }
+    }, [])
+    console.log(props.items)
+
     const displayCard = (card_list, type) => {
         return card_list.map((card) => {
+            const setMaxandItems = (amount) => {
+                if(type === "entree"){
+                    setEntreeMax(amount)
+                    const new_list = [...entreeItems]
+                    new_list.push(card)
+                    setEntreeItems(new_list) 
+                }
+                else{
+                    setSidesMax(amount)
+                    const new_list = [...sideItems]
+                    new_list.push(card)
+                    setSideItems(new_list) 
+                }
+                
+            }
             return (
                 <div className='card-grid-container'>
                     <ItemCard
                         title={card.name}
                         img={card.img}
                         type = {type}
+                        max = {type === "entree" ? entreeMax : sidesMax}
+                        setMax = {(amount) => setMaxandItems(amount)}
                     />
                 </div>
             );
@@ -33,16 +92,16 @@ const EntreePage = (props) => {
             <Topbar />
             <br/>
             <div className="to-center">
-                <h1>Select your Entrees</h1>
+                <h1>Select {entreeMax} more Entrees</h1>
             </div>
-            <div className='mainpage-card-container'>{displayCard(entrees, "entree")}</div>
+            <div className='mainpage-card-container'>{displayCard(entrees, "entree", entreeMax)}</div>
             <div className="to-center">
-                <h1>Select your Sides</h1>
+                <h1>Select {sidesMax} more Sides</h1>
             </div>
-            <div className='mainpage-card-container'>{displayCard(sides, "sides")}</div>
+            <div className='mainpage-card-container'>{displayCard(sides, "sides", sidesMax)}</div>
             <div className='to-center'>
-                <button className='ui button' onClick={() => submit("submit")}>Previous</button>
-                <button className='red ui button' onClick={() => submit("previous")}>Add to Cart</button>
+                <button className='ui button' onClick={() => submit("previous")}>Previous</button>
+                <button className='red ui button' onClick={() => submit("submit")}>Add to Cart</button>
             </div>
             <br/>
         </div>
@@ -54,13 +113,13 @@ const mapStateToProps = (state) => {
     return{
         page: state.page,
         combo: state.combo,
-        entreeCount: state.entreeCount,
-        sideCount: state.sideCount
+        items: state.items
     }
 }
 export default connect(mapStateToProps, {
     setPage: setPage,
     setCombo: setCombo,
-    setEntreeCount: setEntreeCount
+    addItem: addItem,
+    concatList: concatList
 })(EntreePage)
 

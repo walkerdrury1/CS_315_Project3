@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import "./Incrementer.css";
 import { connect } from "react-redux";
 
-const Incrementer = ({ type }) => {
+const Incrementer = ({ type, max, setMax }) => {
     const [count, setCount] = useState(0);
 
     const change_count = (_type) => {
         if (_type === "i") {
-            if (count !== 2) {
+            if (max !== 0) {
                 setCount(count + 1);
+                setMax(max - 1);
             }
         } else {
             if (count !== 0) {
                 setCount(count - 1);
+                setMax(max + 1);
             }
         }
     };
