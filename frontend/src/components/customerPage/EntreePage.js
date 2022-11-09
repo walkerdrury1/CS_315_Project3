@@ -97,16 +97,18 @@ const EntreePage = (props) => {
                     setSideItems(new_list);
                 }
             };
-            return (
-                <div className='card-grid-container'>
-                    <ItemCard
-                        item={card}
-                        type={type}
-                        max={type === "entree" ? entreeMax : sidesMax}
-                        setMax={(amount) => setMaxandItems(amount)}
-                    />
-                </div>
-            );
+            if (card.onmenu === "yes") {
+                return (
+                    <div className='card-grid-container'>
+                        <ItemCard
+                            item={card}
+                            type={type}
+                            max={type === "entree" ? entreeMax : sidesMax}
+                            setMax={(amount) => setMaxandItems(amount)}
+                        />
+                    </div>
+                );
+            }
         });
     };
     if (allEntrees.length === 0) {
