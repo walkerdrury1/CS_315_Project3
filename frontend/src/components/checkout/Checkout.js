@@ -56,13 +56,23 @@ const Checkout = (props) => {
                             <div className='ui top attached segment'>
                                 <div className='ui padded grid container'>
                                     <div className='fourteen wide column'>
-                                        <h1>{item.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</h1>
+                                        <h1>
+                                            {item.name.replace(
+                                                /(^\w{1})|(\s+\w{1})/g,
+                                                (letter) => letter.toUpperCase()
+                                            )}
+                                        </h1>
                                     </div>
                                     <div className='two wide column'>
                                         <button
                                             className='ui red button'
                                             tabIndex={0}
-                                            onClick = {() => props.deleteCartItem(index,itemIndex)}
+                                            onClick={() =>
+                                                props.deleteCartItem(
+                                                    index,
+                                                    itemIndex
+                                                )
+                                            }
                                         >
                                             X
                                         </button>
@@ -101,7 +111,9 @@ const Checkout = (props) => {
                         <div className='ui attached segment'>
                             <ol className='ui list'>{list}</ol>
                         </div>
-                        <div className='ui bottom attached segment'>20</div>
+                        <div className='ui bottom attached segment'>
+                            {calculateCost(item.combo)}
+                        </div>
                         <div className='ui section divider'></div>
                     </div>
                 );
@@ -160,5 +172,5 @@ export default connect(mapStateToProps, {
     deleteIndex: deleteIndex,
     setPage: setPage,
     setCombo: setCombo,
-    deleteCartItem: deleteCartItem
+    deleteCartItem: deleteCartItem,
 })(Checkout);
