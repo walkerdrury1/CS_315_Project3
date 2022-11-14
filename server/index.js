@@ -143,7 +143,6 @@ app.post('/validate', async(req, res) => {
     const password = req.body.password;
     const sqlQuery = `SELECT * FROM users WHERE name='${username}' AND password='${password}';`
     const result = await pool.query(sqlQuery);
-    console.log(result.rows);
     if (result.rows == 0) {
         res.send({role : 'None'});
     }
@@ -159,6 +158,9 @@ app.post('/validate', async(req, res) => {
     }
 });
 
+
+const exampleRounter = require('./example')
+app.use('/', exampleRounter)
 
 app.listen(PORT, function () {
     console.log('Server is running on port ' + PORT);
