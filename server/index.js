@@ -93,6 +93,23 @@ app.get('/get-inventory', async(req, res) => {
 
 
 
+///////// Function to write
+//Menu Items
+//Add menu items - with ingredients
+//Change menu item price
+//Delete menu item (set onmenu to "no")
+
+//Inventory Items
+//Get inventory items
+//Add inventory item
+//Add batch
+//
+
+//Reports
+// Excess report
+// Restock report
+// Pairs
+// ?getTopItems
 
 
 
@@ -129,7 +146,7 @@ app.post('/process-transaction', async(req, res) => {
             await pool.query(updateCommand);
         }
 
-    } catch(err) {
+``    } catch(err) {
 
         console.log(err.message);
         res.send(err.message);

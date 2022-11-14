@@ -8,6 +8,7 @@ const Topbar = (props) => {
     const [active, setActive] = useState(null);
 
     const click = (item, index) => {
+        console.log("why this not working");
         if (item === "Order Now") {
             props.setPage("Combo Page");
         }
@@ -15,6 +16,7 @@ const Topbar = (props) => {
             props.setPage(item);
             setIndex(index);
         } else if (item === "Sign in") {
+            console.log("in here");
             props.setPage("Sign in page");
         }
     };
@@ -55,11 +57,9 @@ const Topbar = (props) => {
             <div className='topbar-items-container'>{displayTopbarItems()}</div>
 
             <div className='to-center'>
-                <div className='sign-in'>
+                <div className='sign-in' onClick={() => click("Sign in")}>
                     <i class='big user circle icon'></i>
-                    <div className='to-center' onClick={() => click("Sign in")}>
-                        Sign in
-                    </div>
+                    <div className='to-center'>Sign in</div>
                 </div>
             </div>
         </div>
