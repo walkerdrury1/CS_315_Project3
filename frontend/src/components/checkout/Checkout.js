@@ -22,8 +22,7 @@ const Checkout = (props) => {
 
         clearCart();
         
-        props.setPage("landing page");
-        props.setCombo(null);
+        props.setPage("Confirmation");
     };
 
     useEffect(() => {
@@ -55,37 +54,39 @@ const Checkout = (props) => {
             if (item.combo === "A La Carte") {
                 return item.items.map((item, itemIndex) => {
                     return (
-                        <div>
-                            <div className='ui top attached segment'>
-                                <div className='ui padded grid container'>
-                                    <div className='fourteen wide column'>
-                                        <h1>
-                                            {item.name.replace(
-                                                /(^\w{1})|(\s+\w{1})/g,
-                                                (letter) => letter.toUpperCase()
-                                            )}
-                                        </h1>
+                        <div className="ui attached segment">
+                                <div className='ui grid container'>
+                                    <div className="row">
+                                        <div className='left floated fourteen wide column'>
+                                            <h1>
+                                                {item.name.replace(
+                                                    /(^\w{1})|(\s+\w{1})/g,
+                                                    (letter) => letter.toUpperCase()
+                                                )}
+                                            </h1>
+                                        </div>
+                                        <div className='right floated two wide column'>
+                                            <button
+                                                className='ui red button'
+                                                tabIndex={0}
+                                                onClick={() =>
+                                                    props.deleteCartItem(
+                                                        index,
+                                                        itemIndex
+                                                    )
+                                                }
+                                            >
+                                                X
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className='two wide column'>
-                                        <button
-                                            className='ui red button'
-                                            tabIndex={0}
-                                            onClick={() =>
-                                                props.deleteCartItem(
-                                                    index,
-                                                    itemIndex
-                                                )
-                                            }
-                                        >
-                                            X
-                                        </button>
+                                    <div className="row">
+                                        <div className="right floated two wide column">
+                                            <h3>${item.cost.toFixed(2)}</h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='ui bottom attached segment'>
-                                ${item.cost.toFixed(2)}
-                            </div>
-                            <div className='ui section divider'></div>
+                                
                         </div>
                     );
                 });
@@ -94,13 +95,14 @@ const Checkout = (props) => {
                     return <li value='-'>{list_item.name}</li>;
                 });
                 return (
-                    <div>
-                        <div className='ui top attached segment'>
-                            <div className='ui padded grid container'>
-                                <div className='fourteen wide column'>
+                    <div className="ui attached segment">
+                        <div className='ui grid container'>
+                            <div className="row">
+                                <div className='left floated fourteen wide column'>
                                     <h1>{item.combo}</h1>
                                 </div>
-                                <div className='two wide column'>
+                                
+                                <div className='right floated two wide column'>
                                     <button
                                         className='ui red button'
                                         tabIndex={0}
@@ -110,14 +112,15 @@ const Checkout = (props) => {
                                     </button>
                                 </div>
                             </div>
+                            <div className="row">
+                                <div className="left floated fourteen wide column">
+                                    <ol className='ui list'><h4>{list}</h4></ol>
+                                </div>
+                                <div className="right floated two wide column">
+                                    <h3>{calculateCost(item.combo)}</h3>
+                                </div>
+                            </div>
                         </div>
-                        <div className='ui attached segment'>
-                            <ol className='ui list'>{list}</ol>
-                        </div>
-                        <div className='ui bottom attached segment'>
-                            {calculateCost(item.combo)}
-                        </div>
-                        <div className='ui section divider'></div>
                     </div>
                 );
             }
@@ -134,12 +137,12 @@ const Checkout = (props) => {
                 </div>
                 <div className='ui section divider'></div>
                 {displayCheckout()}
-                <div className='ui top attached header'>
+                <div className='ui attached segment'>
                     <div className='ui padded grid'>
-                        <div className='fourteen wide column'>Total:</div>
-                        <div className='two wide column'>${props.total.toFixed(2)}</div>
+                        <div className='fourteen wide column'><h2>Total:</h2></div>
+                        <div className='two wide column'><h2>${props.total.toFixed(2)}</h2></div>
                     </div>
-                    <div className='ui bottom attached segment'>
+                    <div className='ui attached segment'>
                         <div class='fluid ui buttons'>
                             <button
                                 class='ui positive button'

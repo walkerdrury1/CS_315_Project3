@@ -6,6 +6,7 @@ import EntreePage from "./components/customerPage/EntreePage";
 import Checkout from "./components/checkout/Checkout";
 import LandingPage from "./components/LandingPage";
 import AllPage from "./components/AllPage";
+import Confirmation from "./components/checkout/Confirmation";
 import SignInPage from "./components/SignInPage";
 import ManagerPage from "./components/ManagerPage";
 import InventoryPage from "./components/InventoryPage";
@@ -19,6 +20,8 @@ const App = (props) => {
         return <LandingPage />;
     } else if (props.page === "a la carte page") {
         return <AllPage />;
+    } else if (props.page === "Confirmation") {
+        return <Confirmation />;
     } 
     else if(props.page === "Sign in page"){
         return <SignInPage />

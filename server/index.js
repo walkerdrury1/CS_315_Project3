@@ -93,6 +93,23 @@ app.get('/get-inventory', async(req, res) => {
 
 
 
+///////// Function to write
+//Menu Items
+//Add menu items - with ingredients
+//Change menu item price
+//Delete menu item (set onmenu to "no")
+
+//Inventory Items
+//Get inventory items
+//Add inventory item
+//Add batch
+//
+
+//Reports
+// Excess report
+// Restock report
+// Pairs
+// ?getTopItems
 
 
 
@@ -143,7 +160,6 @@ app.post('/validate', async(req, res) => {
     const password = req.body.password;
     const sqlQuery = `SELECT * FROM users WHERE name='${username}' AND password='${password}';`
     const result = await pool.query(sqlQuery);
-    console.log(result.rows);
     if (result.rows == 0) {
         res.send({role : 'None'});
     }
@@ -159,6 +175,9 @@ app.post('/validate', async(req, res) => {
     }
 });
 
+
+const exampleRounter = require('./example')
+app.use('/', exampleRounter)
 
 app.listen(PORT, function () {
     console.log('Server is running on port ' + PORT);
