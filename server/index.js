@@ -30,14 +30,14 @@ app.get('/say-name/:name', (req, res, next) => {
     res.send("hi " + name);
 });*/
 
-app.get('/get-users', async (req, res, next) => {
-    try{
-        const a = await pool.query("SELECT * FROM users");
-        res.json(a.rows);
-    } catch (err) {
-        res.send(err.message);
-    }
-} );
+// app.get('/get-users', async (req, res, next) => {
+//     try{
+//         const a = await pool.query("SELECT * FROM users");
+//         res.json(a.rows);
+//     } catch (err) {
+//         res.send(err.message);
+//     }
+// } );
 
 //////////////////// GET REQUESTS
 app.get('/get-menuitems', async(req, res) => {
@@ -93,6 +93,23 @@ app.get('/get-inventory', async(req, res) => {
 
 
 
+///////// Function to write
+//Menu Items
+//Add menu items - with ingredients
+//Change menu item price
+//Delete menu item (set onmenu to "no")
+
+//Inventory Items
+//Get inventory items
+//Add inventory item
+//Add batch
+//
+
+//Reports
+// Excess report
+// Restock report
+// Pairs
+// ?getTopItems
 
 
 
@@ -129,6 +146,28 @@ app.post('/process-transaction', async(req, res) => {
             await pool.query(updateCommand);
         }
 
+``    } catch(err) {
+
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+
+app.post('/validate', async(req, res) => {
+    try{
+    const username = req.body.username;
+    const password = req.body.password;
+    const sqlQuery = `SELECT * FROM users WHERE name='${username}' AND password='${password}';`
+    const result = await pool.query(sqlQuery);
+    if (result.rows == 0) {
+        res.send({role : 'None'});
+    }
+    else{
+        res.send({role : `${result.rows[0].role}`});
+    }
+
+
     } catch(err) {
 
         console.log(err.message);
@@ -136,6 +175,9 @@ app.post('/process-transaction', async(req, res) => {
     }
 });
 
+
+const exampleRounter = require('./example')
+app.use('/', exampleRounter)
 
 app.listen(PORT, function () {
     console.log('Server is running on port ' + PORT);

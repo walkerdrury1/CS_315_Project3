@@ -44,8 +44,7 @@
     align-items: center;
 }
 .topbar-item:hover{
-    background-color: rgb(172, 0, 0);
-    color: rgb(160, 160, 160);
+    color: black;
     cursor: pointer;
 }
 .active-topbar-item{
@@ -61,4 +60,11 @@
     cursor: pointer;
     color: white;
 }
+.sign-in:hover{
+    cursor: pointer;
+    color: black;
+}
 
+.error-message{
+    color:red
+}

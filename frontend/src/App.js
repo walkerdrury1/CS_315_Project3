@@ -7,6 +7,7 @@ import Checkout from "./components/checkout/Checkout";
 import LandingPage from "./components/LandingPage";
 import AllPage from "./components/AllPage";
 import Confirmation from "./components/checkout/Confirmation";
+import SignInPage from "./components/SignInPage";
 
 const App = (props) => {
     if (props.page === "Combo Page") {
@@ -19,7 +20,11 @@ const App = (props) => {
         return <AllPage />;
     } else if (props.page === "Confirmation") {
         return <Confirmation />;
-    } else {
+    } 
+    else if(props.page === "Sign in page"){
+        return <SignInPage />
+    }
+    else {
         return <EntreePage />;
     }
 };
