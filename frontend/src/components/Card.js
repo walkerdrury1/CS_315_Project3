@@ -7,6 +7,7 @@ const Card = ({title, img, onCardClick}) => {
             <div className='card-img-container'>
                 <img className =  "card-img" src = {img} alt = "pic of card"/>
             </div>
+            
             <div className='to-center'>
                 <h3 className='card-title'>{title}</h3>
             </div>

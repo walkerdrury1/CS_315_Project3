@@ -1,40 +1,23 @@
 import React, { useState } from "react";
-import "./Topbar.css";
 import { connect } from "react-redux";
 import { setPage } from "../actions";
-
-const Topbar = (props) => {
-    const topbar_item_list = ["Order Now", "Locations", "Checkout"];
+const ManagerTopbar = (props) => {
+    const topbar_item_list = ["Inventory", "Sales Report", "Checkout"];
     const [active, setActive] = useState(null);
-
-    const click = (item, index) => {
-        if (item === "Order Now") {
-            props.setPage("Combo Page");
-        }
-        if (item === "Checkout") {
-            props.setPage(item);
-            setIndex(index);
-        } else if (item === "Sign in") {
-            console.log("in here");
-            props.setPage("Sign in page");
-        }
-    };
 
     const goHome = () => {
         window.location.assign("/");
     };
-    const setIndex = (index) => {
-        setActive(index);
+
+    const click = (item) => {
+        if (item === "Inventory") {
+            props.setPage("Inventory Page");
+        }
     };
     const displayTopbarItems = () => {
-        return topbar_item_list.map((item, index) => {
+        return topbar_item_list.map((item) => {
             return (
-                <div
-                    className={`${
-                        active === index ? "active-" : ""
-                    }topbar-item`}
-                    onClick={() => click(item, index)}
-                >
+                <div className='topbar-item' onClick={() => click(item)}>
                     {item}
                 </div>
             );
@@ -51,12 +34,12 @@ const Topbar = (props) => {
                 />
             </div>
             <div className='gui-view'>
-                <h4>Customer View</h4>
+                <h4>Manager View</h4>
             </div>
             <div className='topbar-items-container'>{displayTopbarItems()}</div>
 
             <div className='to-center'>
-                <div className='sign-in' onClick={() => click("Sign in")}>
+                <div className='sign-in'>
                     <i class='big user circle icon'></i>
                     <div className='to-center'>Sign in</div>
                 </div>
@@ -65,12 +48,12 @@ const Topbar = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateProps = (state) => {
     return {
         page: state.page,
     };
 };
 
-export default connect(mapStateToProps, {
+export default connect(mapStateProps, {
     setPage: setPage,
-})(Topbar);
+})(ManagerTopbar);

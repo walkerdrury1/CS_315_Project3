@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import Topbar from "./Topbar";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import { setPage } from "../actions";
+import { connect } from "react-redux";
 
-const SignInPage = () => {
-    let correct_username = "username";
-    let correct_password = "password";
-
+const SignInPage = (props) => {
     const [error, setError] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -31,12 +30,10 @@ const SignInPage = () => {
                 password: password,
             })
         ).data;
-        console.log(x);
         if (x.role === "None") {
             setError(true);
-        } else {
-            setError(false);
-            console.log("signed in");
+        } else if (x.role === "manager") {
+            props.setPage("Manager Page");
         }
     };
     return (
@@ -78,4 +75,12 @@ const SignInPage = () => {
     );
 };
 
-export default SignInPage;
+const mapStateToProps = (state) => {
+    return {
+        page: state.page,
+    };
+};
+
+export default connect(mapStateToProps, {
+    setPage: setPage,
+})(SignInPage);
