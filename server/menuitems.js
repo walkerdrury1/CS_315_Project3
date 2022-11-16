@@ -56,6 +56,26 @@ router.post('/add-item', async(req, res) => {
 
 })
 
+/**
+ * Description: Change the price of an existing item in the database
+ * Requires: name
+ * Returns: 'success' or error message
+ * EX: axois.post(url + '/set-price', {name: 'orange chicken', price: 20});
+ */
+
+router.post('/set-price', async (req, res) => {
+    try {
+        const itemName = req.body.name;
+        const newPrice = req.body.price;
+        await pool.query(`UPDATE items SET cost=${newPrice} WHERE name='${itemName}';`);
+        res.send('success');
+    }
+    catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+})
+
 // toggle bool
 
 
