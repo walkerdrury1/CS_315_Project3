@@ -76,8 +76,48 @@ router.post('/set-price', async (req, res) => {
     }
 })
 
-// toggle bool
 
 
+/**
+ * Description: Sets the onmenu flag to no
+ * Requires: name
+ * Returns: 'success' or error message
+ * EX: axois.post(url + '/remove-item', {name: 'orange chicken'});
+ */
+router.post('/remove-item', async (req, res) => {
+    try {
+        const itemName = req.body.name;
+        await pool.query(`UPDATE items SET onmenu='no' WHERE name='${itemName}';`);
+        res.send('success');
+    }
+    catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+}) 
+
+
+/**
+ * Description: Toggles the onmenu flag
+ * Requires: name
+ * Returns: 'success' or error message
+ * EX: axois.post(url + '/toggle-item', {name: 'orange chicken'});
+ */
+ router.post('/toggle-item', async (req, res) => {
+    try {
+        const itemName = req.body.name;
+        const data = (await pool.query(`SELECT * FROM items WHERE name='${itemName}';`)).rows;
+        if (data.length > 0) {
+            // item exists
+            if (data[0].onmenu == 'yes') await pool.query(`UPDATE items SET onmenu='no' WHERE name='${itemName}';`);
+            else await pool.query(`UPDATE items SET onmenu='yes' WHERE name='${itemName}';`);
+        }
+        res.send('success');
+    }
+    catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+}) 
 
 module.exports = router
