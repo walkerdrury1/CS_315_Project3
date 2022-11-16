@@ -179,6 +179,9 @@ app.post('/validate', async(req, res) => {
 const exampleRounter = require('./inventory')
 app.use('/', exampleRounter)
 
+const menuitemsRouter = require('./menuitems')
+app.use('/', menuitemsRouter)
+
 app.listen(PORT, function () {
     console.log('Server is running on port ' + PORT);
 });
