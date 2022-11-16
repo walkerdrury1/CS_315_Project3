@@ -1,9 +1,34 @@
 import React from "react";
 import ManagerTopbar from "./ManagerTopbar";
+import "./InventoryPage.css";
 
 const InventoryPage = () => {
     const list = [
         { name: "chicken", amount: 3 },
+        {
+            name: "orange sauce",
+            amount: 4,
+        },
+        {
+            name: "orange sauce",
+            amount: 4,
+        },
+        {
+            name: "orange sauce",
+            amount: 4,
+        },
+        {
+            name: "orange sauce",
+            amount: 4,
+        },
+        {
+            name: "orange sauce",
+            amount: 4,
+        },
+        {
+            name: "orange sauce",
+            amount: 4,
+        },
         {
             name: "orange sauce",
             amount: 4,
@@ -15,10 +40,27 @@ const InventoryPage = () => {
     const displayIngredients = () => {
         return list.map((ingredient) => {
             return (
-                <div className="inventory grid">
-                    <div>{ingredient.name}</div>
-                    <div>{ingredient.amount}</div>
-                    <div className='ui button'>Add {ingredient.name}</div>
+                <div>
+                    <div className='to-center'>
+                        <div className='inventory-grid'>
+                            <div className='to-center'>
+                                {" "}
+                                <h5>{ingredient.name}</h5>
+                            </div>
+                            <div className='to-center'>
+                                {" "}
+                                <h5>{ingredient.amount}</h5>
+                            </div>
+                            <div className='to-center'>
+                                {" "}
+                                <div className='ui button'>
+                                    Add {ingredient.name}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
                 </div>
             );
         });
@@ -28,8 +70,25 @@ const InventoryPage = () => {
         <div>
             <ManagerTopbar />
             <br />
-            <div className='to-center'>{displayIngredients()}</div>
-            invenotry page
+            <h1 className='to-center'>Inventory</h1>
+            <br />
+            <br />
+            <div className='to-center'>
+                <div className='inventory-grid'>
+                    <div className='to-center'>
+                        <h3>Name</h3>
+                    </div>
+                    <div className='to-center'>
+                        <h3>Amount</h3>
+                    </div>
+                    <div className='to-center'>
+                        <h3>Update amount</h3>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div className='inventory'>{displayIngredients()}</div>
         </div>
     );
 };
