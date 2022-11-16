@@ -19,7 +19,7 @@ const pool = new Pool({
  */
 router.get('/get-inventory', async(req, res) => {
     try{
-        const data = await pool.query("SELECT * FROM items");
+        const data = await pool.query("SELECT * FROM inventory");
         res.json(data.rows);
     } catch(err) {
         console.log(err.message);
