@@ -76,4 +76,20 @@ router.post('/add-inventory' ,async(req,res) => {
     }
 });
 
+/**
+ * Change the minimum amount attribute of an item in the inventory
+ * Requires : name, minimumamount
+ * Returns : 'success' or error message
+ * EX: axois.post(url + '/change-minimumamount', {name : 'chicken', minimumamount : 200});
+ */
+router.post('/change-minimumamount', async (req, res) => {
+    try{
+        await pool.query(`UPDATE inventory set minimumamount = ${req.body.minimumamount} WHERE itemname = '${req.body.name}';`);
+        res.send('success');
+    } catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+})
+
 module.exports = router
