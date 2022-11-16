@@ -11,6 +11,12 @@ const pool = new Pool({
     ssl: {rejectUnauthorized: false}
 });
 
+/**
+ * Description: Get a list of all inventory items
+ * Requires: none
+ * Returns: list of json objects with attributes : itemid, itemname, totalquantity, minimumamount
+ * EX: axois.get(url + '\get-inventory');
+ */
 router.get('/get-inventory', async(req, res) => {
     try{
         const data = await pool.query("SELECT * FROM items");
@@ -22,6 +28,12 @@ router.get('/get-inventory', async(req, res) => {
 });
 
 // Body requires : name, expDate, amt
+/**
+ * Description: Add a new batch of a current inventory item into the database
+ * Requires: name, expDate, amt
+ * Returns: 'success' or error message
+ * EX: axois.post(url + '/add-batch', {name: 'chicken', expDate: '01-01-2023', amt: 100});
+ */
 router.post('/add-batch', async(req, res) => {
     try{
        //console.log(req.body);
@@ -32,28 +44,31 @@ router.post('/add-batch', async(req, res) => {
        const itemid = data2.rows[0].itemid;
        await pool.query(`INSERT INTO batch VALUES (${batchid}, '${req.body.expDate}', ${req.body.amt}, ${itemid});`);
        console.log("executed update");
-       res.send(true);
+       res.send('success');
     } catch (err) {
         console.log(err.message);
         res.send(err.message);
     }
 });
 
-// itemid, itemname, totalquantity, minimumamount
-// Body requires : name
-// Body optional : minimumamount
+/**
+ * Description: Create a new inventory item into the database
+ * Requires: name
+ * Optional: minimumamount
+ * Returns: 'success' or error message
+ * EX: axios.post(url + '/add-inventory', {name: 'chicken', minimumamount: 100});
+ */
 router.post('/add-inventory' ,async(req,res) => {
     try{
         //console.log(req.body);
         const data = await pool.query('SELECT MAX(itemid) FROM inventory');
         const itemid = data.rows[0].max +1;
         //console.log(itemid);
-        var minimumamount = 100;
-        if(req.body.minimumamount){
-            minimumamount = req.body.minimumamount;
-        }
+        let minimumamount = req.body.minimumamount;
+        minimumamount ??= 100;
+        console.log(minimumamount);
         await pool.query(`INSERT INTO inventory VALUES(${itemid}, '${req.body.name}', 0, ${minimumamount});`);
-        res.send(true);
+        res.send('success');
     } catch(err) {
         console.log(err.message);
         res.send(err.message);
