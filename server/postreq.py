@@ -1,3 +1,5 @@
 import requests
 
-requests.post("http://localhost:4000/validate", json={'username': 'miketyson2', 'password': 'diversity'})
+requests.post("http://localhost:4000/add-inventory", json={'name': 'carrot1'})
+#a = requests.get("http://localhost:4000/get-inventory")
+#print(a.text)

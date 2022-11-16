@@ -80,7 +80,7 @@ app.get('/get-extras', async(req, res) => {
         res.send(err.message);
     }
 });
-
+/*
 app.get('/get-inventory', async(req, res) => {
     try{
         const data = await pool.query("SELECT * FROM inventory");
@@ -90,7 +90,7 @@ app.get('/get-inventory', async(req, res) => {
         res.send(err.message);
     }
 });
-
+*/
 
 
 ///////// Function to write
@@ -176,7 +176,7 @@ app.post('/validate', async(req, res) => {
 });
 
 
-const exampleRounter = require('./example')
+const exampleRounter = require('./inventory')
 app.use('/', exampleRounter)
 
 app.listen(PORT, function () {
