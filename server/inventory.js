@@ -64,10 +64,11 @@ router.post('/add-inventory' ,async(req,res) => {
         const data = await pool.query('SELECT MAX(itemid) FROM inventory');
         const itemid = data.rows[0].max +1;
         //console.log(itemid);
-        let minimumamount = req.body.minimumamount;
-        minimumamount ??= 100;
-        console.log(minimumamount);
-        await pool.query(`INSERT INTO inventory VALUES(${itemid}, '${req.body.name}', 0, ${minimumamount});`);
+        // let minimumamount;
+        // minimumamount ??= 100;
+        // req.body.minimumamount ? minimumamount = req.body.minimumamount : minimumamount = 100; 
+        // console.log(minimumamount);
+        await pool.query(`INSERT INTO inventory VALUES(${itemid}, '${req.body.name}', 0, ${req.body.minimumamount ? req.body.minimumamount : 100});`);
         res.send('success');
     } catch(err) {
         console.log(err.message);
