@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { setPage } from "../actions";
 const ManagerTopbar = (props) => {
-    const topbar_item_list = ["Inventory", "Sales Report", "Checkout"];
+    const topbar_item_list = ["Inventory", "Items", "Sales Report", "Checkout"];
     const [active, setActive] = useState(null);
 
     const goHome = () => {
@@ -12,6 +12,8 @@ const ManagerTopbar = (props) => {
     const click = (item) => {
         if (item === "Inventory") {
             props.setPage("Inventory Page");
+        } else if (item === "Items") {
+            props.setPage("Items Page");
         }
     };
     const displayTopbarItems = () => {

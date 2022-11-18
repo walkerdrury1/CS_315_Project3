@@ -92,7 +92,10 @@ const Checkout = (props) => {
                 });
             } else {
                 const list = item.items.map((list_item) => {
-                    return <li value='-'>{list_item.name}</li>;
+                    return <li value='-'>{list_item.name.replace(
+                        /(^\w{1})|(\s+\w{1})/g,
+                        (letter) => letter.toUpperCase()
+                    )}</li>;
                 });
                 return (
                     <div className="ui attached segment">
@@ -139,8 +142,8 @@ const Checkout = (props) => {
                 {displayCheckout()}
                 <div className='ui attached segment'>
                     <div className='ui padded grid'>
-                        <div className='fourteen wide column'><h2>Total:</h2></div>
-                        <div className='two wide column'><h2>${props.total.toFixed(2)}</h2></div>
+                        <div className='left floated thirteen wide column'><h2>Total:</h2></div>
+                        <div className='right floated three wide column'><h2>${props.total.toFixed(2)}</h2></div>
                     </div>
                     <div className='ui attached segment'>
                         <div class='fluid ui buttons'>

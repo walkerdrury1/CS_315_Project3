@@ -10,6 +10,7 @@ import Confirmation from "./components/checkout/Confirmation";
 import SignInPage from "./components/SignInPage";
 import ManagerPage from "./components/ManagerPage";
 import InventoryPage from "./components/InventoryPage";
+import ItemsPage from "./components/ItemsPage";
 
 const App = (props) => {
     if (props.page === "Combo Page") {
@@ -31,8 +32,9 @@ const App = (props) => {
     }
     else if(props.page === "Inventory Page"){
         return <InventoryPage />
-    }
-    else {
+    } else if (props.page === "Items Page") {
+        return <ItemsPage />
+    } else {
         return <EntreePage />;
     }
 };
