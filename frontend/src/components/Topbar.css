@@ -4,7 +4,6 @@
     grid-template-columns: 10% 10% 65% 15%;
     background-color: rgb(185, 0, 0);
     /* new edits below this line */
-    border-radius: 25px; 
 }
 .topbar-logo-container{
     display:flex;
