@@ -99,17 +99,27 @@ router.post('/change-type', async (req, res) => {
  * Description: Change the ingredients of an existing item in the database
  * Requires: name and new ingredients list
  * Returns: 'success' or error message
- * EX: axois.post(url + '/change-ingredients', {name: 'orange chicken', type: side});
+ * EX: axois.post(url + '/change-ingredients', {name: 'orange chicken', ingredients: ['orange', 'chicken']});
  */
 
 router.post('/change-ingredients', async (req, res) => {
-    const ingredients = req.body.ingredients;
-    const itemName = req.body.name;
+    
+    // clear old
+   // 
 
     try {
-        for (let t = 0; t < ingredients.length; t++) {
-            let ingredient = ingredients[t];
-            data = (await pool.query(`SELECT * FROM inventory WHERE itemname='${ingredient}';`)).rows;
+        const itemName = req.body.name;
+        const newIngredients = req.body.ingredients;
+
+        const itemId = (await pool.query(`SELECT id FROM items WHERE name='${itemName}'`)).rows[0].id;
+        await pool.query(`DELETE FROM ingredientslist WHERE id=${itemId}`);
+        let newIndexId = (await pool.query("SELECT MAX(indexid) from ingredientslist;")).rows[0].max + 1;
+        let newIngId = (await pool.query("SELECT MAX(itemid) FROM inventory;")).rows[0].max + 1;
+
+        for (let i = 0; i < newIngredients.length; i++) {
+            let ingredient = newIngredients[i];
+
+            let data = (await pool.query(`SELECT * FROM inventory WHERE itemname='${ingredient}';`)).rows;
             if (data.length > 0) {
                 // ingredient exists
                 // itemid is ingId in sql server
@@ -121,10 +131,13 @@ router.post('/change-ingredients', async (req, res) => {
                 await pool.query(`INSERT INTO ingredientslist VALUES (${newIndexId}, ${itemId}, ${newIngId});`)
                 newIngId++;
             }
-            newIndexId++
-            
+            newIndexId++;
         }
+
         res.send('success');
+            
+        
+        
     } catch(err) {
         console.log(err.message);
         res.send(err.message);
