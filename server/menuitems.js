@@ -76,7 +76,60 @@ router.post('/set-price', async (req, res) => {
     }
 })
 
+/**
+ * Description: Change the type of an existing item in the database
+ * Requires: name and new type
+ * Returns: 'success' or error message
+ * EX: axois.post(url + '/change-type', {name: 'orange chicken', type: side});
+ */
 
+router.post('/change-type', async (req, res) => {
+    try {
+        const itemName = req.body.name;
+        const newType = req.body.type;
+        await pool.query(`UPDATE items SET type='${newType}' WHERE name= '${itemName}';`)
+        res.send('success');
+    } catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+})
+
+/**
+ * Description: Change the ingredients of an existing item in the database
+ * Requires: name and new ingredients list
+ * Returns: 'success' or error message
+ * EX: axois.post(url + '/change-ingredients', {name: 'orange chicken', type: side});
+ */
+
+router.post('/change-ingredients', async (req, res) => {
+    const ingredients = req.body.ingredients;
+    const itemName = req.body.name;
+
+    try {
+        for (let t = 0; t < ingredients.length; t++) {
+            let ingredient = ingredients[t];
+            data = (await pool.query(`SELECT * FROM inventory WHERE itemname='${ingredient}';`)).rows;
+            if (data.length > 0) {
+                // ingredient exists
+                // itemid is ingId in sql server
+                const ingId = data[0].itemid;
+                await pool.query(`INSERT INTO ingredientslist VALUES (${newIndexId}, ${itemId}, ${ingId});`)
+            } 
+            else {   
+                await pool.query(`INSERT INTO inventory VALUES (${newIngId}, '${ingredient}', 0, 100);`)
+                await pool.query(`INSERT INTO ingredientslist VALUES (${newIndexId}, ${itemId}, ${newIngId});`)
+                newIngId++;
+            }
+            newIndexId++
+            
+        }
+        res.send('success');
+    } catch(err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+})
 
 /**
  * Description: Sets the onmenu flag to no
