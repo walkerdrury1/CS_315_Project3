@@ -2,7 +2,9 @@
     height: 100px;
     display: grid;
     grid-template-columns: 10% 10% 65% 15%;
-    background-color: rgb(201, 0, 0);
+    background-color: rgb(185, 0, 0);
+    /* new edits below this line */
+    border-radius: 25px; 
 }
 .topbar-logo-container{
     display:flex;
@@ -14,8 +16,6 @@
     height: 80px;
     object-fit: scale-down;
     cursor: pointer;
-
-    
 }
 .topbar-items-container{
     /*display: grid;
@@ -31,7 +31,15 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: gray;
+}
+/* moved the view to bottom left corner */
+.gui-view h4{
+    position:fixed;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    bottom: 0;
+    left: 0;
 }
 .to-center{
     display:flex;
@@ -44,14 +52,14 @@
     align-items: center;
 }
 .topbar-item:hover{
-    color: black;
+    color: rgb(0, 0, 0);
     cursor: pointer;
 }
 .active-topbar-item{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(172, 0, 0);
+    background-color: rgb(185, 0, 0);
     color: white;
 }
 .sign-in{
@@ -62,7 +70,7 @@
 }
 .sign-in:hover{
     cursor: pointer;
-    color: black;
+    color: rgb(0, 0, 0);
 }
 
 .error-message{

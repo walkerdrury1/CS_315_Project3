@@ -6,18 +6,22 @@ import Popup from "./Popup";
 
 const InventoryPage = () => {
     const [list, setList] = useState([]);
+    const [waiting, setWaiting] = useState(false);
 
     const inventoryItems = async () => {
+        setWaiting(true);
         const x = await axios.get(
             "https://tyson-express.onrender.com/get-inventory"
         );
         setList(x.data);
+        setWaiting(false);
         return x.data;
     };
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         inventoryItems();
-    }, []);
+    }, [refresh]);
 
     const [popup, setPopup] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null);
@@ -25,11 +29,10 @@ const InventoryPage = () => {
     const [amount, setAmount] = useState("");
 
     const isNum = (word) => {
-        if(word.length === 0){
-            setAmount("")
-        }
-        else if (isNaN(word)) {
-            return
+        if (word.length === 0) {
+            setAmount("");
+        } else if (isNaN(word)) {
+            return;
         } else {
             setAmount(word);
         }
@@ -43,7 +46,26 @@ const InventoryPage = () => {
         setTitle(null);
         setAmount("");
     };
-    const popUp = (type, index, ingredient) => {
+    const submit = async (type) => {
+        setWaiting(true);
+        if (title.includes("Batch")) {
+            await axios.post("https://tyson-express.onrender.com/add-batch", {
+                name: list[activeIndex].itemname,
+                expDate: new Date(),
+                amt: amount,
+            });
+        }
+        else{
+            await axios.post("https://tyson-express.onrender.com/change-minimumamount", {
+                name: list[activeIndex].itemname,
+                minimumamount: amount
+            });
+        }
+
+        setRefresh(!refresh);
+        reset();
+    };
+    const popUp = () => {
         if (popup) {
             return (
                 <Popup setPopup={setPopup}>
@@ -64,7 +86,9 @@ const InventoryPage = () => {
                         <button className='ui red button' onClick={reset}>
                             Cancel
                         </button>
-                        <button className='ui red button'>Submit</button>
+                        <button className='ui red button' onClick={submit}>
+                            Submit
+                        </button>
                     </div>
                 </Popup>
             );
@@ -149,42 +173,51 @@ const InventoryPage = () => {
             );
         });
     };
+    if (waiting) {
+        return (
+            <div className='ui active dimmer'>
+                <div className='ui text loader'>Loading...</div>
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                {popUp()}
+                <ManagerTopbar />
+                <br />
+                <h1 className='to-center'>Inventory</h1>
+                <br />
+                <br />
+                <table class='ui celled table'>
+                    <thead>
+                        <tr>
+                            <th className='three wide'>
+                                {" "}
+                                <div className='to-center'>Name</div>
+                            </th>
+                            <th className='three wide'>
+                                {" "}
+                                <div className='to-center'>Amount</div>
+                            </th>
+                            <th className='three wide'>
+                                {" "}
+                                <div className='to-center'>Minimum Amount</div>
+                            </th>
+                            <th className='five wide'>
+                                {" "}
+                                <div className='to-center'>
+                                    Update Inventory
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>{displayIngredients()}</tbody>
+                </table>
 
-    return (
-        <div>
-            {popUp()}
-            <ManagerTopbar />
-            <br />
-            <h1 className='to-center'>Inventory</h1>
-            <br />
-            <br />
-            <table class='ui celled table'>
-                <thead>
-                    <tr>
-                        <th className='three wide'>
-                            {" "}
-                            <div className='to-center'>Name</div>
-                        </th>
-                        <th className='three wide'>
-                            {" "}
-                            <div className='to-center'>Amount</div>
-                        </th>
-                        <th className='three wide'>
-                            {" "}
-                            <div className='to-center'>Minimum Amount</div>
-                        </th>
-                        <th className='five wide'>
-                            {" "}
-                            <div className='to-center'>Update Inventory</div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>{displayIngredients()}</tbody>
-            </table>
-
-            <br />
-        </div>
-    );
+                <br />
+            </div>
+        );
+    }
 };
 
 export default InventoryPage;
