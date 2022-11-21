@@ -53,6 +53,22 @@ router.post('/get-pairs', async (req, res) => {
         console.log(err.message);
         res.send(err.message);
     }
+});
+
+/**
+ * Description: Get the items that have totalquantity < minimumamount
+ * Requires: Nothing
+ * Returns: List of Json objects representing each item to be restocked
+ * EX: const data = axois.get('url' + '/restock-report');
+ */
+router.get('/restock-report', async (req,res) => {
+    try{
+        const data = await (await pool.query('SELECT * FROM INVENTORY WHERE INVENTORY.TOTALQUANTITY < INVENTORY.MINIMUMAMOUNT;')).rows
+        res.json(data);
+    } catch (err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
 })
 
 
