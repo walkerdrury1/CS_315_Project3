@@ -4,7 +4,6 @@ const ManagerPage = () => {
     return (
         <div>
             <ManagerTopbar/>
-            manager page
         </div>
 
     );

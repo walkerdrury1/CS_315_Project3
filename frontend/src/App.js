@@ -11,7 +11,7 @@ import SignInPage from "./components/SignInPage";
 import ManagerPage from "./components/ManagerPage";
 import InventoryPage from "./components/InventoryPage";
 import ItemsPage from "./components/ItemsPage";
-
+import Reports from "./components/Reports";
 const App = (props) => {
     if (props.page === "Combo Page") {
         return <ComboPage />;
@@ -23,17 +23,16 @@ const App = (props) => {
         return <AllPage />;
     } else if (props.page === "Confirmation") {
         return <Confirmation />;
-    } 
-    else if(props.page === "Sign in page"){
-        return <SignInPage />
-    }
-    else if(props.page === "Manager Page"){
-        return <ManagerPage />
-    }
-    else if(props.page === "Inventory Page"){
-        return <InventoryPage />
+    } else if (props.page === "Sign in page") {
+        return <SignInPage />;
+    } else if (props.page === "Manager Page") {
+        return <ManagerPage />;
+    } else if (props.page === "Inventory Page") {
+        return <InventoryPage />;
     } else if (props.page === "Items Page") {
-        return <ItemsPage />
+        return <ItemsPage />;
+    } else if (props.page === "Reports") {
+        return <Reports />;
     } else {
         return <EntreePage />;
     }

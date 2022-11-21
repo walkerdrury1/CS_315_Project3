@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { setPage } from "../actions";
 const ManagerTopbar = (props) => {
-    const topbar_item_list = ["Inventory", "Items", "Sales Report", "Checkout"];
-    const [active, setActive] = useState(null);
+    const topbar_item_list = ["Inventory", "Items", "Reports"];
 
     const goHome = () => {
         window.location.assign("/");
@@ -14,6 +13,8 @@ const ManagerTopbar = (props) => {
             props.setPage("Inventory Page");
         } else if (item === "Items") {
             props.setPage("Items Page");
+        } else if (item === "Reports") {
+            props.setPage("Reports");
         }
     };
     const displayTopbarItems = () => {
@@ -43,7 +44,7 @@ const ManagerTopbar = (props) => {
             <div className='to-center'>
                 <div className='sign-in'>
                     <i class='big user circle icon'></i>
-                    <div className='to-center'>Sign in</div>
+                    <div className='to-center' onClick={() => props.setPage("landing page")}>Sign Out</div>
                 </div>
             </div>
         </div>
