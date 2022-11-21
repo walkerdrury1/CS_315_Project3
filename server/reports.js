@@ -53,7 +53,49 @@ router.post('/get-pairs', async (req, res) => {
         console.log(err.message);
         res.send(err.message);
     }
-})
+});
+
+/**
+ * Description: Get the items that have totalquantity < minimumamount
+ * Requires: Nothing
+ * Returns: List of Json objects representing each item to be restocked
+ * EX: const data = axois.get('url' + '/restock-report');
+ */
+router.get('/restock-report', async (req,res) => {
+    try{
+        const data = await (await pool.query('SELECT * FROM INVENTORY WHERE INVENTORY.TOTALQUANTITY < INVENTORY.MINIMUMAMOUNT;')).rows
+        res.json(data);
+    } catch (err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+router.get('/excess-report/:date', async (req,res) => {
+    try{
+        const {date} = req.params;
+        const q1 = `CREATE OR REPLACE VIEW view50 AS SELECT indexid, transactionitems.transactionid, id FROM transactionitems LEFT JOIN transactions on transactionitems.transactionid = transactions.transactionid WHERE transactiondate >= '${date}';`;
+        const q2 = `SELECT id, name, count(*) amountOrdered from view50 NATURAL JOIN items GROUP BY (id, name) ORDER BY amountOrdered DESC;`;
+        await pool.query(q1);
+        const db_response1 = await pool.query(q2);
+        const data = db_response1.rows;
+        for(let i=0; i<data.length; i++){
+            const name = data[i].name;
+            const db_response2 = await pool.query(`SELECT itemname FROM items NATURAL JOIN ingredientslist NATURAL JOIN inventory WHERE name = '${name}';`);
+            console.log(db_response2.rows);
+        }
+
+        //console.log(data.rows);
+        res.send(data.rows);
+    } catch (err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+});
+
+
+
+
 
 
 module.exports = router
