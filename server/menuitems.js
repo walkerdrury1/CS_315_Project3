@@ -89,6 +89,8 @@ router.post('/change-type', async (req, res) => {
         const newType = req.body.type;
         await pool.query(`UPDATE items SET type='${newType}' WHERE name= '${itemName}';`)
         res.send('success');
+        const x = await pool.query(`SELECT * from items WHERE name = '${itemName}'`)
+        res.send(x)
     } catch(err) {
         console.log(err.message);
         res.send(err.message);
