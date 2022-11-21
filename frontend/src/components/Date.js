@@ -6,7 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./Date.css";
 
-export default function Date({ label }) {
+export default function Date({ label, toSet }) {
     const [value, setValue] = React.useState(null);
 
     return (
@@ -16,6 +16,7 @@ export default function Date({ label }) {
                     label={label}
                     value={value}
                     onChange={(newValue) => {
+                        toSet(newValue)
                         setValue(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} />}
