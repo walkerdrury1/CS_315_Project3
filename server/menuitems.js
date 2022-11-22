@@ -188,4 +188,22 @@ router.post('/remove-item', async (req, res) => {
     }
 }) 
 
+/**
+ * Description: Get the ingredients for a given menu item
+ * Requires: name
+ * Returns: list of objects of type {itemname: itemname}
+ * EX: axois.get(url + '/get-ingredients/' + 'orange chicken')
+ * EX response: [{itemname:'chicken'},{itemname:'orange sauce'}]
+ */
+router.get('/get-ingredients/:name', async (req, res) => {
+    try{
+        const {name} = req.params;
+        const db_response1 = await pool.query(`SELECT itemname FROM ingredientslist NATURAL JOIN inventory NATURAL JOIN items WHERE name = '${name}';`);
+        res.send(db_response1.rows);
+    } catch (err) {
+        console.log(err.message);
+        res.send(err.message);
+    }
+})
+
 module.exports = router
