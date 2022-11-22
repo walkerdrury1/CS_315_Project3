@@ -4,6 +4,7 @@ import ExcessReport from "./ExcessReport";
 import ManagerPage from "./ManagerPage";
 import MFP from "./MFP";
 import RestockReport from "./RestockReport";
+import SalesReport from "./SalesReport";
 
 const Reports = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -38,6 +39,9 @@ const Reports = () => {
         }
         else if(activeIndex === 2){
             return <ExcessReport />
+        }
+        else if(activeIndex === 0){
+            return <SalesReport />
         }
         else {
             return <div>null</div>;
