@@ -43,16 +43,11 @@ const SalesReport = () => {
                 return (
                     <tr>
                         <td>
-                            <div className='to-center'>{item[0]}</div>
+                            <div className='to-center'>{item.name}</div>
                         </td>
                         <td>
                             <div className='to-center'>
-                                {item[1]}
-                            </div>
-                        </td>
-                        <td>
-                            <div className='to-center'>
-                                {item[2]}
+                                {item.amountordered}
                             </div>
                         </td>
                     </tr>
@@ -71,13 +66,13 @@ const SalesReport = () => {
     } else if (!showList) {
         return (
             <div>
-                <h3 className='to-center'>Enter a Start Date</h3>
+                <h3 className='to-center'>Enter a Date</h3>
                 <div className='to-center'>
-                    <Datee label='Start Date' toSet={setStartDate} />
+                    <Datee label='Date' toSet={setStartDate} />
                 </div>
                 <div className='to-center'>
                     <button className='ui red button' onClick={submit}>
-                        Get Excess Report
+                        Get Sales Report
                     </button>
                 </div>
             </div>
@@ -94,11 +89,7 @@ const SalesReport = () => {
                             </th>
                             <th className='three wide'>
                                 {" "}
-                                <div className='to-center'>Order Count</div>
-                            </th>
-                            <th className='three wide'>
-                                {" "}
-                                <div className='to-center'>Total Amount</div>
+                                <div className='to-center'>Amount Ordered</div>
                             </th>
                         </tr>
                     </thead>
