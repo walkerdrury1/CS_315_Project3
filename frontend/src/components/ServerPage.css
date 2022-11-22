@@ -3,6 +3,12 @@
     padding: 10px;
 }
 
+.server-checkout{
+    float:right;
+    width: 300px;
+    padding: 10px;
+}
+
 .server-card-container{
     display: flex;
     justify-content: center;

@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { setPage } from "../actions";
 import ServerCard from "./ServerCard";
+import ServerCheckout from "./ServerCheckout";
 import "./ServerPage.css";
 
 const ServerPage = (props) => {
+    const cart = [
+        {
+            combo: "A La Carte",
+            items: [
+                {
+                    name: "chicken",
+                    cost: 8.2
+                }
+            ]
+        },
+        {
+            combo: "Bowl",
+            items: [
+                {
+                    name: "beef"
+                },
+                {
+                    name: "chowmein"
+                }
+            ]
+        }
+    ]
+
+
     const comboList = ["Bowl", "Plate", "Bigger Plate", "A La Carte"];
     const displayCombos = () => {
         return comboList.map((combo) => {
@@ -12,6 +37,7 @@ const ServerPage = (props) => {
         });
     };
     return (
+        
         <div className='ui grid'>
             <div className='twelve wide column'>
                 <div className='ui grid'>{displayCombos()}</div>
@@ -24,6 +50,9 @@ const ServerPage = (props) => {
                     >
                         <button className='ui big red button'>Sign Out</button>
                     </div>
+                </div>
+                <div className="server-checkout">
+                        <ServerCheckout items={{cart}}/>
                 </div>
             </div>
         </div>
