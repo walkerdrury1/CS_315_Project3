@@ -35,6 +35,9 @@ const SignInPage = (props) => {
         } else if (x.role === "manager") {
             props.setPage("Inventory Page");
         }
+        else if(x.role === "server"){
+            props.setPage("Server Page")
+        }
     };
     return (
         <div>

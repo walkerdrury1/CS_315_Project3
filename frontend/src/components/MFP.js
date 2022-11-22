@@ -41,8 +41,10 @@ const MFP = () => {
     const displayBody = () => {
         if (list === null || list.length === 0) {
             return (
-                <div className='ui active dimmer'>
-                    <div className='ui text loader'>Loading...</div>
+                <div className='loading-container'>
+                    <div className='ui active dimmer'>
+                        <div className='ui text loader'>Loading...</div>
+                    </div>
                 </div>
             );
         } else {

@@ -1,7 +1,6 @@
 import ComboPage from "./components/customerPage/ComboPage";
 import { connect } from "react-redux";
 import { setPage } from "./actions";
-import SidePage from "./components/customerPage/SidePage";
 import EntreePage from "./components/customerPage/EntreePage";
 import Checkout from "./components/checkout/Checkout";
 import LandingPage from "./components/LandingPage";
@@ -12,6 +11,7 @@ import ManagerPage from "./components/ManagerPage";
 import InventoryPage from "./components/InventoryPage";
 import ItemsPage from "./components/ItemsPage";
 import Reports from "./components/Reports";
+import ServerPage from "./components/ServerPage";
 const App = (props) => {
     if (props.page === "Combo Page") {
         return <ComboPage />;
@@ -33,7 +33,11 @@ const App = (props) => {
         return <ItemsPage />;
     } else if (props.page === "Reports") {
         return <Reports />;
-    } else {
+    } 
+    else if(props.page === "Server Page"){
+        return <ServerPage />
+    }
+    else {
         return <EntreePage />;
     }
 };
