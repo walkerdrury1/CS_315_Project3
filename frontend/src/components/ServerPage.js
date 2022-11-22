@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState }, { useState } from "react";
 import { connect } from "react-redux";
 import { setPage, setSideCount } from "../actions";
 import ServerCard from "./ServerCard";
+import ServerCheckout from "./ServerCheckout";
 import "./ServerPage.css";
 import axios from "axios";
 
@@ -248,6 +249,7 @@ const ServerPage = (props) => {
         );
     }
     return (
+        
         <div className='ui grid'>
             <div className='twelve wide column'>{route()}</div>
             <div className='four wide column'>
@@ -258,6 +260,9 @@ const ServerPage = (props) => {
                     >
                         <button className='ui big red button'>Sign Out</button>
                     </div>
+                </div>
+                <div className="server-checkout">
+                        <ServerCheckout items={{cart}}/>
                 </div>
             </div>
         </div>
