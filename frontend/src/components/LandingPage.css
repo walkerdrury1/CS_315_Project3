@@ -32,7 +32,7 @@
     line-height: 25px;
 }
 
-.function button{
+.landing-button button{
     width: 200px;
     padding: 15px;
     text-align: center;
@@ -46,7 +46,7 @@
     overflow: hidden;
 }
 
-/* span{
+.landing-button span.xyz{
     background: red;
     height: 100%;
     width: 0%;
@@ -56,9 +56,9 @@
     bottom: 0;
     z-index: -1;
     transition: 0.5s;
-} */
+}
 
-button:hover span{
+button:hover span.xyz{
     width: 100%;
 }
 

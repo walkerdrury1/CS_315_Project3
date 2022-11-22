@@ -16,9 +16,9 @@ const LandingPage = () => {
             <h1>TYSON EXPRESS</h1>
             <p>Thith Is Way Better Than Panda Expreth.</p>
 
-            <div className="function">
-              <button type="button"><span></span> LOG IN</button>
-              <button type="button"><span></span> ORDER NOW </button>
+            <div className="landing-button">
+              <button type="button"><span className="xyz"></span> LOG IN</button>
+              <button type="button"><span className="xyz"></span> ORDER NOW </button>
             </div>
 
           </div>
