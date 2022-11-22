@@ -1,4 +1,4 @@
-import React, { useEffect, useState }, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { setPage, setSideCount } from "../actions";
 import ServerCard from "./ServerCard";
@@ -11,8 +11,6 @@ const ServerPage = (props) => {
     const comboList = ["Bowl", "Plate", "Bigger Plate", "A La Carte"];
     const [entreeCount, setEntreeCount] = useState(0);
     const [sideCount, setSideCount] = useState(0);
-    const [entreeList, setEntreeList] = useState([]);
-    const [sideList, setSideList] = useState([]);
     const [allList, setAllList] = useState([]);
     const [waiting, setWaiting] = useState(false);
     const [transactionList, setTransactionList] = useState([]);
@@ -31,32 +29,45 @@ const ServerPage = (props) => {
     useEffect(() => {
         callApi();
     }, []);
-    console.log(transactionList, "transaction list")
-    console.log(currItem, "currItem")
+    console.log(transactionList, "transaction list");
+    console.log(currItem, "currItem");
     const comboClick = (combo) => {
         setMyPage(combo + " Page");
         if (combo === "Bowl") {
             setEntreeCount(1);
             setSideCount(1);
             setMyPage2("Entree");
-            setCurrItem({ type: "Bowl", items: [] });
+            setCurrItem({ type: "Bowl", items: [], cost: 7.5 });
         } else if (combo === "Plate") {
             setEntreeCount(2);
             setSideCount(1);
             setMyPage2("Entree");
-            setCurrItem({ type: "Plate", items: [] });
+            setCurrItem({ type: "Plate", items: [], cost: 9.0 });
         } else if (combo === "Bigger Plate") {
             setEntreeCount(3);
             setSideCount(1);
             setMyPage2("Entree");
-            setCurrItem({ type: "Bigger Plate", items: [] });
+            setCurrItem({ type: "Bigger Plate", items: [], cost: 10.5 });
         } else {
             setEntreeCount(1);
             setEntreeCount(1);
             setMyPage2("All");
         }
     };
+    const clearCart = () => {
+        setCurrItem(null);
+        setTransactionList([]);
+    };
 
+    const clearItem = (i) => {
+        const temp = [];
+        transactionList.forEach((item, index) => {
+            if (index !== i) {
+                temp.push(item);
+            }
+        });
+        setTransactionList(temp);
+    };
     const sideClick = (side) => {
         if (sideCount === 0) {
             return;
@@ -72,7 +83,7 @@ const ServerPage = (props) => {
                 }
                 temp2.push(currItem);
                 setTransactionList(temp2);
-                setCurrItem(null)
+                setCurrItem(null);
             } else {
                 setSideCount(sideCount - 1);
                 const temp = currItem;
@@ -108,6 +119,8 @@ const ServerPage = (props) => {
         setSideCount(0);
         setMyPage("Combo Page");
         setMyPage2(null);
+        setTransactionList([])
+        setCurrItem(null)
     };
 
     const displayCombos = () => {
@@ -215,10 +228,11 @@ const ServerPage = (props) => {
         ) {
             return (
                 <div>
-                    <h3 className='to-center'>
+                    <br />
+                    <h1 className='to-center'>
                         Select {myPage2 === "Entree" ? entreeCount : sideCount}{" "}
                         more {myPage2 === "Entree" ? "entrees" : "sides"}
-                    </h3>
+                    </h1>
 
                     <div className='to-center'>
                         <div className='ui grid'>
@@ -249,10 +263,9 @@ const ServerPage = (props) => {
         );
     }
     return (
-        
         <div className='ui grid'>
-            <div className='twelve wide column'>{route()}</div>
-            <div className='four wide column'>
+            <div className='ten wide column'>{route()}</div>
+            <div className='six wide column'>
                 <div className='server-signout'>
                     <div
                         className='to-center'
@@ -261,8 +274,14 @@ const ServerPage = (props) => {
                         <button className='ui big red button'>Sign Out</button>
                     </div>
                 </div>
-                <div className="server-checkout">
-                        <ServerCheckout items={{cart}}/>
+                <div className='server-checkout'>
+                    <ServerCheckout
+                        reset={reset}
+                        setWaiting={setWaiting}
+                        clearItem={clearItem}
+                        clearCart={clearCart}
+                        transactionList={transactionList}
+                    />
                 </div>
             </div>
         </div>
