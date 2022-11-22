@@ -17,8 +17,9 @@ const ItemsPage = () => {
     const [newItemName, setNewItemName] = useState("");
     const [newItemType, setNewItemType] = useState("");
     const [newItemIngredientsString, setNewItemIngredientsString] = useState("");
-    const [newItemIngredientsList, setNewItemIngredientsList] = useState([]);
-    const [found, setFound] = useState(false);
+    const [ingredients, setIngredients] = useState({});
+    let newItemIngredientsList = [];
+    let found = false;
 
     const callApi = async () => {
         setWaiting(true)
@@ -26,21 +27,43 @@ const ItemsPage = () => {
             "https://tyson-express.onrender.com/get-menuitems"
         );
         setAllItems(x.data);
+        const y = {}
+        for(let i = 0; i < x.data.length; i++){
+            let item = x.data[i]
+            const temp_ingredients = await axios.get("https://tyson-express.onrender.com/get-ingredients/" + item.name)
+            y[item.name] = temp_ingredients.data
+        }
+        setIngredients(y)
         setWaiting(false)
-        return;
     };
 
+    const getIngredients = async () => {
+        while(true){
+            if(allItems.length === 0){
+                break
+            }
+        }
+        const x = {}
+        for(let i = 0; i < allItems.length; i++){
+            let item = allItems[i]
+            const temp_ingredients = await axios.get("https://tyson-express.onrender.com/get-ingredients/" + item.name)
+            x[item.name] = temp_ingredients.data
+        }
+        setIngredients(x)
+    }
     useEffect(() => {
+        setWaiting(true)
         callApi();
+        //getIngredients();
+        setWaiting(false)
     }, [refresh]);
 
 
 
     const removeItem = async (itemname) => {
         setWaiting(true)
-        const res = await axios.post("https://tyson-express.onrender.com/remove-item", {name: itemname});
+        await axios.post("https://tyson-express.onrender.com/remove-item", {name: itemname});
         setRefresh(!refresh);
-        console.log(res)
     };
 
     // const restoreItems = () => {
@@ -58,27 +81,25 @@ const ItemsPage = () => {
         setPopup(false);
         setPopup2(false);
         setError(false);
-        //setFound(false);
+        found = false;
         setNewItemCost("");
         setNewItemName("");
         setNewItemType("");
         setNewItemIngredientsString("");
+        newItemIngredientsList = [];
     };
 
-    const addOldItem = async (item) => {
-        let result;
-        if (item.onmenu === "no") {
-            result = await axios.post("https://tyson-express.onrender.com/toggle-item", {name: item.name});
-            console.log("On menu: ", result);   
-        }
-        await axios.post("https://tyson-express.onrender.com/set-price", {name: item.name, price: newItemCost});
-        result = await axios.post("https://tyson-express.onrender.com/change-type", {name: item.name, type: newItemType});
-        console.log(result)
-        await axios.post("https://tyson-express.onrender.com/change-type", {name: item.name, ingredients: newItemIngredientsList});
+    const addOldItem = async () => {
+        await axios.post("https://tyson-express.onrender.com/remove-item", {name: newItemName});
+        await axios.post("https://tyson-express.onrender.com/toggle-item", {name: newItemName});  
+        await axios.post("https://tyson-express.onrender.com/set-price", {name: newItemName, price: newItemCost});
+        await axios.post("https://tyson-express.onrender.com/change-type", {name: newItemName, type: newItemType});
+        await axios.post("https://tyson-express.onrender.com/change-ingredients", {name: newItemName, ingredients: newItemIngredientsList});
     }
 
     const addNewItem = async () => {
-        let result = await axios.post("https://tyson-express.onrender.com/add-item", {name: newItemName, price: newItemCost, type: newItemType, ingredients: newItemIngredientsList});
+        console.log(newItemName, " ", newItemCost, " ", newItemType, " ", newItemIngredientsList)
+        let result = await axios.post("https://tyson-express.onrender.com/add-item", {name: newItemName, cost: newItemCost, type: newItemType, ingredients: newItemIngredientsList});
         console.log(result);
     }
 
@@ -91,31 +112,30 @@ const ItemsPage = () => {
         setError(false);
         setWaiting(true);
 
-        console.log("Changing price of ", title, " to ", Number(newItemCost));
-
         let result = await axios.post("https://tyson-express.onrender.com/set-price", {name: title, price: newItemCost});
 
-        console.log(result);
         setPopup2(false);
         reset();
         setRefresh(!refresh);
     }
 
     const checkForItem = async () => {
-        console.log("Checking if ", newItemName.toLowerCase(), " already exists");
+        setNewItemName(newItemName.toLowerCase());
         await allItems.map((item) => {
             if (item.name === newItemName.toLowerCase()) {
-                setFound(true);
-                addOldItem(item);
+                found = true;
             }
             return;
         })
 
-        if (!found) {
-            console.log("in wrong function")
-            addNewItem();
+
+        if (found) {
+            await addOldItem();
+        } else {
+            await addNewItem();
         }
     }
+
     const getItemInfo = async () => {
         if (newItemCost === "" 
             || newItemName === "" 
@@ -126,7 +146,7 @@ const ItemsPage = () => {
         }
         setError(false);
         setWaiting(true);
-        setNewItemIngredientsList(newItemIngredientsString.split(','));
+        newItemIngredientsList = newItemIngredientsString.split(',');
         
         newItemIngredientsList.forEach(function(part, index) {
             this[index] = part.trim();
@@ -231,7 +251,7 @@ const ItemsPage = () => {
                         <button className='ui red button' onClick={reset}>
                             Cancel
                         </button>
-                        <button className='ui green button' onClick={() => getItemInfo()}>Submit</button>
+                        <button className='ui green button' onClick={async () =>  {await getItemInfo()}}>Submit</button>
                     </div>
                     <br />
                     <div>{displayError()}</div>
@@ -245,64 +265,67 @@ const ItemsPage = () => {
     }, [refresh]);
 
     const displayItems = () => {
-        return allItems.map((item) => {
+        return allItems.map((item, index) => {
             if (item.type !== "combo" && item.onmenu === "yes") {
-                // const ingredientsList = item.ingredients.map((ingredient) => {
-                //     return <li value='-'>
-                //             {ingredient.replace(
-                //             /(^\w{1})|(\s+\w{1})/g,
-                //             (letter) => letter.toUpperCase()
-                //             )}
-                //         </li>;
-                //     });
+                const ingredientsList = ingredients[item.name].map((ingredient) => {
+                    return <div className="to-center">
+                            {ingredient.replace(
+                            /(^\w{1})|(\s+\w{1})/g,
+                            (letter) => letter.toUpperCase()
+                            )}
+                        </div>;
+                    });
+
                 return (
-                    <div>
-                        <div className='to-center'>
-                            <div className='items-grid'>
-                                <div className='to-center'>
-                                    {" "}
-                                    <h5>{item.name.replace(
-                                        /(^\w{1})|(\s+\w{1})/g,
-                                        (letter) => letter.toUpperCase()
-                                        )}
-                                    </h5>
-                                </div>
-                                <div className='to-center'>
-                                    {" "}
-                                    <h5>
-                                        <ol class="ui list">
-                                            candy
-                                        </ol>
-                                    </h5>
-                                </div>
-                                <div className="to-center">
-                                    {" "}    
-                                    <h5>
-                                        ${item.cost.toFixed(2)}
-                                    </h5>
-                                </div>
-                                <div className="to-center">
-                                    {" "}
-                                    <h5>
-                                        {item.type.replace(
-                                        /(^\w{1})|(\s+\w{1})/g,
-                                        (letter) => letter.toUpperCase()
-                                        )}
-                                    </h5>
-                                </div>
-                                <div className='to-center'>
-                                    <button class="ui blue button" onClick={() => {setTitle(item.name); setPopup2(true);}}>
-                                        Change Price
-                                    </button>
-                                    <button className="negative ui button" onClick={() => removeItem(item.name)}>
-                                        X
-                                    </button>
-                                    
-                                </div>
+                    <tr>
+                        <td>
+                            <div className='to-center'>
+                                {" "}
+                                <h5>{item.name.replace(
+                                    /(^\w{1})|(\s+\w{1})/g,
+                                    (letter) => letter.toUpperCase()
+                                    )}
+                                </h5>
                             </div>
-                        </div>
-                        <br />
-                    </div>
+                        </td>
+                        <td>
+                            <div className="to-center"> 
+                                {" "}
+                                <h5>
+                                    {ingredientsList}
+                                </h5>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="to-center">
+                                {" "}    
+                                <h5>
+                                    ${item.cost.toFixed(2)}
+                                </h5>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="to-center">
+                                {" "}
+                                <h5>
+                                    {item.type.replace(
+                                    /(^\w{1})|(\s+\w{1})/g,
+                                    (letter) => letter.toUpperCase()
+                                    )}
+                                </h5>
+                            </div>
+                        </td>
+                        <td>
+                            <div className='to-center'>
+                                <button class="ui blue button" onClick={() => {setTitle(item.name); setPopup2(true);}}>
+                                    Change Price
+                                </button>
+                                <button className="negative ui button" onClick={() => removeItem(item.name)}>
+                                    X
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                 );
             } else {
                 return <div></div>
@@ -327,31 +350,36 @@ const ItemsPage = () => {
             <h1 className='to-center'>Menu Items</h1>
             <br />
             <br />
-            <div className='to-center'>
-                <div className='items-grid'>
-                    <div className='to-center'>
-                        <h3>Name</h3>
-                    </div>
-                    <div className='to-center'>
-                        <h3>Ingredients</h3>
-                    </div>
-                    <div className="to-center">
-                        <h3>Price</h3>
-                    </div>
-                    <div className="to-center">
-                        <h3>Type</h3>
-                    </div>
-                    <div className="to-center">
-                        <button 
-                            className="ui positive button" 
-                            onClick={() => {setPopup(true);}}
-                            >Add New Item</button>
-                    </div>
-                </div>
-            </div>
-
-            <br />
-            <div className='items'>{displayItems()}</div>
+            <table className="ui celled table">
+                <thead>
+                    <tr>
+                        <th className='three wide'>
+                            <h3 className="to-center">Name</h3>
+                        </th>
+                        <th className='three wide'>
+                            <h3 className="to-center">Ingredients</h3>
+                        </th>
+                        <th className='three wide'>
+                            <h3 className="to-center">Price</h3>
+                        </th>
+                        <th className='three wide'>
+                            <h3 className="to-center">Type</h3>
+                        </th>
+                        <th className='three wide'>
+                            <div className="to-center">
+                                <button 
+                                className="ui positive button" 
+                                onClick={() => {setPopup(true);}}
+                                >Add New Item</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {displayItems()}
+                </tbody>
+            </table>
+            
         </div>
     );
 };
