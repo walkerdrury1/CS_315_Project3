@@ -1,8 +1,11 @@
 import React from "react";
 import Topbar from "./Topbar";
+import { connect } from "react-redux";
 import "./LandingPage.css"
+import { setPage } from "../actions";
 
-const LandingPage = () => {
+
+const LandingPage = (props) => {
   return (
     <html>
       <head>
@@ -16,9 +19,11 @@ const LandingPage = () => {
             <h1>TYSON EXPRESS</h1>
             <p>Thith Is Way Better Than Panda Expreth.</p>
 
-            <div className="function">
-              <button type="button"><span></span> LOG IN</button>
-              <button type="button"><span></span> ORDER NOW </button>
+            <div className="landing-button">
+              {/* <a href="">
+                <button type="button" onClick={'/SignInPage'}><span className="xyz"></span> LOG IN</button>
+              </a> */}
+                <button onClick = {() => props.setPage("Combo Page")} type="button"><span className="xyz"></span> ORDER NOW </button>
             </div>
 
           </div>
@@ -35,5 +40,12 @@ const LandingPage = () => {
     // </div>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+      page: state.page,
+  };
+};
 
-export default LandingPage;
+export default connect(mapStateToProps, {
+  setPage: setPage,
+})(LandingPage);

@@ -33,7 +33,7 @@ const SignInPage = (props) => {
         if (x.role === "None") {
             setError(true);
         } else if (x.role === "manager") {
-            props.setPage("Manager Page");
+            props.setPage("Inventoryer Page");
         }
     };
     return (

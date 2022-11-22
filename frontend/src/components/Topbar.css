@@ -1,7 +1,7 @@
 .topbar-container{
     height: 100px;
     display: grid;
-    grid-template-columns: 10% 10% 65% 15%;
+    grid-template-columns: 10% 75% 15%;
     background-color: rgb(185, 0, 0);
     /* new edits below this line */
 }

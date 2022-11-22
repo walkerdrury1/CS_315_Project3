@@ -27,27 +27,32 @@ const ManagerTopbar = (props) => {
         });
     };
     return (
-        <div className='topbar-container'>
-            <div className='topbar-logo-container'>
-                <img
-                    className='topbar-logo'
-                    src='mike.png'
-                    alt='panda logo'
-                    onClick={() => goHome()}
-                />
-            </div>
-            <div className='gui-view'>
-                <h4>Manager View</h4>
-            </div>
-            <div className='topbar-items-container'>{displayTopbarItems()}</div>
+        <div>
+            <div className='topbar-container'>
+                <div className='topbar-logo-container'>
+                    <img
+                        className='topbar-logo'
+                        src='mike.png'
+                        alt='panda logo'
+                        onClick={() => goHome()}
+                    />
+                </div>
+                <div className='topbar-items-container'>{displayTopbarItems()}</div>
 
-            <div className='to-center'>
-                <div className='sign-in'>
-                    <i class='big user circle icon'></i>
-                    <div className='to-center' onClick={() => props.setPage("landing page")}>Sign Out</div>
+                <div className='to-center'>
+                    <div className='sign-in'>
+                        <i class='big user circle icon'></i>
+                        <div className='to-center' onClick={() => props.setPage("landing page")}>Sign Out</div>
+                    </div>
                 </div>
             </div>
+
+            <div className='gui-view'>
+                    <h4>Manager View</h4>
+            </div>
         </div>
+
+        
     );
 };
 

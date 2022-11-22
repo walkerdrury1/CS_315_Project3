@@ -1,4 +1,4 @@
-const pageReducer = (state = "Reports", action) => {
+const pageReducer = (state = "landing page", action) => {
     switch(action.type){
         case "SET_PAGE":
             return action.payload

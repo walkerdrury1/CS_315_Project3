@@ -41,29 +41,35 @@ const Topbar = (props) => {
         });
     };
     return (
-        <div className='topbar-container'>
-            <div className='topbar-logo-container'>
-                <img
-                    className='topbar-logo'
-                    src='mike.png'
-                    alt='panda logo'
-                    onClick={() => goHome()}
-                />
+        <div>
+            <div className='topbar-container'>
+                <div className='topbar-logo-container'>
+                    <img
+                        className='topbar-logo'
+                        src='mike.png'
+                        alt='panda logo'
+                        onClick={() => goHome()}
+                    />
+                </div>
+                
+                <div className='topbar-items-container'>{displayTopbarItems()}</div>
+
+                <div className='to-center'>
+                    <div className='sign-in' onClick={() => click("Sign in")}>
+                        <i class='big user circle icon'></i>
+                        <div className='to-center'>Sign in</div>
+                    </div>
+                </div>
             </div>
+
             <div className='gui-view'>
                 <h4>Customer View</h4>
             </div>
-            <div className='topbar-items-container'>{displayTopbarItems()}</div>
 
-            <div className='to-center'>
-                <div className='sign-in' onClick={() => click("Sign in")}>
-                    <i class='big user circle icon'></i>
-                    <div className='to-center'>Sign in</div>
-                </div>
-            </div>
         </div>
     );
 };
+
 
 const mapStateToProps = (state) => {
     return {
