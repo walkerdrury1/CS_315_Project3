@@ -199,7 +199,14 @@ router.get('/get-ingredients/:name', async (req, res) => {
     try{
         const {name} = req.params;
         const db_response1 = await pool.query(`SELECT itemname FROM ingredientslist NATURAL JOIN inventory NATURAL JOIN items WHERE name = '${name}';`);
-        res.send(db_response1.rows);
+        const data = db_response1.rows;
+        let names = [];
+        for(let i=0; i<data.length; i++){
+            names.push(data[i].itemname);
+        }
+        console.log(names);
+        res.send(names);
+        
     } catch (err) {
         console.log(err.message);
         res.send(err.message);
