@@ -9,13 +9,14 @@ const ServerPage = (props) => {
     const [myPage, setMyPage] = useState("Combo Page");
     const comboList = ["Bowl", "Plate", "Bigger Plate", "A La Carte"];
     const [entreeCount, setEntreeCount] = useState(0);
-    const [sideCount, setSideCount] = useState(0)
+    const [sideCount, setSideCount] = useState(0);
     const [entreeList, setEntreeList] = useState([]);
     const [sideList, setSideList] = useState([]);
     const [allList, setAllList] = useState([]);
     const [waiting, setWaiting] = useState(false);
     const [transactionList, setTransactionList] = useState([]);
     const [myPage2, setMyPage2] = useState(null);
+    const [currItem, setCurrItem] = useState(null);
 
     const callApi = async () => {
         setWaiting(true);
@@ -29,21 +30,25 @@ const ServerPage = (props) => {
     useEffect(() => {
         callApi();
     }, []);
-
+    console.log(transactionList, "transaction list")
+    console.log(currItem, "currItem")
     const comboClick = (combo) => {
         setMyPage(combo + " Page");
         if (combo === "Bowl") {
             setEntreeCount(1);
             setSideCount(1);
             setMyPage2("Entree");
+            setCurrItem({ type: "Bowl", items: [] });
         } else if (combo === "Plate") {
             setEntreeCount(2);
             setSideCount(1);
             setMyPage2("Entree");
+            setCurrItem({ type: "Plate", items: [] });
         } else if (combo === "Bigger Plate") {
             setEntreeCount(3);
             setSideCount(1);
             setMyPage2("Entree");
+            setCurrItem({ type: "Bigger Plate", items: [] });
         } else {
             setEntreeCount(1);
             setEntreeCount(1);
@@ -57,9 +62,21 @@ const ServerPage = (props) => {
         } else {
             if (sideCount - 1 === 0) {
                 setMyPage2(null);
-                setMyPage("Combo Page")
+                setMyPage("Combo Page");
+                setSideCount(sideCount - 1);
+                currItem.items.push(side);
+                const temp2 = [];
+                for (let i = 0; i < transactionList.length; i++) {
+                    temp2.push(transactionList[i]);
+                }
+                temp2.push(currItem);
+                setTransactionList(temp2);
+                setCurrItem(null)
+            } else {
+                setSideCount(sideCount - 1);
+                const temp = currItem;
+                temp.items.push(side);
             }
-            setSideCount(sideCount - 1);
         }
     };
 
@@ -71,13 +88,20 @@ const ServerPage = (props) => {
                 setMyPage2(null);
             }
             setEntreeCount(entreeCount - 1);
+            currItem.items.push(entree);
         }
     };
 
-    const allClick = ( item ) => {
+    const allClick = (item) => {
         setMyPage2(null);
-        setMyPage("Combo Page")
-    }
+        setMyPage("Combo Page");
+        const temp2 = [];
+        for (let i = 0; i < transactionList.length; i++) {
+            temp2.push(transactionList[i]);
+        }
+        temp2.push(item);
+        setTransactionList(temp2);
+    };
     const reset = () => {
         setEntreeCount(0);
         setSideCount(0);
@@ -109,8 +133,7 @@ const ServerPage = (props) => {
             );
         }
         return allList.map((entree, index) => {
-            console.log(entree);
-            if (entree.type === "entree" && entree.onmenu === "yes")  {
+            if (entree.type === "entree" && entree.onmenu === "yes") {
                 return (
                     <div key={index} className='eight wide column'>
                         <ServerCard
@@ -184,25 +207,31 @@ const ServerPage = (props) => {
                     <div className='ui grid'>{displayCombos()}</div>
                 </div>
             );
-        } else if (myPage === "Bowl Page" || myPage === "Plate Page" || myPage === "Bigger Plate Page") {
+        } else if (
+            myPage === "Bowl Page" ||
+            myPage === "Plate Page" ||
+            myPage === "Bigger Plate Page"
+        ) {
             return (
                 <div>
                     <h3 className='to-center'>
-                        Select {myPage2 === "Entree" ? entreeCount : sideCount} more {myPage2 === "Entree" ? "entrees" : "sides"}
+                        Select {myPage2 === "Entree" ? entreeCount : sideCount}{" "}
+                        more {myPage2 === "Entree" ? "entrees" : "sides"}
                     </h3>
 
                     <div className='to-center'>
-                        <div className='ui grid'>{myPage2 === "Entree"? displayEntrees(): displaySides()}</div>
+                        <div className='ui grid'>
+                            {myPage2 === "Entree"
+                                ? displayEntrees()
+                                : displaySides()}
+                        </div>
                     </div>
                 </div>
             );
-        }
-        else{
+        } else {
             return (
                 <div>
-                    <h3 className='to-center'>
-                        Select an Item
-                    </h3>
+                    <h3 className='to-center'>Select an Item</h3>
 
                     <div className='to-center'>
                         <div className='ui grid'>{displayAll()}</div>
