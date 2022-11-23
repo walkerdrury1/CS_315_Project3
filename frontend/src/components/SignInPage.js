@@ -63,6 +63,7 @@ const SignInPage = (props) => {
                     sx={{ width: "30%" }}
                     label='password'
                     value={password}
+                    type = "password"
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
