@@ -19,7 +19,6 @@ const Confirmation = (props) => {
                 <div className="ui raised padded center aligned segment">
                     <h1 className="ui header">Order complete</h1>
                     <h4>Thank you for your purchase!</h4>
-                    <h4>Returning you to the landing page.</h4>
                 </div>
                 <div className="fluid ui buttons">
                     <button className="ui blue button" onClick={() => props.setPage("landing page")}>

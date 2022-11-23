@@ -113,7 +113,7 @@ const ServerCheckout = ({
                                     </ol>
                                 </div>
                                 <div className='right floated four wide column'>
-                                    <h3>{item.cost}$</h3>
+                                    <h3>${item.cost.toFixed(2)}</h3>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +133,7 @@ const ServerCheckout = ({
                             <h2>Total:</h2>
                         </div>
                         <div className='right floated five wide column'>
-                            <h2>${getTotalCost()}</h2>
+                            <h2>${getTotalCost().toFixed(2)}</h2>
                         </div>
                     </div>
 
