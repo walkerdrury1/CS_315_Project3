@@ -160,9 +160,9 @@ const Checkout = (props) => {
                             >
                                 Complete Order
                             </button>
-                            <div class='or'></div>
+                            <div className='or'></div>
                             <button
-                                class='ui negative button'
+                                className='ui negative button'
                                 tabIndex={0}
                                 onClick={() => clearCart()}
                             >
