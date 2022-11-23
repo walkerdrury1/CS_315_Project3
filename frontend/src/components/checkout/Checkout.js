@@ -146,9 +146,14 @@ const Checkout = (props) => {
                         <div className='right floated three wide column'><h2>${props.total.toFixed(2)}</h2></div>
                     </div>
                     <div className='ui attached segment'>
+                        <button className="ui fluid blue button" onClick={() => props.setPage("Combo Page")}>
+                            Order More
+                        </button>
+                    </div>
+                    <div className='ui attached segment'>
                         <div class='fluid ui buttons'>
                             <button
-                                class='ui positive button'
+                                className='ui positive button'
                                 onClick={
                                     processTransactions
                                 }
