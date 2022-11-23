@@ -149,7 +149,7 @@ const ItemsPage = () => {
         newItemIngredientsList = newItemIngredientsString.split(',');
         
         newItemIngredientsList.forEach(function(part, index) {
-            this[index] = part.trim();
+            this[index] = part.trim().toLowerCase();
         }, newItemIngredientsList);
 
         console.log(newItemIngredientsList);

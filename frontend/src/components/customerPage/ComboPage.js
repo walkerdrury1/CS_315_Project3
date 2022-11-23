@@ -5,6 +5,7 @@ import { setPage } from "../../actions";
 import { setCombo } from "../../actions";
 import Topbar from "../Topbar";
 import Card from "../Card";
+import "./CustomerPage.css";
 import { setEntreeCount, setSideCount } from "../../actions";
 
 const ComboPage = (props) => {
