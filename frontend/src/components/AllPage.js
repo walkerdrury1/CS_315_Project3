@@ -13,6 +13,10 @@ const AllPage = (props) => {
     const [allItems, setAllItems] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
 
+
+    const [highlightNum, changeHighlight] = useState(-1);
+    const [incFlag, changeFlag] = useState(1);
+
     const callApi = async () => {
         const x = await axios.get(
             "https://tyson-express.onrender.com/get-menuitems"
@@ -32,6 +36,99 @@ const AllPage = (props) => {
         props.setCombo(null);
         props.setPage("Checkout");
     };
+
+    useEffect(() => {
+        const handleKey = (event) => {
+        if (event.keyCode === 13) {
+            // enter
+            
+            if (highlightNum === -1)
+                return;
+            
+            event.preventDefault();
+            const incrementerArrs = Array.from(document.querySelectorAll('.increment'))
+            const decrementArrs = Array.from(document.querySelectorAll('.decrement'))
+            const incNos = Array.from(document.querySelectorAll('.incrementer-container h4'))
+            const total = incrementerArrs.length
+
+            if (highlightNum === total) {
+                // previous
+                submit("previous")
+            }
+            else if (highlightNum === total+1) {
+                // add to cart
+                submit("submit")
+            }
+            else {
+                // when to decrease??
+                const itemLimit = 5
+                
+                
+                if (incFlag == 1)
+                    incrementerArrs[highlightNum].click()
+                else
+                    decrementArrs[highlightNum].click()
+                
+                const curr = parseInt(incNos[highlightNum].innerHTML, 10)
+                
+                if (curr == 0) changeFlag(1)
+                else if (curr == itemLimit) changeFlag(0)
+
+            }
+            
+        }
+        else if (event.keyCode === 9) {
+            // tab
+                event.preventDefault();
+                const incrementerArrs = Array.from(document.querySelectorAll('.incrementer-container'))
+                const cardImgs = Array.from(document.querySelectorAll('.card-img'))
+                const prev = document.querySelector('#prev')
+                const all = document.querySelector('#add')
+                const total = incrementerArrs.length
+
+                if (highlightNum !== -1) {
+
+                    if (highlightNum === total - 1) {
+                        incrementerArrs[highlightNum].style.color = "black"
+                        prev.style.color = "red"
+                        prev.scrollIntoView({behavior: 'smooth'})
+                        changeHighlight(highlightNum+1)
+                        return
+                    }
+
+                    else if (highlightNum < total)
+                        incrementerArrs[highlightNum].style.color = "black"
+                        
+                    else if (highlightNum === total) {
+                        prev.style.color = "black";
+                        all.style.color = "red";
+                        all.scrollIntoView({behavior: 'smooth'})
+                        changeHighlight(highlightNum+1);
+                        return;
+                    }
+                    else {
+                        all.style.color = "black";
+                        incrementerArrs[0].style.color = "red";
+                        cardImgs[0].scrollIntoView({behavior: 'smooth'})
+                        changeHighlight(0);
+                        return;
+                    }
+                }
+
+                incrementerArrs[highlightNum + 1].style.color = "red"
+                cardImgs[highlightNum + 1].scrollIntoView({behavior: 'smooth'})
+                changeHighlight(highlightNum+1);
+
+        }
+    };
+    window.addEventListener('keydown', handleKey);
+
+    return () => {
+        window.removeEventListener('keydown', handleKey);
+    };
+    
+    
+    },)
 
     useEffect(() => {
         callApi();
@@ -95,12 +192,14 @@ const AllPage = (props) => {
             <div className='mainpage-card-container'>{displayItems()}</div>
             <div className='to-center'>
                 <button
+                    id = 'prev'
                     className='ui button'
                     onClick={() => submit("previous")}
                 >
                     Previous
                 </button>
                 <button
+                    id = 'add'
                     className='red ui button'
                     onClick={() => submit("submit")}
                 >

@@ -6,9 +6,15 @@ import { setCombo } from "../../actions";
 import Topbar from "../Topbar";
 import Card from "../Card";
 import "./CustomerPage.css";
+import {useState} from "react"
+import { useEffect } from "react"
 import { setEntreeCount, setSideCount } from "../../actions";
 
 const ComboPage = (props) => {
+    const [highlightNum, changeHighlight] = useState(-1)
+
+    
+
     const onCardClick = (combo_name) => {
         props.setCombo(combo_name);
 
@@ -18,6 +24,41 @@ const ComboPage = (props) => {
         }
         props.setPage("Select Items Page");
     };
+
+    useEffect(() => {
+        const handleKey = (event) => {
+        if (event.keyCode === 13) {
+            // enter
+            event.preventDefault();
+            if (highlightNum !== -1)
+                onCardClick(combos[highlightNum].name);
+        }
+        else if (event.keyCode === 9) {
+            // tab
+
+                event.preventDefault();
+                const cardsArr = Array.from(document.querySelectorAll('.card-container'))
+                console.log(cardsArr)
+                if (highlightNum !== -1) {
+                    cardsArr[highlightNum].style.opacity = "1.0";
+                }
+                const next = (highlightNum+1) % combos.length
+                cardsArr[next].style.opacity = "0.5";
+                cardsArr[next].scrollIntoView({behavior: 'smooth'})
+                changeHighlight(next);
+        }
+    };
+    window.addEventListener('keydown', handleKey);
+
+    return () => {
+        window.removeEventListener('keydown', handleKey);
+    };
+    }, );
+
+
+
+
+
     console.log(props.combo)
     const displayCard = () => {
         return combos.map((card, index) => {

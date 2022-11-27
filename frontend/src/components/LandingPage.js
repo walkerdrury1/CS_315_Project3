@@ -3,9 +3,24 @@ import Topbar from "./Topbar";
 import { connect } from "react-redux";
 import "./LandingPage.css"
 import { setPage } from "../actions";
+import { useEffect } from "react"
 
 
 const LandingPage = (props) => {
+
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        props.setPage("Combo Page")
+      }
+    };
+    window.addEventListener('keydown', handleEnter);
+
+    return () => {
+      window.removeEventListener('keydown', handleEnter);
+    };
+  }, [props]);
+
   return (
     <html>
       <head>

@@ -18,6 +18,11 @@ const EntreePage = (props) => {
     const [allEntrees, setAllEntrees] = useState([]);
     const [allSides, setAllSides] = useState([]);
 
+    const [highlightNum, changeHighlight] = useState(-1);
+    const [incFlag, changeFlag] = useState(1);
+    let valid_entrees = 0;
+    let valid_sides = 0;
+
     const callApis = async () => {
         const x = await axios.get(
             "https://tyson-express.onrender.com/get-entrees"
@@ -56,6 +61,114 @@ const EntreePage = (props) => {
         props.setPage("Checkout");
         props.setCombo(null);
     };
+
+    
+    useEffect(() => {
+        const handleKey = (event) => {
+        if (event.keyCode === 13) {
+            // enter
+            
+            if (highlightNum === -1)
+                return;
+            
+            event.preventDefault();
+            const incrementerArrs = Array.from(document.querySelectorAll('.increment'))
+            const decrementArrs = Array.from(document.querySelectorAll('.decrement'))
+            const incNos = Array.from(document.querySelectorAll('.incrementer-container h4'))
+            const total = incrementerArrs.length
+
+            if (highlightNum === total) {
+                // previous
+                submit("previous")
+            }
+            else if (highlightNum === total+1) {
+                // add to cart
+                submit("submit")
+            }
+            else {
+                // item
+
+                if (incFlag === 1) {
+                    incrementerArrs[highlightNum].click()
+                }
+                else {
+                    decrementArrs[highlightNum].click()
+                }
+
+                if (highlightNum < valid_entrees) {
+                    const curr = parseInt(incNos[highlightNum].innerHTML, 10)
+
+                    if (entreeMax == 0) changeFlag(0)
+                    if (curr == 0) changeFlag(1)
+
+                }
+
+                else {
+                    // in sides
+                    const curr = parseInt(incNos[highlightNum].innerHTML, 10)
+
+                    if (sidesMax == 0) changeFlag(0)
+                    if (curr == 0) changeFlag(1)
+                }
+
+            }
+            
+        }
+        else if (event.keyCode === 9) {
+            // tab
+                event.preventDefault();
+                const incrementerArrs = Array.from(document.querySelectorAll('.incrementer-container'))
+                const cardImgs = Array.from(document.querySelectorAll('.card-img'))
+                const prev = document.querySelector('#prev')
+                const all = document.querySelector('#add')
+                const total = incrementerArrs.length
+
+                if (highlightNum !== -1) {
+
+                    if (highlightNum === total - 1) {
+                        incrementerArrs[highlightNum].style.color = "black"
+                        prev.style.color = "red"
+                        prev.scrollIntoView({behavior: 'smooth'})
+                        changeHighlight(highlightNum+1)
+                        return
+                    }
+
+                    else if (highlightNum < total)
+                        incrementerArrs[highlightNum].style.color = "black"
+                        
+                    else if (highlightNum === total) {
+                        prev.style.color = "black";
+                        all.style.color = "red";
+                        all.scrollIntoView({behavior: 'smooth'})
+                        changeHighlight(highlightNum+1);
+                        return;
+                    }
+                    else {
+                        all.style.color = "black";
+                        incrementerArrs[0].style.color = "red";
+                        cardImgs[0].scrollIntoView({behavior: 'smooth'})
+                        changeHighlight(0);
+                        return;
+                    }
+                }
+
+                incrementerArrs[highlightNum + 1].style.color = "red"
+                cardImgs[highlightNum + 1].scrollIntoView({behavior: 'smooth'})
+                changeHighlight(highlightNum+1);
+
+        }
+    };
+    window.addEventListener('keydown', handleKey);
+
+    return () => {
+        window.removeEventListener('keydown', handleKey);
+    };
+    
+    
+    },)
+
+
+
     useEffect(() => {
         if (props.combo === "Bowl") {
             setEntreeMax(1);
@@ -129,6 +242,8 @@ const EntreePage = (props) => {
                 }
             };
             if (card.onmenu === "yes") {
+                if (type === "entree") valid_entrees++
+                else valid_sides++
                 return (
                     <div className='card-grid-container'>
                         <ItemCard
@@ -172,12 +287,14 @@ const EntreePage = (props) => {
             </div>
             <div className='to-center'>
                 <button
+                    id = 'prev'
                     className='ui button'
                     onClick={() => submit("previous")}
                 >
                     Previous
                 </button>
                 <button
+                    id = 'add'
                     className='red ui button'
                     onClick={() => submit("submit")}
                 >

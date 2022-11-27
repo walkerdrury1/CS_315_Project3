@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Topbar from "../Topbar";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -8,6 +8,9 @@ import { setCombo } from "../../actions";
 import { deleteCartItem } from "../../actions";
 
 const Checkout = (props) => {
+
+    const [highlightNum, changeHighlight] = useState(-1);
+
     const processTransactions = async () => {
         const itemList = [];
         props.items.map((item) => {
@@ -28,6 +31,111 @@ const Checkout = (props) => {
     useEffect(() => {
         props.calculateTotal(props.items);
     }, [props.items]);
+
+    useEffect(() => {
+        const handleKey = (event) => {
+        if (event.keyCode === 13) {
+            // enter
+            
+            if (highlightNum === -1)
+                return;
+            
+            event.preventDefault();
+            const singleCancels = Array.from(document.querySelectorAll('.ui.red.button'))
+            const orderMore = document.querySelector('.ui.fluid.blue.button')
+            const completeOrder = document.querySelector('.ui.positive.button')
+            const clearCart = document.querySelector('.ui.negative.button')
+            switch(highlightNum) {
+                case singleCancels.length:
+                    orderMore.click()
+                    break
+                case singleCancels.length+1:
+                    completeOrder.click()
+                    break
+                case singleCancels.length+2:
+                    clearCart.click()
+                    changeHighlight(2)
+                    break
+                default:
+                    singleCancels[highlightNum].click()
+                    changeHighlight(highlightNum-1)
+            }
+
+        }
+        else if (event.keyCode === 9) {
+            // tab
+                event.preventDefault();
+                const singleCancels = Array.from(document.querySelectorAll('.ui.red.button'))
+                const orderMore = document.querySelector('.ui.fluid.blue.button')
+                const completeOrder = document.querySelector('.ui.positive.button')
+                const clearCart = document.querySelector('.ui.negative.button')
+                const ll = singleCancels.length
+                if (highlightNum !== -1) {
+
+                    switch(highlightNum) {
+                        case ll-1:
+                            singleCancels[highlightNum].style.opacity = "1"
+                            orderMore.style.opacity = "0.5"
+                            orderMore.scrollIntoView({behavior: 'smooth'})
+                            changeHighlight(highlightNum+1)
+                            return
+                        
+                        case ll:
+                            orderMore.style.opacity = "1"
+                            completeOrder.style.opacity = "0.5"
+                            completeOrder.scrollIntoView({behavior: 'smooth'})
+                            changeHighlight(highlightNum+1)
+                            return
+                        
+                        case ll+1:
+                            completeOrder.style.opacity = "1"
+                            clearCart.style.opacity = "0.5"
+                            clearCart.scrollIntoView({behavior: 'smooth'})
+                            changeHighlight(highlightNum+1)
+                            return
+                        case ll+2:
+                            clearCart.style.opacity = "1"
+                            if (ll == 0) {
+                                orderMore.style.opacity = "0.5"
+                                orderMore.scrollIntoView({behavior: 'smooth'})
+                                changeHighlight(0)
+                                return
+                            }
+                            singleCancels[0].style.opacity = "0.5"
+                            singleCancels[0].scrollIntoView({behavior: 'smooth'})
+                            changeHighlight(0)
+                            return
+                        default:
+                            singleCancels[highlightNum].style.opacity = "1"
+                            
+                            
+                    }
+
+                }
+                
+                if (ll == 0) {
+                    orderMore.style.opacity = "0.5"
+                    orderMore.scrollIntoView({behavior: 'smooth'})
+                    changeHighlight(0)
+                    return
+                }
+                singleCancels[highlightNum+1].style.opacity = "0.5"
+                singleCancels[highlightNum+1].scrollIntoView({behavior: 'smooth'})
+                changeHighlight(highlightNum+1)
+                
+
+
+
+        }
+    };
+    window.addEventListener('keydown', handleKey);
+
+    return () => {
+        window.removeEventListener('keydown', handleKey);
+    };
+    
+    
+    },)
 
     const clearCart = () => {
         props.items.map((item, index) => {
