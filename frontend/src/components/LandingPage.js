@@ -32,7 +32,7 @@ const LandingPage = (props) => {
           <div> <Topbar /> </div>
           <div className="landing-content">
             <h1>TYSON EXPRESS</h1>
-            <p>Thith Is Way Better Than Panda Expreth.</p>
+            <p>This Is Way Better Than Panda Express.</p>
 
             <div className="landing-button">
               {/* <a href="">
