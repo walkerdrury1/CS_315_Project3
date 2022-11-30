@@ -46,7 +46,41 @@
     overflow: hidden;
 }
 
+.landing-button-active button{
+    width: 200px;
+    padding: 15px;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    border: 2px solid red;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transform: scale(1);
+	animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.3);}
+    100% {transform: scale(1);}
+}
+
+
 .landing-button span.xyz{
+    background: red;
+    height: 100%;
+    width: 0%;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+}
+.landing-button-active span.xyz{
     background: red;
     height: 100%;
     width: 0%;

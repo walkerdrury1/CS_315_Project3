@@ -30,9 +30,7 @@ const Topbar = (props) => {
         return topbar_item_list.map((item, index) => {
             return (
                 <div
-                    className={`${
-                        active === index ? "active-" : ""
-                    }topbar-item`}
+                    className={`${active === index ? "active-" : ""}topbar-item`}
                     onClick={() => click(item, index)}
                 >
                     {item}
@@ -40,6 +38,7 @@ const Topbar = (props) => {
             );
         });
     };
+
     return (
         <div>
             <div className='topbar-container'>

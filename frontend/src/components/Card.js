@@ -1,9 +1,9 @@
 import React from 'react'
 import './Card.css'
 
-const Card = ({title, img, onCardClick}) => {
+const Card = ({title, img, onCardClick, active}) => {
     return(
-        <div className='card-container' onClick = {onCardClick}>
+        <div className={active ? 'card-container-active' : 'card-container'} onClick = {onCardClick}>
             <div className='card-img-container'>
                 <img className =  "card-img" src = {img} alt = "pic of card"/>
             </div>

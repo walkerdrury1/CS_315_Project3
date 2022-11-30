@@ -28,7 +28,7 @@ const Incrementer = ({ type, max, setMax }) => {
                 <h4>{count}</h4>
             </div>
             <div className='increment' onClick={() => change_count("i")}>
-                +
+                <div className="plus">+</div>
             </div>
         </div>
     );

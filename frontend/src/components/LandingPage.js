@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Topbar from "./Topbar";
 import { connect } from "react-redux";
 import "./LandingPage.css"
@@ -7,7 +7,14 @@ import { useEffect } from "react"
 
 
 const LandingPage = (props) => {
+  const [active, setActive] = useState(false)
 
+
+  useEffect(() => {
+    setTimeout(() => {
+      setActive(!active)
+    }, 9000)
+  }, [])
   useEffect(() => {
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
@@ -20,6 +27,10 @@ const LandingPage = (props) => {
       window.removeEventListener('keydown', handleEnter);
     };
   }, [props]);
+
+  const startPulsing = () => {
+    document.getElementById("btn1").className("click-me");
+  }
 
   return (
     <html>
@@ -34,13 +45,12 @@ const LandingPage = (props) => {
             <h1>TYSON EXPRESS</h1>
             <p>This Is Way Better Than Panda Express.</p>
 
-            <div className="landing-button">
+            <div className={active ? "landing-button-active" : "landing-button"} >
               {/* <a href="">
                 <button type="button" onClick={'/SignInPage'}><span className="xyz"></span> LOG IN</button>
               </a> */}
                 <button onClick = {() => props.setPage("Combo Page")} type="button"><span className="xyz"></span> ORDER NOW </button>
             </div>
-
           </div>
         </div>
       </body>

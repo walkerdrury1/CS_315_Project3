@@ -16,16 +16,39 @@
 .card-container:hover{
     opacity: .5;
 }
+
+.card-container-active:hover{
+    opacity: .5;
+}
 .card-container{
     width: 70%;
     border-radius: 25px;
     box-shadow: 3px 3px 10px#a9a9a9;
 }
+
+.card-container-active{
+    width: 70%;
+    border-radius: 25px;
+    box-shadow: 3px 3px 10px#a9a9a9;
+    transform: scale(1);
+    animation: pulseCard 3s infinite;
+}
+
 .cardItem-container{
     width: 70%;
     border-radius: 25px;
     box-shadow: 3px 3px 10px#a9a9a9;
 }
+
+@keyframes pulseCard {
+    0% {transform: scale(1);
+        box-shadow: 3px 3px 10px#a9a9a9;}
+    50% {transform: scale(1.05);
+        box-shadow: 10px 10px 15px#fe9595;}
+    100% {transform: scale(1);
+        box-shadow: 3px 3px 10px#a9a9a9;}
+}
+
 .card-title{
     padding: 30px;
 }

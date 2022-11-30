@@ -12,6 +12,7 @@ import { setEntreeCount, setSideCount } from "../../actions";
 
 const ComboPage = (props) => {
     const [highlightNum, changeHighlight] = useState(-1)
+    const [active, setActive] = useState(false)
 
     
 
@@ -49,11 +50,14 @@ const ComboPage = (props) => {
         }
     };
     window.addEventListener('keydown', handleKey);
+    setTimeout(() => {
+        setActive(!active)
+      }, 9000)
 
     return () => {
         window.removeEventListener('keydown', handleKey);
     };
-    }, );
+    }, []);
 
 
 
@@ -68,6 +72,7 @@ const ComboPage = (props) => {
                         onCardClick={() => onCardClick(card.name)}
                         title={card.name}
                         img={card.img}
+                        active = {active}
                     />
                 </div>
             );

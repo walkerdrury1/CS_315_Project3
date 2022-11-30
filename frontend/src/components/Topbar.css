@@ -58,8 +58,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(185, 0, 0);
-    color: white;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
 .sign-in{
     display: grid;
