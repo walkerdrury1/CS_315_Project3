@@ -199,7 +199,7 @@ const ServerPage = (props) => {
             );
         }
         return allList.map((item, index) => {
-            if (item.onmenu === "yes") {
+            if (item.onmenu === "yes" && item.type !== "combo") {
                 return (
                     <div key={index} className='eight wide column'>
                         <ServerCard
