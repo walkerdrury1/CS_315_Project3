@@ -64,15 +64,15 @@ const AllPage = (props) => {
                 const itemLimit = 5
                 
                 
-                if (incFlag == 1)
+                if (incFlag === 1)
                     incrementerArrs[highlightNum].click()
                 else
                     decrementArrs[highlightNum].click()
                 
                 const curr = parseInt(incNos[highlightNum].innerHTML, 10)
                 
-                if (curr == 0) changeFlag(1)
-                else if (curr == itemLimit) changeFlag(0)
+                if (curr === 0) changeFlag(1)
+                else if (curr === itemLimit) changeFlag(0)
 
             }
             
@@ -135,7 +135,7 @@ const AllPage = (props) => {
     }, []);
 
     console.log(selectedItems);
-    const displayItems = () => {
+    const displayItems = (type) => {
         return allItems.map((item) => {
             const setMaxandItems = (amount, inc) => {
                 const new_list = [...selectedItems];
@@ -158,7 +158,17 @@ const AllPage = (props) => {
                     setSelectedItems(to_return);
                 }
             };
-            if (item.type !== "combo" && item.onmenu === "yes") {
+            
+            if (item.type === type && item.onmenu === "yes" && !item.name.includes("drink")) {
+                return (
+                    <div className='card-grid-container'>
+                        <ItemCard
+                            item={item}
+                            setMax={(e, x) => setMaxandItems(e, x)}
+                        />
+                    </div>
+                );
+            } else if (item.type === "extra" && type === "drink" && item.name.includes("drink")) {
                 return (
                     <div className='card-grid-container'>
                         <ItemCard
@@ -187,9 +197,21 @@ const AllPage = (props) => {
             <Topbar />
             <br />
             <div className='to-center'>
-                <h1>Select Items</h1>
+                <h1>Entrees</h1>
             </div>
-            <div className='mainpage-card-container'>{displayItems()}</div>
+            <div className='mainpage-card-container'>{displayItems("entree")}</div>
+            <div className="to-center">
+                <h1>Sides</h1>
+            </div>
+            <div className='mainpage-card-container'>{displayItems("side")}</div>
+            <div className="to-center">
+                <h1>Extras</h1>
+            </div>
+            <div className='mainpage-card-container'>{displayItems("extra")}</div>
+            <div className="to-center">
+                <h1>Drinks</h1>
+            </div>
+            <div className='mainpage-card-container'>{displayItems("drink")}</div>
             <div className='to-center'>
                 <button
                     id = 'prev'

@@ -17,9 +17,10 @@ const ItemCard = ({
     img = img.replace(/\s/g, "");
 
     const displayName = () => {
-        if (item.name.includes("drink")) {
-            return <h3>{item.name}</h3>;
-        }
+        return <h3>{item.name.replace(
+            /(^\w{1})|(\s+\w{1})/g,
+            (letter) => letter.toUpperCase()
+            )}</h3>;
     };
     const displayCost = () => {
         if (combo === "A La Carte") {

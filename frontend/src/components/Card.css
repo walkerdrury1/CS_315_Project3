@@ -50,5 +50,8 @@
 }
 
 .card-title{
-    padding: 30px;
+    padding:10px;
+}
+.card-components{
+    padding-bottom: 30px;
 }
