@@ -5,9 +5,19 @@
     width: 50%;
     grid-template-columns: 20% 60% 20%;
     height: 30px;
+}
+
+.incrementer-container-active{
+    display: grid;
+    border-radius: 35px;
+    box-shadow: 3px 3px 10px#a9a9a9;
+    width: 50%;
+    grid-template-columns: 20% 60% 20%;
+    height: 30px;
     transform: scale(1);
     animation: pulseInc 3s infinite;
 }
+
 .decrement{
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;

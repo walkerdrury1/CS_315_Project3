@@ -13,8 +13,8 @@ const LandingPage = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setActive(!active)
-    }, 9000)
-  }, [])
+    }, 6000)
+  }, [active])
   useEffect(() => {
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
@@ -27,10 +27,6 @@ const LandingPage = (props) => {
       window.removeEventListener('keydown', handleEnter);
     };
   }, [props]);
-
-  const startPulsing = () => {
-    document.getElementById("btn1").className("click-me");
-  }
 
   return (
     <html>

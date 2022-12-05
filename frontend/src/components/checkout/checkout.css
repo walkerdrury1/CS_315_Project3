@@ -1,0 +1,14 @@
+.checkout-button-active {
+    transform: scale(1);
+    animation: pulseChk 3s infinite;
+}
+
+.checkout-button {
+    transform: scale(1);
+}
+
+@keyframes pulseChk {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.03);}
+    100% {transform: scale(1);}
+}

@@ -5,7 +5,7 @@ const Card = ({title, img, onCardClick, active}) => {
     return(
         <div className={active ? 'card-container-active' : 'card-container'} onClick = {onCardClick}>
             <div className='card-img-container'>
-                <img className =  "card-img" src = {img} alt = "pic of card"/>
+                <img className =  "card-img" src = {img} alt = {title}/>
             </div>
             
             <div className='to-center'>

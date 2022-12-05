@@ -57,7 +57,7 @@ const ComboPage = (props) => {
     return () => {
         window.removeEventListener('keydown', handleKey);
     };
-    }, []);
+    }, [active]);
 
 
 

@@ -6,10 +6,12 @@ import { calculateTotal, setPage } from "../../actions";
 import { deleteIndex } from "../../actions";
 import { setCombo } from "../../actions";
 import { deleteCartItem } from "../../actions";
+import "./checkout.css"
 
 const Checkout = (props) => {
 
     const [highlightNum, changeHighlight] = useState(-1);
+    const [active, setActive] = useState(false);
 
     const processTransactions = async () => {
         const itemList = [];
@@ -60,7 +62,6 @@ const Checkout = (props) => {
                     singleCancels[highlightNum].click()
                     changeHighlight(highlightNum-1)
             }
-
         }
         else if (event.keyCode === 9) {
             // tab
@@ -122,12 +123,8 @@ const Checkout = (props) => {
                 singleCancels[highlightNum+1].style.opacity = "0.5"
                 singleCancels[highlightNum+1].scrollIntoView({behavior: 'smooth'})
                 changeHighlight(highlightNum+1)
-                
-
-
-
         }
-    };
+    }
     window.addEventListener('keydown', handleKey);
 
     return () => {
@@ -136,6 +133,12 @@ const Checkout = (props) => {
     
     
     },)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setActive(!active)
+        }, 6000)
+    }, [active])
 
     const clearCart = () => {
         props.items.map((item, index) => {
@@ -254,28 +257,32 @@ const Checkout = (props) => {
                         <div className='right floated three wide column'><h2>${props.total.toFixed(2)}</h2></div>
                     </div>
                     <div className='ui attached segment'>
+                        <div className={active ? 'checkout-button-active' : 'checkout-button'}>
                         <button className="ui fluid blue button" onClick={() => props.setPage("Combo Page")}>
                             Order More
                         </button>
+                        </div>
                     </div>
                     <div className='ui attached segment'>
-                        <div class='fluid ui buttons'>
-                            <button
-                                className='ui positive button'
-                                onClick={
-                                    processTransactions
-                                }
-                            >
-                                Complete Order
-                            </button>
-                            <div className='or'></div>
-                            <button
-                                className='ui negative button'
-                                tabIndex={0}
-                                onClick={() => clearCart()}
-                            >
-                                Clear Cart
-                            </button>
+                        <div className={active ? 'checkout-button-active' : 'checkout-button'}>
+                            <div className='fluid ui buttons'>
+                                <button
+                                    className='ui positive button'
+                                    onClick={
+                                        processTransactions
+                                    }
+                                >
+                                    Complete Order
+                                </button>
+                                <div className='or'></div>
+                                <button
+                                    className='ui negative button'
+                                    tabIndex={0}
+                                    onClick={() => clearCart()}
+                                >
+                                    Clear Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
