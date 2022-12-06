@@ -38,7 +38,7 @@ const ItemCard = ({
     return (
         <div className='cardItem-container' onClick={onCardClick}>
             <div className='card-img-container'>
-                <img className='card-img' src={img} alt={item.name} />
+                <img className='card-img-trans' src={img} alt={item.name} />
             </div>
             <div className="to-center">{displayName()}</div>
             <br/>
