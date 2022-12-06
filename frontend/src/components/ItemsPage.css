@@ -48,3 +48,9 @@
 .toggle-switch input[type="checkbox"]:checked + .switch {
     background-color: rgb(76, 223, 76);
 }
+
+#fileDisplayArea {
+    margin-top: 20em;
+    width: 100%;
+    overflow-x: auto;
+}
