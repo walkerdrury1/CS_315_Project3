@@ -29,7 +29,7 @@ const LandingPage = (props) => {
   }, [props]);
 
   return (
-    <html>
+    <html className="landing-page-container">
       <head>
         <title> Tyson Express</title>
       </head>

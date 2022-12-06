@@ -4,6 +4,7 @@
     font-family: sans-serif;
 }
 
+
 .landing-background{
     width: 100%;
     height: 100vh;
@@ -18,21 +19,45 @@
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
-    color: ivory;
+    color: rgb(250, 250, 209);
 }
 
 .landing-content h1{
-    font-size: 80px;
+    font-size: 110px;
     margin-top: 80px;
+    text-transform: uppercase;
+    animation-delay: 0s;
+    animation: fadeInEffect 2s;
+    
+    text-shadow: 1px 1px 1px rgb(185, 185, 168),
+        1px 2px 1px rgb(185, 185, 168),
+        1px 3px 1px rgb(185, 185, 168),
+        1px 4px 1px rgb(185, 185, 168),
+        1px 5px 1px rgb(185, 185, 168),
+        1px 6px 1px rgb(185, 185, 168),
+        1px 7px 1px rgb(185, 185, 168),
+        /* 1px 8px 1px rgb(185, 185, 168),
+        /* 1px 9px 1px rgb(185, 185, 168),
+        1px 10px 1px rgb(185, 185, 168), */
+        1px 18px 6px rgba(16,16,16,0.4),
+        1px 22px 10px rgba(16,16,16,0.2),
+        1px 25px 35px rgba(16,16,16,0.2),
+        1px 30px 60px rgba(16,16,16,0.4);
 }
 
 .landing-content p{
     margin: 20px auto;
+    font-size: 20px;
     font-weight: 100;
+    font-style: bold;
     line-height: 25px;
+    animation-delay: 1s;
+    animation: fadeInEffect 6s;
+    
 }
 
 .landing-button button{
+    font-size: large;
     width: 200px;
     padding: 15px;
     text-align: center;
@@ -44,9 +69,12 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    animation: ease-in;
+    
 }
 
 .landing-button-active button{
+    font-size: large;
     width: 200px;
     padding: 15px;
     text-align: center;
@@ -101,4 +129,17 @@ button:hover{
 }
 .loading-container{
     height:70vh;
+}
+
+@keyframes fadeInEffect {
+    from {
+        opacity: 0;
+        transform: rotateX(-10deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotateX(0);
+        animation-duration: 100s;
+    }
 }
