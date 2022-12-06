@@ -12,6 +12,8 @@ const ItemCard = ({
     setItems,
     item,
     combo,
+    active,
+    setActive
 }) => {
     let img = item.name + ".png";
     img = img.replace(/\s/g, "");
@@ -43,7 +45,7 @@ const ItemCard = ({
 
             {displayCost()}
             <div className='to-center'>
-                <Incrementer type={item.type} max={max} setMax={setMax} />
+                <Incrementer type={item.type} max={max} setMax={setMax} active = {active} setActive = {setActive}/>
             </div>
             <br />
         </div>

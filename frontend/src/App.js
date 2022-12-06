@@ -12,6 +12,7 @@ import InventoryPage from "./components/InventoryPage";
 import ItemsPage from "./components/ItemsPage";
 import Reports from "./components/Reports";
 import ServerPage from "./components/ServerPage";
+import LocationsPage from "./components/LocationsPage";
 const App = (props) => {
     if (props.page === "Combo Page") {
         return <ComboPage />;
@@ -36,6 +37,9 @@ const App = (props) => {
     } 
     else if(props.page === "Server Page"){
         return <ServerPage />
+    }
+    else if(props.page === "Locations Page"){
+        return <LocationsPage />
     }
     else {
         return <EntreePage />;

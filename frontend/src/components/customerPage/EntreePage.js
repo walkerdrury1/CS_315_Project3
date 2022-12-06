@@ -23,6 +23,16 @@ const EntreePage = (props) => {
     let valid_entrees = 0;
     let valid_sides = 0;
 
+
+    const [active, setActive] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setActive(!active)
+        }, 6000)
+    }, [active])
+
+
     const callApis = async () => {
         const x = await axios.get(
             "https://tyson-express.onrender.com/get-entrees"
@@ -107,8 +117,8 @@ const EntreePage = (props) => {
                     // in sides
                     const curr = parseInt(incNos[highlightNum].innerHTML, 10)
 
-                    if (sidesMax == 0) changeFlag(0)
-                    if (curr == 0) changeFlag(1)
+                    if (sidesMax === 0) changeFlag(0)
+                    if (curr === 0) changeFlag(1)
                 }
 
             }
@@ -253,6 +263,8 @@ const EntreePage = (props) => {
                             setMax={(amount, inc) =>
                                 setMaxandItems(amount, inc)
                             }
+                            active = {active}
+                            setActive = {setActive}
                         />
                     </div>
                 );
