@@ -18,6 +18,9 @@ const Topbar = (props) => {
             console.log("in here");
             props.setPage("Sign in page");
         }
+        else if(item === "Locations"){
+            props.setPage("Locations Page")
+        }
     };
 
     const goHome = () => {
