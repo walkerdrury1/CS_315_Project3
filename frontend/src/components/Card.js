@@ -19,11 +19,8 @@ const Card = ({title, img, onCardClick, active}) => {
 
         return (
             <div>
-                <div>
-                    <h5>{numEntree} entree{(numEntree > 1) ? "s" : ""}</h5>
-                </div>
-                <div>
-                    <h5>{numSide} side{(numSide > 1) ? "s" : ""}</h5>
+                <div className='to-center'>
+                    <h5 className='menu-components'>{numEntree} entree{(numEntree > 1) ? "s" : ""} & {numSide} side{(numSide > 1) ? "s" : ""}</h5>
                 </div>
             </div>
         )
@@ -31,6 +28,7 @@ const Card = ({title, img, onCardClick, active}) => {
 
     return(
         <div className={active ? 'card-container-active' : 'card-container'} onClick = {onCardClick}>
+            <button>
             <div className='card-img-container'>
                 <img className =  "card-img" src = {img} alt = {title}/>
             </div>
@@ -42,6 +40,7 @@ const Card = ({title, img, onCardClick, active}) => {
                     {(title === "A La Carte") ? "" : displayComponents()}
                 </div>
             </div>
+            </button>
         </div>
     )
 }
