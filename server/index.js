@@ -175,6 +175,30 @@ app.post('/validate', async(req, res) => {
     }
 });
 
+app.post('/validateEmail', async (req, res) => {
+    try{
+        const email = req.body.email
+        const sqlQuery = `SELECT * FROM users WHERE email='${email}'`
+      //  console.log(email)
+        //console.log(sqlQuery)
+        const results = await pool.query(sqlQuery)
+       // console.log(results)
+        if (results.rows == 0) {
+            res.send({role:'None'})
+        }
+        else {
+            console.log(results.rows[0].role)
+            res.send({role: `${results.rows[0].role}`})
+        }
+
+    }
+    catch(err) {
+
+        console.log(err.message);
+        res.send(err.message);
+    }
+})
+
 
 const exampleRounter = require('./inventory')
 app.use('/', exampleRounter)
@@ -185,8 +209,7 @@ app.use('/', menuitemsRouter)
 const reportRouter = require('./reports')
 app.use('/', reportRouter)
 
-const oauthRouter = require('./oauth')
-app.use('/', oauthRouter)
+
 
 app.listen(PORT, function () {
     console.log('Server is running on port ' + PORT);
