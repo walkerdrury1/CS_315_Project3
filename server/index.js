@@ -111,7 +111,10 @@ app.use('/docs',
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/MenuItem'
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/MenuItem'
  *           
  *  
  */
@@ -136,7 +139,10 @@ app.get('/get-menuitems', async(req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/MenuItem'
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/MenuItem'
  *           
  *  
  */
@@ -161,7 +167,10 @@ app.get('/get-entrees', async(req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/MenuItem'
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/MenuItem'
  *           
  *  
  */
@@ -186,7 +195,10 @@ app.get('/get-sides', async(req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/MenuItem'
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/MenuItem'
  *           
  *  
  */
