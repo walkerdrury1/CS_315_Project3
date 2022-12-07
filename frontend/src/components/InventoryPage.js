@@ -65,6 +65,37 @@ const InventoryPage = () => {
         setRefresh(!refresh);
         reset();
     };
+
+    const displayOutOfStock = () => {
+        const outOfStockList = list.filter(function(ingredient) {
+            return (ingredient.totalquantity === 0);
+        })
+
+        const display = outOfStockList.map((item) => {
+            return (
+                <div className="to-center">
+                    {capitalize(item.itemname)}
+                </div>
+            )
+        })
+
+        console.log(outOfStockList.length)
+
+        if (outOfStockList.length !== 0) {
+            return (
+                <div>
+                    <div className="to-center">
+                        <h3 className="outOfStockWarning">These items are out of stock:</h3>
+                    </div>
+                    <br/>
+                    <div className="to-center">
+                        <h5>{display}</h5>
+                    </div>
+                    <br/>
+                </div>
+            )
+        }
+    }
     const popUp = () => {
         if (popup) {
             return (
@@ -187,7 +218,7 @@ const InventoryPage = () => {
                 <br />
                 <h1 className='to-center'>Inventory</h1>
                 <br />
-                <br />
+                {displayOutOfStock()}
                 <table class='ui celled table'>
                     <thead>
                         <tr>

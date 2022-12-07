@@ -8,3 +8,7 @@
 .padding{
     padding: 10px;
 }
+
+.outOfStockWarning{
+    color:red;
+}

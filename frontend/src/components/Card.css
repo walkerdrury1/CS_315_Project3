@@ -68,3 +68,8 @@
 .card-components {
     padding-bottom: 30px;
 }
+
+.menu-components {
+    color: gray;
+    opacity: 75%;
+}

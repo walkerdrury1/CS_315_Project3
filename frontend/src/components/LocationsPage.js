@@ -25,7 +25,8 @@ const LocationsPage = () => {
                     mapContainerStyle={mapContainerStyle}
                 >
                     {" "}
-                    <MarkerF position={{ lat: 30.6158145, lng: -96.3384525 }} />
+                    <MarkerF position={{ lat: 30.6119145, lng: -96.3414525 }} />
+                    <MarkerF position={{lat:30.6181, lng: -96.3233525}}/>
                     <MarkerF
                         position={{
                             lat: 30.622781452867564,
