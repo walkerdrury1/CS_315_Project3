@@ -149,7 +149,7 @@ const ServerPage = (props) => {
         return allList.map((entree, index) => {
             if (entree.type === "entree" && entree.onmenu === "yes") {
                 return (
-                    <div key={index} className='eight wide column'>
+                    <div key={index} className='four wide column'>
                         <ServerCard
                             onClick={() => entreeClick(entree)}
                             title={entree.name}
