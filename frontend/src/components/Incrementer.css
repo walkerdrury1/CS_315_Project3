@@ -37,6 +37,16 @@
     cursor: pointer;
 }
 
+.increment:focus{
+    background-color: white;
+    color: rgba(0, 200, 255);
+}
+
+.decrement:focus{
+    background-color: white;
+    color:rgb(255, 92, 92);
+}
+
 @keyframes pulseInc {
     0% {transform: scale(1);}
     50% {transform: scale(1.2);}

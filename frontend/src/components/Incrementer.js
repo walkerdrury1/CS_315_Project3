@@ -27,7 +27,7 @@ const Incrementer = ({ type, max, setMax, active, setActive }) => {
                     : "incrementer-container"
             }
         >
-            <div
+            <button
                 className='decrement'
                 onClick={() => {
                     change_count("d");
@@ -35,11 +35,11 @@ const Incrementer = ({ type, max, setMax, active, setActive }) => {
                 }}
             >
                 -
-            </div>
+            </button>
             <div className='to-center'>
                 <h4>{count}</h4>
             </div>
-            <div
+            <button
                 className='increment'
                 onClick={() => {
                     change_count("i");
@@ -47,7 +47,7 @@ const Incrementer = ({ type, max, setMax, active, setActive }) => {
                 }}
             >
                 <div className='plus'>+</div>
-            </div>
+            </button>
         </div>
     );
 };

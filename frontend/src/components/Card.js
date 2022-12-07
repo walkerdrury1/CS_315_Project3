@@ -28,6 +28,7 @@ const Card = ({title, img, onCardClick, active}) => {
 
     return(
         <div className={active ? 'card-container-active' : 'card-container'} onClick = {onCardClick}>
+            <button>
             <div className='card-img-container'>
                 <img className =  "card-img" src = {img} alt = {title}/>
             </div>
@@ -39,6 +40,7 @@ const Card = ({title, img, onCardClick, active}) => {
                     {(title === "A La Carte") ? "" : displayComponents()}
                 </div>
             </div>
+            </button>
         </div>
     )
 }
