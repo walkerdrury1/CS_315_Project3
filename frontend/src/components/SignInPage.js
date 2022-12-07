@@ -35,13 +35,13 @@ const SignInPage = (props) => {
     };
 
     const submit = async () => {
-        const x = await axios.post(
+        const x = (await axios.post(
             "https://tyson-express.onrender.com/validate",
             {
                 username: username,
                 password: password,
             }
-        ).data;
+        )).data;
         if (x.role === "None") {
             setError(true);
         } else if (x.role === "manager") {
