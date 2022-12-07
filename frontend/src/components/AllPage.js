@@ -12,6 +12,7 @@ import { addItem } from "../actions";
 const AllPage = (props) => {
     const [allItems, setAllItems] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
+    const [active, setActive] = useState(false);
 
 
     const [highlightNum, changeHighlight] = useState(-1);
@@ -24,6 +25,12 @@ const AllPage = (props) => {
         setAllItems(x.data);
         return;
     };
+
+    useEffect(() => {
+        setTimeout(() => {
+            setActive(!active)
+        }, 12000)
+    }, [active])
 
     const submit = (type) => {
         if (type === "submit") {
@@ -72,6 +79,8 @@ const AllPage = (props) => {
                         <ItemCard
                             item={item}
                             setMax={(e, x) => setMaxandItems(e, x)}
+                            active={active}
+                            setActive={setActive}
                         />
                     </div>
                 );
@@ -81,6 +90,8 @@ const AllPage = (props) => {
                         <ItemCard
                             item={item}
                             setMax={(e, x) => setMaxandItems(e, x)}
+                            active={active}
+                            setActive={setActive}
                         />
                     </div>
                 );

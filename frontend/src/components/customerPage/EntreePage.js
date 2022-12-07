@@ -29,7 +29,7 @@ const EntreePage = (props) => {
     useEffect(() => {
         setTimeout(() => {
             setActive(!active)
-        }, 6000)
+        }, 12000)
     }, [active])
 
 
