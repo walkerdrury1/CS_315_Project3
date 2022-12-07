@@ -185,6 +185,9 @@ app.use('/', menuitemsRouter)
 const reportRouter = require('./reports')
 app.use('/', reportRouter)
 
+const oauthRouter = require('./oauth')
+app.use('/', oauthRouter)
+
 app.listen(PORT, function () {
     console.log('Server is running on port ' + PORT);
 });
