@@ -2,6 +2,7 @@ import requests
 
 #url = "http://localhost:4000"
 url = "https://tyson-express.onrender.com"
-#requests.post(url + "/change-type", json={'name': 'potato3', 'type': 'pen15'})
-a = requests.get("http://localhost:4000/get-ingredients/orange chicken")
+a =requests.post(url + "/get-pairs", json={'startDate': '01-01-0001', 'endDate': '12-12-2050'})
+
+#a = requests.get("http://localhost:4000/get-ingredients/orange chicken")
 print(a.text)

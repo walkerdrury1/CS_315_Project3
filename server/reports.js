@@ -12,6 +12,34 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false },
 });
 
+
+/**
+ * @swagger
+ * /transaction-history/{date}/:
+ *   get:
+ *     description: Get transaction history from a certain date
+ *     parameters:
+ *       - in: path
+ *         name: date
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The date to search from
+ *     responses: 
+ *       '200':
+ *         description: An array of items with the number of times it's been sold
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                   amountOrdered:
+ *                     type: integer
+*/
 router.get("/transaction-history/:date", async (req, res) => {
     try {
         const {date} = req.params;
@@ -28,12 +56,37 @@ router.get("/transaction-history/:date", async (req, res) => {
 });
 
 /**
- * Description: Returns popular pairs
- * Requires: Start date, end date
- * Returns: Json of popular pairs
- * EX: axois.post(url + '/get-pairs', {startDate: '1/1/1000', endDate:'3/3/3000'});
+ * @swagger
+ * /get-pairs/:
+ *   post:
+ *     description: Retrieve sorted list of items that are commonly paired together
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               startDate:
+ *                 type: string
+ *               endDate:
+ *                 type: string      
+ * 
+ *     responses: 
+ *       '200':
+ *         description: An array of arrays with two items and the number of times they've been sold together
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ * 
+ *           
+ *  
  */
-
 router.post("/get-pairs", async (req, res) => {
     try {
         const itemData = (await pool.query("SELECT * FROM items")).rows;
@@ -75,11 +128,21 @@ router.post("/get-pairs", async (req, res) => {
 });
 
 /**
- * Description: Get the items that have totalquantity < minimumamount
- * Requires: Nothing
- * Returns: List of Json objects representing each item to be restocked
- * EX: const data = axois.get('url' + '/restock-report');
- */
+ * @swagger
+ * /restock-report/:
+ *   get:
+ *     description: Get items that are less than their minimum amount for restock
+ *     responses: 
+ *       '200':
+ *         description: An array of items with the number of times it's been sold
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items: 
+ *                 type: object
+ *                 $ref: '#/components/schemas/Ingredient'
+*/
 router.get("/restock-report", async (req, res) => {
     try {
         const data = await (
@@ -94,6 +157,29 @@ router.get("/restock-report", async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /excess-report/{date}/:
+ *   get:
+ *     description: Get items that have sold less than 10% of their inventory from a given time
+ *     parameters:
+ *       - in: path
+ *         name: date
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The date to search from
+ *     responses: 
+ *       '200':
+ *         description: An array of ingredients
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items: 
+ *                 type: object
+ *                 $ref: '#/components/schemas/Ingredient'
+*/
 router.get("/excess-report/:date", async (req, res) => {
     try {
         const { date } = req.params;
