@@ -193,14 +193,14 @@ const EntreePage = (props) => {
             <div className='to-center'>
                 <button
                     id = 'prev'
-                    className='ui button'
+                    className='ui massive button'
                     onClick={() => submit("previous")}
                 >
                     Previous
                 </button>
                 <button
                     id = 'add'
-                    className='red ui button'
+                    className='ui green massive button'
                     onClick={() => submit("submit")}
                 >
                     Add to Cart

@@ -2,9 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./Incrementer.css";
 import { connect } from "react-redux";
 
+/**
+ * Incrementer for add entrees and sides to a combo
+ */
 const Incrementer = ({ type, max, setMax, active, setActive }) => {
     const [count, setCount] = useState(0);
 
+    /**
+     * Increments or decrements count
+     */
     const change_count = (_type) => {
         if (_type === "i") {
             if (max !== 0) {
