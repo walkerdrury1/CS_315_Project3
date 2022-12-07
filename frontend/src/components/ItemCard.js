@@ -3,6 +3,9 @@ import "./Card.css";
 import Incrementer from "./Incrementer";
 import { connect } from "react-redux";
 
+/**
+ * Card for displaying contents of a menu item
+ */
 const ItemCard = ({
     title,
     onCardClick,
@@ -18,12 +21,19 @@ const ItemCard = ({
     let img = item.name + ".png";
     img = img.replace(/\s/g, "");
 
+    /**
+     * Show name of the menu item
+     */
     const displayName = () => {
         return <h3>{item.name.replace(
             /(^\w{1})|(\s+\w{1})/g,
             (letter) => letter.toUpperCase()
             )}</h3>;
     };
+
+    /**
+     * Show cost of the menu item
+     */
     const displayCost = () => {
         if (combo === "A La Carte") {
             return (
