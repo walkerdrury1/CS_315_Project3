@@ -12,10 +12,19 @@ const pool = new Pool({
 });
 
 /**
- * Description: Get a list of all inventory items
- * Requires: none
- * Returns: list of json objects with attributes : itemid, itemname, totalquantity, minimumamount
- * EX: axois.get(url + '\get-inventory');
+ * @swagger
+ * /get-inventory/:
+ *   get:
+ *     description: Retrieve list of inventory items from the database
+ *     responses: 
+ *       '200':
+ *         description: A JSON array of ingredients
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Ingredient'
+ *           
+ *  
  */
 router.get('/get-inventory', async(req, res) => {
     try{
@@ -27,12 +36,29 @@ router.get('/get-inventory', async(req, res) => {
     }
 });
 
-// Body requires : name, expDate, amt
 /**
- * Description: Add a new batch of a current inventory item into the database
- * Requires: name, expDate, amt
- * Returns: 'success' or error message
- * EX: axois.post(url + '/add-batch', {name: 'chicken', expDate: '01-01-2023', amt: 100});
+ * @swagger
+ * /add-batch/:
+ *   post:
+ *     description: Add a new batch of a current inventory item to the database
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               expDate:
+ *                 type: string
+ *               amt:
+ *                 type: integer
+ *             example: {name: Orange Chicken, expDate: 01-01-23, amt:100}
+ *         
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
 router.post('/add-batch', async(req, res) => {
     try{
@@ -52,11 +78,20 @@ router.post('/add-batch', async(req, res) => {
 });
 
 /**
- * Description: Create a new inventory item into the database
- * Requires: name
- * Optional: minimumamount
- * Returns: 'success' or error message
- * EX: axios.post(url + '/add-inventory', {name: 'chicken', minimumamount: 100});
+ * @swagger
+ * /add-inventory/:
+ *   post:
+ *     description: Add a new inventory item to the database
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Ingredient'
+ *         
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
 router.post('/add-inventory' ,async(req,res) => {
     try{
@@ -77,10 +112,24 @@ router.post('/add-inventory' ,async(req,res) => {
 });
 
 /**
- * Change the minimum amount attribute of an item in the inventory
- * Requires : name, minimumamount
- * Returns : 'success' or error message
- * EX: axois.post(url + '/change-minimumamount', {name : 'chicken', minimumamount : 200});
+ * @swagger
+ * /change-minimumamount/:
+ *   post:
+ *     description: Change the minimumamount attribute of an ingredient
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               name:
+ *                 type: string
+ *               minimumamount:
+ *                 type: integer
+ *         
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
 router.post('/change-minimumamount', async (req, res) => {
     try{
@@ -90,6 +139,6 @@ router.post('/change-minimumamount', async (req, res) => {
         console.log(err.message);
         res.send(err.message);
     }
-})
+});
 
 module.exports = router

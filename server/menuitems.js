@@ -12,10 +12,26 @@ const pool = new Pool({
 });
 
 /**
- * Description: Add a new item with possibly new ingredients to the database
- * Requires: name, type, cost, list of ingredients
- * Returns: 'success' or error message
- * EX: axois.post(url + '/add-item', {name: 'pumpkin pie', type:'entree', cost: 50, ingredients: ['pumpkin', 'pie']});
+ * @swagger
+ * /add-item/:
+ *   post:
+ *     description: Add a new item with possibly new ingredients to the database
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               item:
+ *                 $ref: '#/components/schemas/MenuItem'
+ *               ingredients:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
 router.post('/add-item', async(req, res) => {
     try {
@@ -57,10 +73,26 @@ router.post('/add-item', async(req, res) => {
 })
 
 /**
- * Description: Change the price of an existing item in the database
- * Requires: name
- * Returns: 'success' or error message
- * EX: axois.post(url + '/set-price', {name: 'orange chicken', price: 20});
+ * @swagger
+ * /set-price/:
+ *   post:
+ *     description: Change the price of an existing item in the database
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *             example: {name: Orange Chicken, price:8.8}
+ *         
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
 
 router.post('/set-price', async (req, res) => {
@@ -77,10 +109,26 @@ router.post('/set-price', async (req, res) => {
 })
 
 /**
- * Description: Change the type of an existing item in the database
- * Requires: name and new type
- * Returns: 'success' or error message
- * EX: axois.post(url + '/change-type', {name: 'orange chicken', type: side});
+ * @swagger
+ * /change-type/:
+ *   post:
+ *     description: Change the type of an existing item in the database
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *             example: {name: Orange Chicken, type: side}
+ *         
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
 
 router.post('/change-type', async (req, res) => {
@@ -98,12 +146,31 @@ router.post('/change-type', async (req, res) => {
 })
 
 /**
- * Description: Change the ingredients of an existing item in the database
- * Requires: name and new ingredients list
- * Returns: 'success' or error message
- * EX: axois.post(url + '/change-ingredients', {name: 'orange chicken', ingredients: ['orange', 'chicken']});
+ * @swagger
+ * /change-ingredients/:
+ *   post:
+ *     description: Change the ingredients of an existing item in the database
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               ingredients:
+ *                 type: array
+ *                 items:
+ *                   type:string
+ *             example: 
+ *               name: Orange Chicken
+ *               ingredients: [chicken, yellow sauce]
+ *         
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
-
 router.post('/change-ingredients', async (req, res) => {
     
     // clear old
@@ -147,10 +214,24 @@ router.post('/change-ingredients', async (req, res) => {
 })
 
 /**
- * Description: Sets the onmenu flag to no
- * Requires: name
- * Returns: 'success' or error message
- * EX: axois.post(url + '/remove-item', {name: 'orange chicken'});
+ * @swagger
+ * /remove-item/:
+ *   post:
+ *     description: Remove an item from the menu
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *             example: {name: Orange Chicken}
+ *         
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
 router.post('/remove-item', async (req, res) => {
     try {
@@ -166,10 +247,24 @@ router.post('/remove-item', async (req, res) => {
 
 
 /**
- * Description: Toggles the onmenu flag
- * Requires: name
- * Returns: 'success' or error message
- * EX: axois.post(url + '/toggle-item', {name: 'orange chicken'});
+ * @swagger
+ * /toggle-item/:
+ *   post:
+ *     description: Toggle an item on or off the menu
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *             example: {name: Orange Chicken}
+ *         
+ *     responses: 
+ *       '200':
+ *         description: Completed
  */
  router.post('/toggle-item', async (req, res) => {
     try {
@@ -189,11 +284,29 @@ router.post('/remove-item', async (req, res) => {
 }) 
 
 /**
- * Description: Get the ingredients for a given menu item
- * Requires: name
- * Returns: list of objects of type {itemname: itemname}
- * EX: axois.get(url + '/get-ingredients/' + 'orange chicken')
- * EX response: [{itemname:'chicken'},{itemname:'orange sauce'}]
+ * @swagger
+ * /get-ingredients/{name}/:
+ *   get:
+ *     description: Retrieve ingredients from a given menu item
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The name of the menu item
+ *     responses: 
+ *       '200':
+ *         description: An array of ingredients
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/Ingredient'
+ *           
+ *  
  */
 router.get('/get-ingredients/:name', async (req, res) => {
     try{

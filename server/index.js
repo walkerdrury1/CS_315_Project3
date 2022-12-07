@@ -23,23 +23,101 @@ app.get('/test-connection', (req, res, next) => {
     res.send("hi");
 });
 
-/*
-// ex: http://localhost:4000/say-name/Walker
-app.get('/say-name/:name', (req, res, next) => {
-    const {name} = req.params;
-    res.send("hi " + name);
-});*/
+//DOCUMENTATTION
+const swaggerJSDoc = require('swagger-jsdoc');
 
-// app.get('/get-users', async (req, res, next) => {
-//     try{
-//         const a = await pool.query("SELECT * FROM users");
-//         res.json(a.rows);
-//     } catch (err) {
-//         res.send(err.message);
-//     }
-// } );
+const swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'Tyson Express API',
+    version: '1.0.0',
+  },
+};
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ['./*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+const swaggerUi = require('swagger-ui-express');
+
+app.use('/docs', 
+        swaggerUi.serve, 
+        swaggerUi.setup(swaggerSpec, {explorer:true}));
+////////////////////
+
+/**
+ * @swagger
+ *   components:
+ *     schemas:
+ *       MenuItem:
+ *         type: object
+ *         required:
+ *           - name
+ *           - id
+ *           - type
+ *           - cost
+ *         properties:
+ *           name:
+ *             type: string
+ *             description: The name of the menu item
+ *           type:
+ *             type: string
+ *             description: The type of menu item
+ *           cost:
+ *             type: number
+ *             description: The cost of the menu item
+ *         example:
+ *           name: 'Orange Chicken'
+ *           type: entree
+ *           cost: 5.4
+ * 
+ *       Ingredient:
+ *         type: object
+ *         required:
+ *           - name
+ *           - id
+ *           - type
+ *           - cost
+ *         properties:
+ *           name:
+ *             type: string
+ *             description: The name of the menu item
+ *           type:
+ *             type: string
+ *             description: The type of menu item
+ *           cost:
+ *             type: number
+ *             description: The cost of the menu item
+ *         example:
+ *           name: 'Orange Chicken'
+ *           type: entree
+ *           cost: 5.4
+ * 
+ */
 
 //////////////////// GET REQUESTS
+/**
+ * @swagger
+ * /get-menuitems/:
+ *   get:
+ *     description: Retrieve list of menu items from the database
+ *     responses: 
+ *       '200':
+ *         description: A JSON array of menu items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/MenuItem'
+ *           
+ *  
+ */
 app.get('/get-menuitems', async(req, res) => {
     try{
         const data = await pool.query("SELECT * FROM items");
@@ -50,6 +128,24 @@ app.get('/get-menuitems', async(req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /get-entrees/:
+ *   get:
+ *     description: Retrieve list of all entree type menu items from the database
+ *     responses: 
+ *       '200':
+ *         description: A JSON array of menu items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/MenuItem'
+ *           
+ *  
+ */
 app.get('/get-entrees', async(req, res) => {
     try{
         const data = await pool.query("SELECT * FROM items WHERE type = 'entree'");
@@ -60,6 +156,24 @@ app.get('/get-entrees', async(req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /get-sides/:
+ *   get:
+ *     description: Retrieve list of all side type menu items from the database
+ *     responses: 
+ *       '200':
+ *         description: A JSON array of menu items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/MenuItem'
+ *           
+ *  
+ */
 app.get('/get-sides', async(req, res) => {
     try{
         const data = await pool.query("SELECT * FROM items WHERE type = 'side'");
@@ -70,6 +184,24 @@ app.get('/get-sides', async(req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /get-extras/:
+ *   get:
+ *     description: Retrieve list of all extra type menu items from the database
+ *     responses: 
+ *       '200':
+ *         description: A JSON array of menu items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/MenuItem'
+ *           
+ *  
+ */
 app.get('/get-extras', async(req, res) => {
     try{
         const data = await pool.query("SELECT * FROM items WHERE type = 'extra'");
@@ -80,47 +212,39 @@ app.get('/get-extras', async(req, res) => {
         res.send(err.message);
     }
 });
-/*
-app.get('/get-inventory', async(req, res) => {
-    try{
-        const data = await pool.query("SELECT * FROM inventory");
-        res.json(data.rows);
-    } catch(err) {
-        console.log(err.message);
-        res.send(err.message);
-    }
-});
-*/
-
-
-///////// Function to write
-//Menu Items
-//Add menu items - with ingredients
-//Change menu item price
-//Delete menu item (set onmenu to "no")
-
-//Inventory Items
-//Get inventory items
-//Add inventory item
-//Add batch
-//
-
-//Reports
-// Excess report
-// Restock report
-// Pairs
-// ?getTopItems
 
 
 
 
 //////////////////// POST REQUESTS
 
-
+/**
+ * @swagger
+ * /process-transaction/:
+ *   post:
+ *     description: Send a transaction to the server and update database
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               cost: 
+ *                 type: number
+ *               items:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses: 
+ *       '200':
+ *         description: Completed
+ *           
+ *  
+ */
 app.post('/process-transaction', async(req, res) => {
     try{
         const data = await pool.query("SELECT MAX(transactionid) FROM transactions;");
-        res.json(data.rows);
         const transactionid = data.rows[0].max + 1;
         await pool.query(`INSERT INTO TRANSACTIONS VALUES (${transactionid}, CURRENT_DATE, ${req.body.cost}); `);
         const items = req.body.items;
@@ -145,6 +269,7 @@ app.post('/process-transaction', async(req, res) => {
            // console.log(updateCommand);
             await pool.query(updateCommand);
         }
+        res.send("completed");
 
 ``    } catch(err) {
 
@@ -153,7 +278,34 @@ app.post('/process-transaction', async(req, res) => {
     }
 });
 
-
+/**
+ * @swagger
+ * /validate/:
+ *   post:
+ *     description: Validate credentials to log into app
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username: 
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example: {username: hello, password: password}
+ *     responses: 
+ *       '200':
+ *         description: Returns users role if found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               properties:
+ *                 role:
+ *                   type: string
+ *               example: {role: manager}
+ */
 app.post('/validate', async(req, res) => {
     try{
     const username = req.body.username;
