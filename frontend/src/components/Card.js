@@ -19,11 +19,8 @@ const Card = ({title, img, onCardClick, active}) => {
 
         return (
             <div>
-                <div>
-                    <h5>{numEntree} entree{(numEntree > 1) ? "s" : ""}</h5>
-                </div>
-                <div>
-                    <h5>{numSide} side{(numSide > 1) ? "s" : ""}</h5>
+                <div className='to-center'>
+                    <h5 className='menu-components'>{numEntree} entree{(numEntree > 1) ? "s" : ""} & {numSide} side{(numSide > 1) ? "s" : ""}</h5>
                 </div>
             </div>
         )

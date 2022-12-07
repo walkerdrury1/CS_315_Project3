@@ -59,10 +59,6 @@ const ComboPage = (props) => {
     };
     }, [active]);
 
-
-
-
-
     console.log(props.combo)
     const displayCard = () => {
         return combos.map((card, index) => {
